@@ -30,6 +30,20 @@
 
 })(window.jQuery);
 
+// Contador
+
+document.addEventListener('DOMContentLoaded', function () {
+  let contador = localStorage.getItem('visitas') || 0;
+  const mensagemElemento = document.getElementById('mensagem');
+
+  function atualizarContador() {
+    mensagemElemento.textContent = `Você é o nosso ${++contador}º visitante!`;
+    localStorage.setItem('visitas', contador);
+  }
+
+  atualizarContador();
+});
+
 
 
 
