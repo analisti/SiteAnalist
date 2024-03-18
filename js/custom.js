@@ -33,7 +33,7 @@
 // Contador
 
 document.addEventListener('DOMContentLoaded', function () {
-  let contador = localStorage.getItem('visitas') || 0;
+  let contador = localStorage.getItem('visitas') || 100;
   const mensagemElemento = document.getElementById('mensagem');
 
   function atualizarContador() {
