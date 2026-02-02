@@ -7435,3 +7435,11 @@
 .bi-fuel-pump::before {
   content: "\f83e";
 }
+
+.logo-svg {
+  transition: transform 0.3s ease;
+}
+
+.logo-svg:hover {
+  transform: scale(1.05);
+}
