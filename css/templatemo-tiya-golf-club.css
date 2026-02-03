@@ -930,35 +930,53 @@ strong {
   border-radius: var(--border-radius-medium);
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(145deg, #f5f5f5, #e0e0e0); /* efeito “premium” */
+  transition: all 0.5s ease;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
 }
 
-.member-block-image-wrap:hover .member-block-image {
-  transform: scale(1.2);
+.member-block-image-wrap:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
 }
 
-.member-block-image-wrap:hover .social-icon {
-  opacity: 1;
+.member-block-svg {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  transition: all 0.5s ease;
+}
+
+.member-block-image-wrap:hover .member-block-svg {
+  transform: scale(1.2) rotate(-2deg);
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
 }
 
 .member-block-image-wrap .social-icon {
-  background-color: var(--white-color);
+  background-color: rgba(255,255,255,0.95);
   border-radius: var(--border-radius-large);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: all 0.5s;
+  transition: all 0.5s ease;
   padding: 15px 20px;
-  width: auto;
+  display: flex;
+  gap: 10px;
 }
 
-.member-block-image {
-  transition: all 0.3s;
+.member-block-image-wrap:hover .social-icon {
+  opacity: 1;
 }
 
 .member-block-info {
   padding: 10px;
+  text-align: center;
 }
 
 .member-block-info h4,
