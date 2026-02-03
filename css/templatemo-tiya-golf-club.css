@@ -420,7 +420,6 @@ strong {
 }
 
 
-
 /*---------------------------------------
   CUSTOM BUTTON               
 -----------------------------------------*/
@@ -1426,90 +1425,125 @@ strong {
 
 
 /*---------------------------------------
-  TIPOGRAFIA FLUIDA
+  RESPONSIVE STYLES               
 -----------------------------------------*/
-h1 { font-size: clamp(2rem, 4vw + 1rem, 3rem); }
-h2 { font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem); }
-h3 { font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2rem); }
-h4 { font-size: clamp(1.25rem, 2vw + 0.25rem, 1.75rem); }
-h5 { font-size: clamp(1.1rem, 1.5vw + 0.25rem, 1.5rem); }
-h6 { font-size: clamp(1rem, 1vw + 0.25rem, 1.25rem); }
+@media screen and (max-width: 991px) {
+  h1 {
+    font-size: 36px;
+  }
 
-/*---------------------------------------
-  SEÇÕES E ESPAÇAMENTO FLUIDO
------------------------------------------*/
-.section-padding {
-  padding-top: clamp(40px, 6vw, 80px);
-  padding-bottom: clamp(40px, 6vw, 80px);
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  h5 {
+    font-size: 18px;
+  }
+
+  h6 {
+    font-size: 16px;
+  }
+
+  .section-padding {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .navbar {
+    background-color: var(--secondary-color);
+  }
+
+  .navbar-nav .dropdown-menu {
+    position: relative;
+    left: 10px;
+    opacity: 1;
+    pointer-events: auto;
+    max-width: 155px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .navbar-expand-lg .navbar-nav {
+    padding-top: 15px;
+    padding-bottom: 10px;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link {
+    margin: 5px;
+    padding: 0;
+  }
+
+  .hero-section {
+    position: relative;
+    top: 82px;
+    margin-bottom: 82px;
+  }
+
+  .events-listing-section {
+    margin-bottom: 50px;
+  }
+
+  .events-detail-section .custom-block-info {
+    padding: 40px;
+  }
+
+  .events-detail-info {
+    padding: 35px 25px;
+  }
+
+  .contact-info-item {
+    width: 60%;
+  }
+
+  .events-detail-section .contact-info-item {
+    width: 70%;
+  }
+
+  .section-bg-image {
+    margin-bottom: 0;
+  }
+
+  .section-bg-image-block {
+    padding: 30px;
+  }
+
+  .site-footer {
+    padding-top: 20px;
+    padding-bottom: 100px;
+  }
 }
 
-/*---------------------------------------
-  NAVBAR
------------------------------------------*/
-.navbar {
-  background-color: var(--secondary-color);
-  padding: clamp(10px, 2vw, 20px);
+@media screen and (max-width: 480px) {
+  .navbar-brand {
+    font-size: var(--p-font-size);
+  }
+
+  .navbar-brand-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navbar-brand-icon::after {
+    top: 5px;
+  }
+
+  .section-bg-image-block {
+    padding: 30px;
+  }
+
+  .contact-info-item {
+    width: 72%;
+  }
 }
 
-.navbar-expand-lg .navbar-nav {
-  padding-top: clamp(10px, 2vw, 15px);
-  padding-bottom: clamp(8px, 1.5vw, 12px);
-}
-
-.navbar-expand-lg .navbar-nav .nav-link {
-  margin: clamp(3px, 1vw, 6px);
-  padding: 0;
-}
-
-/*---------------------------------------
-  HERO SECTION
------------------------------------------*/
-.hero-section {
-  position: relative;
-  top: clamp(60px, 8vw, 82px);
-  margin-bottom: clamp(60px, 8vw, 82px);
-}
-
-/*---------------------------------------
-  EVENTOS
------------------------------------------*/
-.events-listing-section {
-  margin-bottom: clamp(40px, 6vw, 60px);
-}
-
-.events-detail-section .custom-block-info {
-  padding: clamp(25px, 4vw, 40px);
-}
-
-.events-detail-info {
-  padding: clamp(20px, 3vw, 35px) clamp(15px, 2vw, 25px);
-}
-
-/*---------------------------------------
-  CONTATO
------------------------------------------*/
-.contact-info-item {
-  width: clamp(60%, 70%, 80%);
-}
-
-/*---------------------------------------
-  BG IMAGE
------------------------------------------*/
-.section-bg-image-block {
-  padding: clamp(20px, 4vw, 30px);
-}
-
-/*---------------------------------------
-  FOOTER
------------------------------------------*/
-.site-footer {
-  padding-top: clamp(15px, 3vw, 30px);
-  padding-bottom: clamp(60px, 10vw, 100px);
-}
-
-/*---------------------------------------
-  BOTÕES EM TELAS MUITO PEQUENAS
------------------------------------------*/
 @media screen and (max-width: 360px) {
   .custom-btn {
     font-size: 12px;
