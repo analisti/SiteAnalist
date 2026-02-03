@@ -1425,128 +1425,138 @@ strong {
 
 
 /*---------------------------------------
-  RESPONSIVE STYLES               
+  RESPONSIVE STYLES - MOBILE FIRST
 -----------------------------------------*/
-@media screen and (max-width: 991px) {
-  h1 {
-    font-size: 36px;
-  }
 
-  h2 {
-    font-size: 28px;
-  }
+/* Variáveis globais para consistência */
+:root {
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
 
-  h3 {
-    font-size: 22px;
-  }
+  --font-h1: clamp(2rem, 5vw, 3rem);
+  --font-h2: clamp(1.75rem, 4vw, 2.5rem);
+  --font-h3: clamp(1.5rem, 3vw, 2rem);
+  --font-h4: clamp(1.25rem, 2.5vw, 1.75rem);
+  --font-h5: clamp(1.125rem, 2vw, 1.5rem);
+  --font-h6: clamp(1rem, 1.5vw, 1.25rem);
+}
 
-  h4 {
-    font-size: 20px;
-  }
+/* Tipografia fluida */
+h1 { font-size: var(--font-h1); }
+h2 { font-size: var(--font-h2); }
+h3 { font-size: var(--font-h3); }
+h4 { font-size: var(--font-h4); }
+h5 { font-size: var(--font-h5); }
+h6 { font-size: var(--font-h6); }
 
-  h5 {
-    font-size: 18px;
-  }
+/* Layout base */
+.section-padding {
+  padding: var(--spacing-lg) 0;
+}
 
-  h6 {
-    font-size: 16px;
-  }
+.navbar {
+  background-color: var(--secondary-color);
+}
 
-  .section-padding {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
+.navbar-nav .dropdown-menu {
+  position: relative;
+  left: 0;
+  opacity: 1;
+  pointer-events: auto;
+  max-width: 100%;
+  margin: var(--spacing-md) 0;
+}
 
-  .navbar {
-    background-color: var(--secondary-color);
-  }
+.navbar-expand-lg .navbar-nav {
+  padding: var(--spacing-md) 0;
+}
 
-  .navbar-nav .dropdown-menu {
-    position: relative;
-    left: 10px;
-    opacity: 1;
-    pointer-events: auto;
-    max-width: 155px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
+.navbar-expand-lg .navbar-nav .nav-link {
+  margin: var(--spacing-sm);
+  padding: 0;
+}
 
-  .navbar-expand-lg .navbar-nav {
-    padding-top: 15px;
-    padding-bottom: 10px;
-  }
+.hero-section {
+  position: relative;
+  margin: var(--spacing-xl) 0;
+}
 
-  .navbar-expand-lg .navbar-nav .nav-link {
-    margin: 5px;
-    padding: 0;
-  }
+.events-listing-section {
+  margin-bottom: var(--spacing-lg);
+}
 
-  .hero-section {
-    position: relative;
-    top: 82px;
-    margin-bottom: 82px;
-  }
+.events-detail-section .custom-block-info {
+  padding: var(--spacing-lg);
+}
 
-  .events-listing-section {
-    margin-bottom: 50px;
-  }
+.events-detail-info {
+  padding: var(--spacing-md);
+}
 
-  .events-detail-section .custom-block-info {
-    padding: 40px;
-  }
+.contact-info-item {
+  width: 100%;
+  max-width: 70%;
+}
 
-  .events-detail-info {
-    padding: 35px 25px;
-  }
+.section-bg-image-block {
+  padding: var(--spacing-md);
+}
 
+.site-footer {
+  padding: var(--spacing-md) 0 var(--spacing-xl);
+}
+
+/*---------------------------------------
+  BREAKPOINTS
+-----------------------------------------*/
+
+/* Small devices (≥576px) */
+@media screen and (min-width: 576px) {
   .contact-info-item {
-    width: 60%;
-  }
-
-  .events-detail-section .contact-info-item {
-    width: 70%;
-  }
-
-  .section-bg-image {
-    margin-bottom: 0;
-  }
-
-  .section-bg-image-block {
-    padding: 30px;
-  }
-
-  .site-footer {
-    padding-top: 20px;
-    padding-bottom: 100px;
+    max-width: 72%;
   }
 }
 
-@media screen and (max-width: 480px) {
+/* Medium devices (≥768px) */
+@media screen and (min-width: 768px) {
   .navbar-brand {
-    font-size: var(--p-font-size);
+    font-size: var(--font-h5);
   }
 
   .navbar-brand-icon {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   }
 
   .navbar-brand-icon::after {
-    top: 5px;
-  }
-
-  .section-bg-image-block {
-    padding: 30px;
-  }
-
-  .contact-info-item {
-    width: 72%;
+    top: 8px;
   }
 }
 
+/* Large devices (≥992px) */
+@media screen and (min-width: 992px) {
+  .contact-info-item {
+    max-width: 60%;
+  }
+
+  .events-detail-section .contact-info-item {
+    max-width: 70%;
+  }
+}
+
+/* Extra large devices (≥1200px) */
+@media screen and (min-width: 1200px) {
+  .site-footer {
+    padding: var(--spacing-lg) 0 var(--spacing-xl);
+  }
+}
+
+/* Ultra small devices (≤360px) */
 @media screen and (max-width: 360px) {
   .custom-btn {
-    font-size: 12px;
-    padding: 4px 12px;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
   }
 }
