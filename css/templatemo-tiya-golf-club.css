@@ -925,23 +925,43 @@ strong {
 
 
 /* =====================================================
-   PREMIUM LOGO CARD – DISRUPTIVO / ELEGANTE
-   Inspirado em Apple / Sites inovadores
+   SEÇÃO PREMIUM CENTRALIZADA
 ===================================================== */
+.premium-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px; /* espaço superior/inferior */
+  min-height: 100vh;  /* ocupa altura total da tela */
+  background: linear-gradient(135deg, #0b1f33, #1e3a5f);
+}
+
+/* Container central */
+.premium-section .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Linha centralizada */
+.premium-section .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
 /* ===============================
-   CONTAINER PRINCIPAL
+   PREMIUM LOGO CARD
 =============================== */
 .premium-logo {
   text-align: center;
   font-family: 'Inter', Helvetica, Arial, sans-serif;
-  position: relative;
-  perspective: 1200px; /* para profundidade real */
+  perspective: 1200px;
 }
 
-/* ===============================
-   MEDIA (IMAGEM + BACKGROUND)
-=============================== */
+/* MEDIA CARD */
 .premium-logo .member-media {
   position: relative;
   height: 380px;
@@ -968,23 +988,13 @@ strong {
   transition: transform 0.6s ease, box-shadow 0.6s ease;
 }
 
-/* ===============================
-   ANIMAÇÃO DE FUNDO VIVO
-=============================== */
+/* SURFACE FLOAT ANIMATION */
 @keyframes surfaceFloat {
-  0%, 100% {
-    background-position: 0% 0%;
-    transform: translateY(0);
-  }
-  50% {
-    background-position: 100% 100%;
-    transform: translateY(-4px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
-/* ===============================
-   LUZ DINÂMICA / LAYER OVERLAY
-=============================== */
+/* LIGHT OVERLAY */
 .premium-logo .member-media::before {
   content: "";
   position: absolute;
@@ -999,14 +1009,9 @@ strong {
   transition: opacity 0.6s ease;
   pointer-events: none;
 }
+.premium-logo .member-media:hover::before { opacity: 1; }
 
-.premium-logo .member-media:hover::before {
-  opacity: 1;
-}
-
-/* ===============================
-   IMAGEM DO LOGO
-=============================== */
+/* LOGO IMAGE */
 .premium-logo .member-image {
   max-width: 62%;
   height: auto;
@@ -1015,7 +1020,6 @@ strong {
   transition: transform 0.6s cubic-bezier(.2,.8,.2,1),
               filter 0.6s ease;
 }
-
 .premium-logo .member-media:hover .member-image {
   transform: translateZ(80px) scale(1.08);
   filter:
@@ -1023,9 +1027,7 @@ strong {
     drop-shadow(0 0 25px rgba(60,200,255,.35));
 }
 
-/* ===============================
-   ÍCONES SOCIAIS
-=============================== */
+/* SOCIAL ICONS */
 .premium-logo .social-icon {
   position: absolute;
   inset: 0;
@@ -1043,47 +1045,40 @@ strong {
   transition: all 0.4s ease;
   z-index: 10;
 }
-
 .premium-logo .member-media:hover .social-icon {
   opacity: 1;
   transform: translateZ(160px) scale(1);
 }
 
-/* Ícones individuais */
+/* SOCIAL ICON EFFECTS */
 .premium-logo .social-icon a {
   font-size: 1.4rem;
   color: #ffffff;
   opacity: 0.85;
   transition: transform 0.25s ease, opacity 0.25s ease, color 0.3s ease;
 }
-
 .premium-logo .social-icon a:hover {
   transform: translateY(-4px) scale(1.15);
   opacity: 1;
   color: #2ba6a4;
 }
 
-/* ===============================
-   RODAPÉ / COPYRIGHT
-=============================== */
+/* FOOTER INFO */
 .member-info {
   margin-top: 12px;
   font-size: 0.9rem;
-  color: #243447;
+  color: #ffffff;
 
   display: flex;
   justify-content: center;
   gap: 6px;
 }
-
 .member-info .years,
 .member-info .copyright {
   display: inline-block;
 }
 
-/* ===============================
-   HOVER GERAL DO CARD
-=============================== */
+/* HOVER CARD */
 .premium-logo .member-media:hover {
   transform: translateY(-6px);
   box-shadow:
@@ -1091,32 +1086,17 @@ strong {
     0 0 35px rgba(60,200,255,0.25);
 }
 
-/* ===============================
-   RESPONSIVO
-=============================== */
+/* RESPONSIVO */
 @media (max-width: 992px) {
-  .premium-logo .member-media {
-    height: 320px;
-  }
-
-  .premium-logo .member-image {
-    max-width: 70%;
-  }
+  .premium-logo .member-media { height: 320px; }
+  .premium-logo .member-image { max-width: 70%; }
 }
-
 @media (max-width: 576px) {
-  .premium-logo .member-media {
-    height: 280px;
-  }
-
-  .premium-logo .member-image {
-    max-width: 75%;
-  }
+  .premium-logo .member-media { height: 280px; }
+  .premium-logo .member-image { max-width: 75%; }
 }
 
-/* ===============================
-   ACESSIBILIDADE / REDUÇÃO DE MOVIMENTO
-=============================== */
+/* ACESSIBILIDADE – REDUÇÃO DE MOVIMENTO */
 @media (prefers-reduced-motion: reduce) {
   .premium-logo .member-media,
   .premium-logo .member-image,
