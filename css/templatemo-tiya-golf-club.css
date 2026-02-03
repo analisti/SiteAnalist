@@ -419,6 +419,18 @@ strong {
   }
 }
 
+.navbar-brand-text {
+  font-style: normal; /* garante que não seja itálico */
+}
+
+.brand-strong {
+  font-weight: 700; /* grosso */
+}
+
+.brand-light {
+  font-weight: 300; /* fino */
+}
+
 
 /*---------------------------------------
   CUSTOM BUTTON               
