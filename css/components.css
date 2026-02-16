@@ -1,0 +1,211 @@
+/* ============================================================================
+   COMPONENTS - BOTÕES, CARDS, FORMAS
+   ============================================================================ */
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-lg);
+  transition: all var(--transition-base);
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left var(--transition-fast);
+  z-index: -1;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+/* Primary Button */
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border-color: var(--color-primary);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-bg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Full Width */
+.btn--full {
+  width: 100%;
+}
+
+/* ========== SERVICE CARDS ========== */
+.service-card {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  transition: left var(--transition-base);
+}
+
+.service-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.service-card:hover::before {
+  left: 0;
+}
+
+.service-card__icon {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+  transition: color var(--transition-base), transform var(--transition-base);
+}
+
+.service-card:hover .service-card__icon {
+  color: var(--color-secondary);
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.service-card__title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+}
+
+.service-card__price {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.service-card__description {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-muted);
+}
+
+.service-card__features {
+  list-style: none;
+  padding-left: 0;
+}
+
+.service-card__features li {
+  padding-left: var(--spacing-md);
+  position: relative;
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.service-card__features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-secondary);
+  font-weight: bold;
+}
+
+/* ========== FORMS ========== */
+.form__group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form__label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.form__input,
+.form__textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+  transition: all var(--transition-base);
+}
+
+.form__input:focus,
+.form__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(129, 178, 154, 0.1);
+}
+
+.form__textarea {
+  resize: vertical;
+  font-family: var(--font-primary);
+}
+
+/* ========== SOCIAL LINKS ========== */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border-radius: var(--border-radius-full);
+  transition: all var(--transition-base);
+  font-size: var(--font-size-lg);
+}
+
+.social-link:hover {
+  background-color: var(--color-secondary);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: var(--shadow-lg);
+}

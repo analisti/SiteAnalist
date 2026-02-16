@@ -1,0 +1,141 @@
+/* ============================================================================
+   DESIGN TOKENS - PALETA EXCLUSIVA ANALIST.COM
+   ============================================================================ */
+
+:root {
+  /* ========== CORES BASE ========== */
+  
+  /* Background (Light Mode) */
+  --color-bg-light: #f9f7f5;           /* Fundo principal (warmth sutil) */
+  --color-bg-light-secondary: #ffffff; /* Fundo secundário */
+  --color-bg-light-tertiary: #f0ebe6;  /* Fundo terciário */
+
+  /* Background (Dark Mode) */
+  --color-bg-dark: #0f1923;             /* Fundo principal (azul profundo) */
+  --color-bg-dark-secondary: #131d2a;   /* Fundo secundário */
+  --color-bg-dark-tertiary: #1a2635;    /* Fundo terciário */
+
+  /* Text */
+  --color-text-light: #1a1a1a;          /* Texto em modo claro */
+  --color-text-dark: #f0ebe6;           /* Texto em modo escuro */
+  --color-text-muted-light: #6b6b6b;    /* Texto muted em claro */
+  --color-text-muted-dark: #a8a8a8;     /* Texto muted em escuro */
+
+  /* Cores Primárias */
+  --color-primary: #81b29a;             /* Verde mineral (confiança) */
+  --color-primary-dark: #6a9481;        /* Verde mineral darker */
+  --color-primary-light: #9eceb8;       /* Verde mineral lighter */
+
+  /* Cores Secundárias */
+  --color-secondary: #d4735f;           /* Coral queimado (ação, energia) */
+  --color-secondary-dark: #b85d4f;      /* Coral queimado darker */
+  --color-secondary-light: #e68f7f;     /* Coral queimado lighter */
+
+  /* Acentos Exclusivos */
+  --color-accent1: #2a5f7f;             /* Azul petróleo (sofisticação) */
+  --color-accent1-dark: #1e4557;        /* Azul petróleo darker */
+  --color-accent1-light: #3d7fa3;       /* Azul petróleo lighter */
+
+  --color-accent2: #6b9f6b;             /* Verde eucalipto (equilíbrio) */
+  --color-accent2-dark: #5a8859;        /* Verde eucalipto darker */
+  --color-accent2-light: #7fb17f;       /* Verde eucalipto lighter */
+
+  /* Status Colors */
+  --color-success: #7cb342;             /* Sucesso */
+  --color-warning: #ffa726;             /* Aviso */
+  --color-error: #e74c3c;               /* Erro */
+  --color-info: #29b6f6;                /* Informação */
+
+  /* Borders & Dividers */
+  --color-border-light: #e0dcd9;        /* Borda em modo claro */
+  --color-border-dark: #2a3d4f;         /* Borda em modo escuro */
+
+  /* ========== TIPOGRAFIA ========== */
+  --font-primary: 'DM Sans', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.5rem;       /* 24px */
+  --font-size-2xl: 2rem;        /* 32px */
+  --font-size-3xl: 2.5rem;      /* 40px */
+  --font-size-4xl: 3.5rem;      /* 56px */
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-base: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* ========== SPACING ========== */
+  --spacing-xs: 0.5rem;      /* 8px */
+  --spacing-sm: 1rem;        /* 16px */
+  --spacing-md: 1.5rem;      /* 24px */
+  --spacing-lg: 2rem;        /* 32px */
+  --spacing-xl: 3rem;        /* 48px */
+  --spacing-2xl: 4rem;       /* 64px */
+  --spacing-3xl: 6rem;       /* 96px */
+
+  /* ========== BORDERS ========== */
+  --border-radius-sm: 0.5rem;      /* 8px */
+  --border-radius-md: 0.75rem;     /* 12px */
+  --border-radius-lg: 1rem;        /* 16px */
+  --border-radius-xl: 1.5rem;      /* 24px */
+  --border-radius-full: 9999px;
+
+  --border-width-light: 1px;
+  --border-width-medium: 2px;
+
+  /* ========== SHADOWS ========== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ========== TRANSITIONS ========== */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 400ms cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* ========== Z-INDEX ========== */
+  --z-dropdown: 100;
+  --z-fixed: 1000;
+  --z-modal: 2000;
+  --z-whatsapp: 999;
+
+  /* ========== BREAKPOINTS ========== */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --color-bg: var(--color-bg-dark);
+  --color-bg-secondary: var(--color-bg-dark-secondary);
+  --color-bg-tertiary: var(--color-bg-dark-tertiary);
+  --color-text: var(--color-text-dark);
+  --color-text-muted: var(--color-text-muted-dark);
+  --color-border: var(--color-border-dark);
+}
+
+/* Light Mode (Default) */
+[data-theme="light"],
+:root {
+  --color-bg: var(--color-bg-light);
+  --color-bg-secondary: var(--color-bg-light-secondary);
+  --color-bg-tertiary: var(--color-bg-light-tertiary);
+  --color-text: var(--color-text-light);
+  --color-text-muted: var(--color-text-muted-light);
+  --color-border: var(--color-border-light);
+}

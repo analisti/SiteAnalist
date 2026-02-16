@@ -1,0 +1,296 @@
+/* ============================================================================
+   ANIMATIONS - 3D, PARALLAX, TRANSIÇÕES SUAVES
+   ============================================================================ */
+
+/* ========== HERO SECTION ========== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--spacing-3xl) 0;
+}
+
+.hero__container {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3xl);
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .hero__container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}
+
+.hero__content {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero__title {
+  font-size: var(--font-size-4xl);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+}
+
+.hero__title em {
+  font-style: normal;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ========== ANIMATED HEADLINE ========== */
+.hero__headline {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.hero__subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.hero__words {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  height: 3rem;
+  position: relative;
+  color: var(--color-secondary);
+}
+
+.hero__word {
+  position: absolute;
+  opacity: 0;
+  animation: wordRotate 3s infinite;
+}
+
+.hero__word:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.hero__word:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+.hero__word:nth-child(3) {
+  animation-delay: 3s;
+}
+
+@keyframes wordRotate {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10%, 40% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50%, 100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* ========== CTA BUTTONS ========== */
+.hero__cta {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.hero__cta .btn {
+  animation: slideInUp 0.8s ease-out 0.2s backwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== 3D BACKGROUND ========== */
+.hero__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 500px;
+  z-index: 1;
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero__decoration {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 30px rgba(129, 178, 154, 0.2));
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateZ(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotateZ(10deg);
+  }
+}
+
+/* ========== PARALLAX 3D ========== */
+[data-3d-element] {
+  perspective: 1000px;
+}
+
+[data-3d-element]:hover {
+  animation: tilt 0.6s ease-out;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotateX(0) rotateY(0) scale(1);
+  }
+  50% {
+    transform: rotateX(5deg) rotateY(-8deg) scale(1.02);
+  }
+  100% {
+    transform: rotateX(0) rotateY(0) scale(1);
+  }
+}
+
+/* ========== SCROLL ANIMATIONS ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.fade-in--left {
+  animation: fadeInLeft 0.6s ease-out forwards;
+}
+
+.fade-in--right {
+  animation: fadeInRight 0.6s ease-out forwards;
+}
+
+/* ========== WAVE SVG ========== */
+.wave {
+  color: var(--color-bg);
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========== WHATSAPP BUTTON ========== */
+.whatsapp-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--border-radius-full);
+  background-color: #25d366;
+  color: white;
+  font-size: var(--font-size-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-whatsapp);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-lg);
+  animation: slideInUp 0.6s ease-out;
+}
+
+.whatsapp-button:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: var(--shadow-xl);
+}
+
+.whatsapp-button:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+@media (max-width: 640px) {
+  .whatsapp-button {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+/* ========== STAGGER ANIMATION ========== */
+.service-card[data-service-card] {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.service-card[data-service-card]:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.service-card[data-service-card]:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.service-card[data-service-card]:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* ========== INTERSECTION OBSERVER ========== */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+[data-animate].in-view {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,82 @@
+/* ============================================================================
+   DARK MODE - TRANSIÇÕES SUAVES E MICROINTERAÇÕES
+   ============================================================================ */
+
+/* ========== TRANSIÇÃO GLOBAL ========== */
+:root {
+  --transition-theme: background-color var(--transition-smooth),
+                      color var(--transition-smooth),
+                      border-color var(--transition-smooth),
+                      box-shadow var(--transition-smooth);
+}
+
+body {
+  transition: var(--transition-theme);
+}
+
+/* ========== ELEMENTOS COM TRANSIÇÃO ========== */
+a, button, input, textarea, select {
+  transition: var(--transition-theme);
+}
+
+.btn, .service-card, .social-link {
+  transition: var(--transition-theme);
+}
+
+/* ========== BACKGROUND GRADIENTS DINÂMICOS ========== */
+[data-theme="light"] {
+  background: linear-gradient(135deg, #f9f7f5 0%, #f0ebe6 100%);
+}
+
+[data-theme="dark"] {
+  background: linear-gradient(135deg, #0f1923 0%, #1a2635 100%);
+}
+
+/* ========== ANIMAÇÃO DE TRANSIÇÃO TEMA ========== */
+body.theme-transitioning {
+  animation: themeTransition 500ms ease-in-out;
+}
+
+@keyframes themeTransition {
+  0% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.98;
+    filter: brightness(0.98);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+/* ========== MICROINTERAÇÕES ========== */
+.btn:active {
+  transform: scale(0.98);
+}
+
+.navbar__link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ========== CONTRAST COMPLIANCE ========== */
+@media (prefers-contrast: more) {
+  :root {
+    --color-border-light: #d0ccc9;
+    --color-border-dark: #3a4d5f;
+  }
+}
+
+/* ========== HIGH CONTRAST MODE ========== */
+@media (prefers-contrast: more) {
+  .btn--primary {
+    border: 2px solid currentColor;
+  }
+
+  .service-card {
+    border-width: 2px;
+  }
+}
