@@ -86,11 +86,9 @@
 
 @font-face {
   font-family: "bootstrap-icons";
-  src: url("data:font/woff2;base64,d09GMgABAAAAAA3oAA0AAAAAC8gAAAWVAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAABG4QcGgYAg1AAAAN+BQExZDAyBAAjG8Hs9EsxRgxVXtv//4u19+YSJmRl5JDQEQqkX8ORrP1GmJlKg0qqzB0gEjpS5VFBRBREbECMAeqBMgDIVhPZXBbWNGjYjzFD15bELfH4/L+/u5eTn4+k5OTS9RqNZPy7qDKKVMGzPl/9OfxJd++33IhGRkZkxEkzqqBADJGM2IAkCzLsiyrVqvpdDoApFIpz+dzuVy+3y8Wiwcn+r/Pfj8UAAD4+fr5+vn7+fv7BwT+X8HhcPgALZVKhcNhk8mUSqXi8Xi/3/d6vZ7P5wNAq9VyoVBIrVYnEgk4nU6XyyUWi8F6vV6bzSYUCnn/83A4PJ1O53M5HEwmEwqFQr1eX61WaDSaXC6nVqvhdrv9fj8ajWYyGSAUChUKBQzDQKVSIZfLweFwoFAoVCoVkslkyGQyMBgMNBqNXC6H3+/H4/EQCoVMJkOj0aDVajGZTLxer9vtRiKRQCwWQ6VSQafToVQqoVarYbPZQKFQQKVSQaVSQaFQ/LZcrv8FAAAA") format("woff2"),
-       url("data:font/woff;base64,d09GRgABAAAAABRQAA0AAAAAC9QAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABWAA...") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/bootstrap-icons.min.woff2") format("woff2"),
+       url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/bootstrap-icons.min.woff") format("woff");
+  font-display: swap;
 }
 
 .bi::before,
