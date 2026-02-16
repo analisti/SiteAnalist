@@ -65,15 +65,22 @@
 .hero__words {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
-  height: 3rem;
+  min-height: 2.5rem;
   position: relative;
   color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .hero__word {
   position: absolute;
+  left: 0;
+  top: 0;
   opacity: 0;
-  animation: wordRotate 3s infinite;
+  animation: wordRotate 9s infinite;
+  white-space: nowrap;
+  will-change: opacity, transform;
 }
 
 .hero__word:nth-child(1) {
@@ -81,25 +88,29 @@
 }
 
 .hero__word:nth-child(2) {
-  animation-delay: 1.5s;
+  animation-delay: 3s;
 }
 
 .hero__word:nth-child(3) {
-  animation-delay: 3s;
+  animation-delay: 6s;
 }
 
 @keyframes wordRotate {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px) translateX(0);
   }
-  10%, 40% {
+  5% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateX(0);
   }
-  50%, 100% {
+  30%, 35% {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+  40%, 100% {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-10px) translateX(0);
   }
 }
 

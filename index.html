@@ -248,44 +248,34 @@
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+<!-- CONTACT SECTION -->
     <section class="section contact" id="contact" data-section="contact">
       <div class="section__container">
         <h2 class="section__title">Vamos conversar?</h2>
 
         <div class="contact__grid">
+          <!-- FORMULÁRIO VISME -->
           <div class="contact__form">
-            <form class="form" data-contact-form>
-              <div class="form__group">
-                <label for="name" class="form__label">Nome</label>
-                <input type="text" id="name" name="name" class="form__input" required aria-required="true">
-              </div>
-
-              <div class="form__group">
-                <label for="email" class="form__label">Email</label>
-                <input type="email" id="email" name="email" class="form__input" required aria-required="true">
-              </div>
-
-              <div class="form__group">
-                <label for="message" class="form__label">Mensagem</label>
-                <textarea id="message" name="message" class="form__textarea" rows="5" required aria-required="true"></textarea>
-              </div>
-
-              <button type="submit" class="btn btn--primary btn--full">Enviar mensagem</button>
-            </form>
+            <div class="visme_d" 
+                 data-title="Contatos analist.com" 
+                 data-url="4d7zz8yz-contatos-analist-com" 
+                 data-domain="forms" 
+                 data-full-page="false" 
+                 data-min-height="500px" 
+                 data-form-id="34148"></div>
+            <script src="https://static-bundles.visme.co/forms/vismeforms-embed.js" async></script>
           </div>
 
+          <!-- VISITOR COUNTER + MAP -->
           <div class="contact__info">
             <div class="contact__visitor">
               <p id="visitor-counter" data-visitor-counter></p>
             </div>
-
             <img src="images/WorldMap.svg" alt="Presença global" loading="lazy" class="contact__map">
           </div>
         </div>
       </div>
     </section>
-  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -326,7 +316,30 @@
   </footer>
 
   <!-- SCRIPTS -->
+  <!-- ==================== JAVASCRIPT SCRIPTS ==================== -->
+  
+  <!-- Theme Manager (deve ser primeiro!) -->
+  <script src="js/theme-manager.js" defer></script>
+  
+  <!-- jQuery (ainda necessário para alguns plugins) -->
+  <script src="js/jquery.min.js" defer></script>
+  
+  <!-- jQuery Plugins -->
+  <script src="js/jquery.sticky.js" defer></script>
+  <script src="js/click-scroll.js" defer></script>
+  <script src="js/animated-headline.js" defer></script>
+  
+  <!-- Utilities -->
+  <script src="js/modernizr.js" defer></script>
+  
+  <!-- Application Core -->
   <script src="js/main.js" defer></script>
+  
+  <!-- Visitor Counter -->
+  <script src="js/balanced-visitor-counter.js" defer></script>
+  
+  <!-- Custom -->
+  <script src="js/custom.js" defer></script>
 </body>
 
 </html>

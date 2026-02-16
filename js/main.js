@@ -1,62 +1,6 @@
 /* ============================================================================
-   MAIN.JS - ORQUESTRADOR DE APLICAÇÃO
+   MAIN.JS - ORQUESTRADOR DE APLICAÇÃO (SEM THEME MANAGER)
    ============================================================================ */
-
-// ========== THEME MANAGER ==========
-class ThemeManager {
-  constructor() {
-    this.THEME_KEY = 'analist-theme';
-    this.LIGHT = 'light';
-    this.DARK = 'dark';
-    this.init();
-  }
-
-  init() {
-    this.detectSystemPreference();
-    this.setupThemeToggle();
-  }
-
-  detectSystemPreference() {
-    const savedTheme = localStorage.getItem(this.THEME_KEY);
-    
-    if (savedTheme) {
-      this.setTheme(savedTheme, false);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      this.setTheme(this.DARK, false);
-    } else {
-      this.setTheme(this.LIGHT, false);
-    }
-  }
-
-  setTheme(theme, withTransition = true) {
-    if (withTransition) this.triggerTransition();
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(this.THEME_KEY, theme);
-    this.updateThemeIcon(theme);
-  }
-
-  toggle() {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || this.LIGHT;
-    const newTheme = currentTheme === this.LIGHT ? this.DARK : this.LIGHT;
-    this.setTheme(newTheme);
-  }
-
-  updateThemeIcon(theme) {
-    const toggle = document.querySelector('[data-theme-toggle]');
-    if (toggle) toggle.setAttribute('aria-pressed', theme === this.DARK);
-  }
-
-  setupThemeToggle() {
-    const toggle = document.querySelector('[data-theme-toggle]');
-    if (!toggle) return;
-    toggle.addEventListener('click', () => this.toggle());
-  }
-
-  triggerTransition() {
-    document.body.classList.add('theme-transitioning');
-    setTimeout(() => document.body.classList.remove('theme-transitioning'), 500);
-  }
-}
 
 // ========== NAVIGATION MANAGER ==========
 class NavigationManager {
@@ -69,6 +13,7 @@ class NavigationManager {
   }
 
   init() {
+    console.log('📱 Inicializando Navigation Manager');
     this.setupMobileToggle();
     this.setupNavLinks();
     this.setupDropdowns();
@@ -76,7 +21,8 @@ class NavigationManager {
   }
 
   setupMobileToggle() {
-    if (!this.navToggle || !this.navMenu) return;
+    if (!this.navToggle) return;
+
     this.navToggle.addEventListener('click', () => {
       const isExpanded = this.navToggle.getAttribute('aria-expanded') === 'true';
       this.navToggle.setAttribute('aria-expanded', !isExpanded);
@@ -85,7 +31,11 @@ class NavigationManager {
   }
 
   setupNavLinks() {
-    this.navLinks.forEach(link => link.addEventListener('click', () => this.closeMenu()));
+    this.navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        this.closeMenu();
+      });
+    });
   }
 
   setupDropdowns() {
@@ -114,59 +64,44 @@ class NavigationManager {
   }
 
   closeMenu() {
-    if (this.navToggle && this.navMenu && window.innerWidth < 768) {
+    if (this.navToggle && window.innerWidth < 768) {
       this.navToggle.setAttribute('aria-expanded', 'false');
       this.navMenu.classList.remove('active');
     }
   }
 }
 
-// ========== SCROLL ANIMATION ==========
+// ========== SCROLL ANIMATION MANAGER ==========
 class ScrollAnimationManager {
   constructor() {
-    this.wordInterval = null;
+    console.log('✨ Inicializando Scroll Animation Manager');
     this.init();
   }
 
   init() {
     this.observeElements();
-    this.observeWordAnimation();
   }
 
   observeElements() {
-    const options = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
-    const observer = new IntersectionObserver((entries, obs) => {
+    const options = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
-          obs.unobserve(entry.target);
+          observer.unobserve(entry.target);
         }
       });
     }, options);
 
     document.querySelectorAll('[data-section]').forEach(section => {
-      section.classList.add('fade-in');
-      observer.observe(section);
+      if (!section.classList.contains('in-view')) {
+        observer.observe(section);
+      }
     });
-  }
-
-  observeWordAnimation() {
-    const headline = document.querySelector('[data-animated-headline]');
-    if (!headline) return;
-
-    const words = headline.querySelectorAll('[data-word]');
-    if (!words.length) return;
-
-    let currentIndex = 0;
-    this.wordInterval = setInterval(() => {
-      words.forEach(word => word.classList.remove('active'));
-      words[currentIndex].classList.add('active');
-      currentIndex = (currentIndex + 1) % words.length;
-    }, 3000);
-  }
-
-  destroy() {
-    if (this.wordInterval) clearInterval(this.wordInterval);
   }
 }
 
@@ -174,6 +109,7 @@ class ScrollAnimationManager {
 class VisitorCounter {
   constructor() {
     this.STORAGE_KEY = 'analist_visitors';
+    console.log('👥 Inicializando Visitor Counter');
     this.init();
   }
 
@@ -182,10 +118,12 @@ class VisitorCounter {
   }
 
   getCount() {
-    let stored = localStorage.getItem(this.STORAGE_KEY);
-    let count = stored ? parseInt(stored, 10) + 1 : 2025;
+    const stored = localStorage.getItem(this.STORAGE_KEY);
+    return stored ? parseInt(stored, 10) + 1 : 2025;
+  }
+
+  saveCount(count) {
     localStorage.setItem(this.STORAGE_KEY, count);
-    return count;
   }
 
   getGreeting() {
@@ -196,19 +134,25 @@ class VisitorCounter {
   }
 
   getMessage(count) {
-    if (count % 100 === 0) return `🏆 Você é o visitante número ${count.toLocaleString('pt-BR')}! Que marco!`;
+    if (count % 100 === 0) {
+      return `🏆 Você é o visitante número ${count.toLocaleString('pt-BR')}! Que marco!`;
+    }
     return `👋 Bem-vindo! Você é o ${count.toLocaleString('pt-BR')}º visitante.`;
   }
 
   render() {
     const counter = document.querySelector('[data-visitor-counter]');
-    if (!counter) return;
+    if (!counter) {
+      console.warn('⚠️ Elemento [data-visitor-counter] não encontrado');
+      return;
+    }
 
     const count = this.getCount();
+    this.saveCount(count);
 
     counter.innerHTML = `
-      <div style="margin-bottom: 8px;">${this.getGreeting()}</div>
-      <div style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary);">
+      <div style="margin-bottom: 8px; font-size: var(--font-size-sm);">${this.getGreeting()}</div>
+      <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);">
         ${this.getMessage(count)}
       </div>
     `;
@@ -219,8 +163,10 @@ class VisitorCounter {
 class FormHandler {
   constructor() {
     this.form = document.querySelector('[data-contact-form]');
-    this.activeMessage = null;
-    if (this.form) this.init();
+    if (this.form) {
+      console.log('📝 Inicializando Form Handler');
+      this.init();
+    }
   }
 
   init() {
@@ -229,13 +175,13 @@ class FormHandler {
 
   handleSubmit(e) {
     e.preventDefault();
-
+    
     const formData = new FormData(this.form);
     const data = Object.fromEntries(formData);
 
-    console.log('Mensagem:', data);
-
-    // Simular envio para backend
+    console.log('📧 Formulário enviado:', data);
+    
+    // Aqui você enviaria para um backend
     // fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) })
 
     this.form.reset();
@@ -243,10 +189,7 @@ class FormHandler {
   }
 
   showSuccess() {
-    if (this.activeMessage) this.activeMessage.remove();
-
     const message = document.createElement('div');
-    this.activeMessage = message;
     message.textContent = '✓ Mensagem enviada com sucesso!';
     message.style.cssText = `
       background: var(--color-success);
@@ -254,12 +197,14 @@ class FormHandler {
       padding: var(--spacing-sm);
       border-radius: var(--border-radius-md);
       margin-bottom: var(--spacing-md);
+      animation: slideInUp 0.4s ease-out;
     `;
+    
     this.form.parentElement.insertBefore(message, this.form);
-
+    
     setTimeout(() => {
-      message.remove();
-      this.activeMessage = null;
+      message.style.animation = 'slideInDown 0.4s ease-out';
+      setTimeout(() => message.remove(), 400);
     }, 3000);
   }
 }
@@ -268,26 +213,37 @@ class FormHandler {
 class TiltEffect {
   constructor() {
     this.elements = document.querySelectorAll('[data-3d-element]');
-    this.init();
+    if (this.elements.length > 0) {
+      console.log('🎯 Inicializando Tilt Effect');
+      this.init();
+    }
   }
 
   init() {
-    this.elements.forEach(el => {
-      el.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-      el.addEventListener('mouseleave', (e) => this.handleMouseLeave(e));
+    this.elements.forEach(element => {
+      element.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+      element.addEventListener('mouseleave', (e) => this.handleMouseLeave(e));
     });
   }
 
   handleMouseMove(e) {
-    const el = e.currentTarget;
-    const rect = el.getBoundingClientRect();
+    const element = e.currentTarget;
+    const rect = element.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * 10;
-    const rotateY = ((rect.width / 2 - x) / (rect.width / 2)) * 10;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-    el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    const rotateX = (y - centerY) / centerY * 8;
+    const rotateY = (centerX - x) / centerX * 8;
+
+    element.style.transform = `
+      perspective(1000px)
+      rotateX(${rotateX}deg)
+      rotateY(${rotateY}deg)
+      scale(1.02)
+    `;
   }
 
   handleMouseLeave(e) {
@@ -296,10 +252,9 @@ class TiltEffect {
 }
 
 // ========== APP INITIALIZATION ==========
-document.addEventListener('DOMContentLoaded', () => {
+function initializeApp() {
   console.log('🚀 Inicializando analist.com');
 
-  new ThemeManager();
   new NavigationManager();
   new ScrollAnimationManager();
   new VisitorCounter();
@@ -307,21 +262,31 @@ document.addEventListener('DOMContentLoaded', () => {
   new TiltEffect();
 
   console.log('✅ Aplicação inicializada com sucesso');
-});
+}
 
-// ========== PERFORMANCE ==========
+// Aguardar DOM estar pronto
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  initializeApp();
+}
+
+// ========== PERFORMANCE - LAZY LOAD ==========
 window.addEventListener('load', () => {
-  // Lazy load images
   if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, obs) => {
+    const imageObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src || img.src;
-          obs.unobserve(img);
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+          }
+          imageObserver.unobserve(img);
         }
       });
     });
+
     document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
   }
 });
