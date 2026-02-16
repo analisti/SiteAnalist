@@ -4,104 +4,726 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="analist.com - Transforme seu negócio em digital de verdade com sistemas que vendem.">
+  <meta name="description" content="analist.com - Transforme seu negócio em digital de verdade com sistemas que vendem.">
   <meta name="author" content="analist.com">
   <meta name="theme-color" content="#81B29A">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
+  
   <title>analist.com - Presença Digital que Gera Resultados</title>
-
+  
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-    rel="stylesheet">
-
-  <!-- CSS personalizado (sem Bootstrap) -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- CSS Customizado (SEM Bootstrap) -->
   <link href="css/consolidated-styles.css" rel="stylesheet">
-
-  <!-- Bootstrap Icons (somente ícones, sem Bootstrap CSS) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+  
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+  
   <!-- Favicon -->
   <link rel="icon" href="images/ia-mao.svg" type="image/x-icon">
   <link rel="shortcut icon" href="images/ia-mao.svg" type="image/x-icon">
+
+  <style>
+    /* ========== RESET E BASE ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #717275;
+      background-color: #ffffff;
+    }
+
+    /* ========== CONTAINER ========== */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 15px;
+      width: 100%;
+    }
+
+    /* ========== GRID (Sem Bootstrap) ========== */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -15px;
+    }
+
+    .row > * {
+      flex-shrink: 0;
+      width: 100%;
+      padding: 0 15px;
+    }
+
+    .col-12 { width: 100%; }
+    .col-10 { width: 83.33%; }
+
+    /* Desktop (lg breakpoint ≥992px) */
+    @media (min-width: 992px) {
+      .col-lg-3 { width: 25%; }
+      .col-lg-4 { width: 33.33%; }
+      .col-lg-5 { width: 41.66%; }
+      .col-lg-6 { width: 50%; }
+      
+      .me-auto { margin-right: auto; }
+      .ms-lg-auto { margin-left: auto; }
+      .ms-lg-4 { margin-left: 1.5rem; }
+      
+      .mb-lg-0 { margin-bottom: 0; }
+      .order-lg-0 { order: 0; }
+    }
+
+    /* Tablet (md breakpoint ≥768px) */
+    @media (min-width: 768px) {
+      .col-md-6 { width: 50%; }
+      .col-md-8 { width: 66.66%; }
+    }
+
+    /* ========== FLEXBOX UTILITIES ========== */
+    .d-flex {
+      display: flex;
+    }
+
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+
+    .justify-content-center {
+      justify-content: center;
+    }
+
+    .align-items-center {
+      align-items: center;
+    }
+
+    .justify-content-between {
+      justify-content: space-between;
+    }
+
+    /* ========== TEXT UTILITIES ========== */
+    .text-center {
+      text-align: center;
+    }
+
+    .text-white {
+      color: #ffffff;
+    }
+
+    .text-dark {
+      color: #000000;
+    }
+
+    /* ========== MARGIN/PADDING ========== */
+    .mb-3 { margin-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1.5rem; }
+    .mb-5 { margin-bottom: 3rem; }
+    .mt-5 { margin-top: 3rem; }
+    .mt-2 { margin-top: 0.5rem; }
+
+    .me-3 { margin-right: 1rem; }
+
+    .pb-2 { padding-bottom: 0.5rem; }
+
+    .pt-3 { padding-top: 1rem; }
+    .pt-5 { padding-top: 3rem; }
+
+    /* ========== DISPLAY ========== */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* ========== BORDER ========== */
+    .border-top {
+      border-top: 1px solid #dee2e6;
+    }
+
+    /* ========== IMAGE ========== */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .img-fluid {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      background: transparent;
+      position: relative;
+      z-index: 99;
+    }
+
+    .navbar.sticky {
+      position: sticky;
+      top: 0;
+      background-color: #3D405B;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: 700;
+      color: #000000;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar.sticky .navbar-brand {
+      color: #ffffff;
+    }
+
+    /* ========== NAVBAR MENU ========== */
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .navbar-menu a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 10px 15px;
+      border-radius: 100px;
+    }
+
+    .navbar-menu a:hover,
+    .navbar-menu a.active {
+      color: #F2CC8F;
+    }
+
+    /* ========== NAVBAR TOGGLE (Mobile) ========== */
+    .navbar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* ========== DROPDOWN ========== */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      list-style: none;
+      padding: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      margin-top: 10px;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      color: #717275;
+      text-decoration: none;
+      padding: 10px 20px;
+      transition: color 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+      color: #F2CC8F;
+    }
+
+    /* ========== MOBILE MENU ========== */
+    @media (max-width: 991px) {
+      .navbar-toggle {
+        display: block;
+      }
+
+      .navbar-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: #3D405B;
+        width: 100%;
+        padding: 20px 0;
+      }
+
+      .navbar-menu.active {
+        display: flex;
+      }
+
+      .navbar-menu a {
+        color: #ffffff;
+        padding: 15px 20px;
+        border-radius: 0;
+        text-align: left;
+      }
+
+      .dropdown-menu {
+        position: static;
+        display: none;
+        background: #2c2d3f;
+        box-shadow: none;
+        margin-top: 0;
+      }
+
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .custom-btn {
+      background-color: #F2CC8F;
+      color: #ffffff;
+    }
+
+    .custom-btn:hover {
+      background-color: #E07A5F;
+      color: #ffffff;
+    }
+
+    .link {
+      color: #ffffff;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .link:hover {
+      color: #F2CC8F;
+    }
+
+    /* ========== SECTIONS ========== */
+    .section-padding {
+      padding: 100px 0;
+    }
+
+    .section-bg {
+      background-color: #F4F1DE;
+    }
+
+    .section-overlay {
+      content: "";
+      background: rgba(0, 0, 0, 0) linear-gradient(rgba(39, 48, 83, 0.01) 0%, rgb(39, 48, 83) 100%);
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero-section {
+      background-image: url('../images/analist-header.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      padding: 100px 0;
+      height: 100vh;
+      min-height: 670px;
+      margin-bottom: -90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-section h2 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+
+    .hero-section h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+
+    .custom-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    /* ========== SECTION PADDING ========== */
+    @media (max-width: 768px) {
+      .section-padding {
+        padding: 60px 0;
+      }
+
+      .hero-section h2 {
+        font-size: 28px;
+      }
+
+      .hero-section h1 {
+        font-size: 24px;
+      }
+
+      .custom-btn-group {
+        gap: 1.5rem;
+      }
+    }
+
+    /* ========== HEADINGS ========== */
+    h1, h2, h3, h4, h5, h6 {
+      color: #000000;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    h1 { font-size: 42px; }
+    h2 { font-size: 36px; }
+    h3 { font-size: 28px; }
+    h4 { font-size: 24px; }
+
+    /* ========== PARAGRAPH ========== */
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    /* ========== LINKS ========== */
+    a {
+      color: #3D405B;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #F2CC8F;
+    }
+
+    /* ========== LISTS ========== */
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ========== FOOTER ========== */
+    .site-footer {
+      background-color: #3D405B;
+      color: #ffffff;
+      padding: 50px 0 200px;
+      position: relative;
+      margin-top: 100px;
+    }
+
+    .site-footer a {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .site-footer a:hover {
+      color: #F2CC8F;
+    }
+
+    /* ========== WHATSAPP BUTTON ========== */
+    .whatsapp-button {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 60px;
+      height: 60px;
+      background-color: #25D366;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 16777270;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .whatsapp-button:hover {
+      transform: scale(1.1);
+    }
+
+    /* ========== SECTION BG IMAGE ========== */
+    .section-bg-image-block {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 20px;
+      padding: 50px;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    /* ========== CAROUSEL ========== */
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 20px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel .item {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      scroll-snap-align: start;
+      transition: transform 0.3s;
+    }
+
+    .carousel .item:hover {
+      transform: scale(1.05);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 576px) {
+      .navbar-menu {
+        gap: 0;
+      }
+
+      .custom-btn-group {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+      }
+
+      .custom-btn {
+        width: 100%;
+      }
+
+      .section-bg-image-block {
+        padding: 30px;
+      }
+
+      .carousel {
+        padding-left: 50%;
+      }
+    }
+
+    /* ========== PREMIUM SECTION ========== */
+    .premium-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 20px;
+      min-height: 100vh;
+      background: #ffffff;
+    }
+
+    .premium-logo {
+      text-align: center;
+    }
+
+    .member-media {
+      position: relative;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .member-image {
+      max-width: 100%;
+      height: auto;
+      transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .member-media:hover .member-image {
+      transform: scale(1.05);
+    }
+
+    .social-icon {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .social-icon-link {
+      width: 35px;
+      height: 35px;
+      background-color: #3D405B;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .social-icon-link:hover {
+      background-color: #81B29A;
+    }
+
+    /* ========== CONTACT FORM ========== */
+    .contact-info {
+      position: relative;
+      min-height: 400px;
+    }
+
+    .contador {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .contador p {
+      font-size: 18px;
+      color: #717275;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* ========== ACCESSIBILITY ========== */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <main>
     <!-- ==================== NAVIGATION ==================== -->
-    <nav class="navbar sticky-wrapper" aria-label="Navegação principal">
-      <div class="container">
+    <nav class="navbar" id="navbar">
+      <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
         <!-- Logo -->
         <a class="navbar-brand" href="index.html" aria-label="analist.com - Home">
-          <svg width="160" height="32" viewBox="0 0 160 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-            focusable="false">
-            <text x="0" y="24" font-family="Inter, Helvetica, Arial, sans-serif" font-size="24" fill="currentColor"
-              letter-spacing="-0.6" font-style="normal">
+          <svg width="160" height="32" viewBox="0 0 160 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <text x="0" y="24" font-family="Inter, Helvetica, Arial, sans-serif" font-size="24" fill="currentColor" letter-spacing="-0.6" font-style="normal">
               <tspan font-weight="700">analist.</tspan>
               <tspan font-weight="300">com</tspan>
             </text>
           </svg>
         </a>
 
-        <!-- Toggler Button (Mobile) -->
-        <button class="navbar-toggler" type="button" aria-label="Alternar navegação">
-          <span class="navbar-toggler-icon"></span>
+        <!-- Toggle Button (Mobile) -->
+        <button class="navbar-toggle" id="navbar-toggle" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
         </button>
 
         <!-- Navigation Menu -->
-        <div class="navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-lg-auto">
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="#section_1">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="#section_2">Sobre</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="#section_4">Inteligência Artificial</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-expanded="false">Páginas</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="https://www.buildai.space/app/analistcom-app" target="_blank"
-                    rel="nofollow">Crie um negócio</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+        <ul class="navbar-menu" id="navbar-menu">
+          <li><a href="#section_1" class="click-scroll">Home</a></li>
+          <li><a href="#section_2" class="click-scroll">Sobre</a></li>
+          <li><a href="#section_4" class="click-scroll">IA</a></li>
+          <li class="dropdown">
+            <a href="#">Páginas</a>
+            <ul class="dropdown-menu">
+              <li><a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow">Crie um negócio</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </nav>
 
     <!-- ==================== WHATSAPP BUTTON ==================== -->
-    <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Estou%20entrando%20em%20contato%20pelo%20seu%20site."
-      target="_blank" rel="noopener" aria-label="Entrar em contato pelo WhatsApp">
-      <button id="whatsapp-button" class="whatsapp-button" aria-label="Botão WhatsApp"
-        title="Clique para falar conosco via WhatsApp">
+    <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Estou%20entrando%20em%20contato%20pelo%20seu%20site." target="_blank" rel="noopener" aria-label="WhatsApp">
+      <button class="whatsapp-button" aria-label="Botão WhatsApp" title="Clique para falar conosco">
         <i class="fab fa-whatsapp"></i>
       </button>
     </a>
 
     <!-- ==================== HERO SECTION ==================== -->
-    <section class="hero-section" id="section_1">
+    <section class="hero-section" id="section_1" aria-labelledby="hero-title">
       <div class="section-overlay"></div>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position: absolute; top: 0; left: 0; right: 0; width: 100%;" aria-hidden="true">
+        <path fill="#3D405B" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,0L1405.7,0C1371.4,0,1303,0,1234,0C1165.7,0,1097,0,1029,0C960,0,891,0,823,0C754.3,0,686,0,617,0C548.6,0,480,0,411,0C342.9,0,274,0,206,0C137.1,0,69,0,34,0L0,0Z"></path>
+      </svg>
+
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-            <h2 id="hero-title" class="text-white">
-              Se o seu negócio está na internet mas não gera clientes… ele não é digital. ele é invisível.
-            </h2>
-
-            <h1 class="cd-headline rotate-1 text-white mb-4 pb-2">
+          <div class="col-lg-6 col-12">
+            <h2 id="hero-title">Se o seu negócio está na internet mas não gera clientes… ele não é digital. ele é invisível.</h2>
+            
+            <h1 class="cd-headline rotate-1 mb-4 pb-2">
               <span>analist.com FAZ↓</span>
               <span class="cd-words-wrapper">
                 <b class="is-visible">Sistemas que vendem</b>
@@ -111,36 +733,38 @@
             </h1>
 
             <div class="custom-btn-group">
-              <a href="#section_2" class="btn custom-btn smoothscroll me-3">Conheça</a>
+              <a href="#section_2" class="btn custom-btn smoothscroll">Conheça</a>
               <a href="#contact" class="link smoothscroll">
                 Quero parar de perder OPORTUNIDADES
-                <i class="fas fa-arrow-down" style="transform: rotate(90deg);"></i>
+                <i class="fas fa-arrow-down"></i>
               </a>
             </div>
           </div>
         </div>
       </div>
+
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position: absolute; bottom: 0; left: 0; right: 0; width: 100%;" aria-hidden="true">
+        <path fill="#ffffff" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path>
+      </svg>
     </section>
 
     <!-- ==================== ABOUT SECTION ==================== -->
-    <section class="about-section reveal" id="section_2" aria-labelledby="about-title">
+    <section class="section-padding" id="section_2" aria-labelledby="about-title">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-12 text-center mb-5">
             <h2 id="about-title">↓ Transforme seu negócio em digital de verdade</h2>
           </div>
 
-          <div class="col-lg-5 col-12 me-auto mb-4 mb-lg-0">
+          <div class="col-lg-5 col-12 me-auto mb-4">
             <h3 class="mb-3">
               O problema não é falta de internet. É excesso de amadorismo digital.
-              <i class="fas fa-arrow-down" style="transform: rotate(-60deg);"></i>
+              <i class="fas fa-arrow-down"></i>
             </h3>
-
+            
             <p>
               <strong>
-                Hoje qualquer empresa consegue "ter um site". O problema é que a maioria deles não gera confiança, não
-                conduz o visitante e não transforma atenção em Resultado. O negócio existe… mas não cresce. Presença
-                digital sem estratégia não é ativo. É custo.
+                Hoje qualquer empresa consegue "ter um site". O problema é que a maioria deles não gera confiança, não conduz o visitante e não transforma atenção em Resultado. O negócio existe… mas não cresce. Presença digital sem estratégia não é ativo. É custo.
               </strong>
             </p>
           </div>
@@ -148,48 +772,33 @@
       </div>
     </section>
 
-    <!-- ==================== EVOLUTION SECTION ==================== -->
-    <section class="evolution-section reveal" id="section_4" aria-labelledby="evolution-title">
+    <!-- ==================== AI/EVOLUTION SECTION ==================== -->
+    <section class="section-padding section-bg" id="section_4" aria-labelledby="evolution-title">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-12 mb-5">
-            <h2 id="evolution-title">
-              Ideias não quebram negócios. Decisões erradas sim. 🚀
-            </h2>
+            <h2 id="evolution-title">Ideias não quebram negócios. Decisões erradas sim. 🚀</h2>
           </div>
 
-          <div class="row custom-block mb-3">
-            <div class="col-lg-4 col-md-8 col-12 order-1 order-lg-0">
-              <div class="custom-block-image-wrap">
+          <div class="row">
+            <div class="col-lg-4 col-12">
+              <div style="border-radius: 20px; overflow: hidden;">
                 <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow">
-                  <img src="images/diversidade-tec.jpg" class="custom-block-image img-fluid"
-                    alt="Interface da plataforma de IA da analist.com" loading="lazy">
-                  <i class="custom-block-icon bi-link"></i>
+                  <img src="images/diversidade-tec.jpg" alt="Interface IA" style="width: 100%; height: auto; display: block;">
                 </a>
               </div>
             </div>
 
-            <div class="col-lg-6 col-12 order-3 order-lg-0 ms-lg-4">
-              <div class="custom-block-info mt-2 mt-lg-0">
-                <h3 class="events-title mb-3">
-                  EVOLUÇÃO
-                  <i class="fas fa-arrow-down" style="transform: rotate(-60deg);"></i>
-                </h3>
+            <div class="col-lg-6 col-12 ms-lg-4">
+              <h3 class="mb-3">EVOLUÇÃO</h3>
+              
+              <p class="mb-4">
+                Conheça meu projeto de IA revolucionária que foi criado para reduzir risco, acelerar clareza e mostrar caminhos onde antes existia dúvida. Não é sobre tecnologia. É sobre decidir melhor — e mais rápido.
+              </p>
 
-                <p class="mb-4">
-                  Conheça meu projeto de IA revolucionária que foi criado para reduzir risco, acelerar clareza e mostrar
-                  caminhos onde antes existia dúvida. Não é sobre tecnologia. É sobre decidir melhor — e mais rápido.
-                </p>
-
-                <div class="d-flex flex-wrap border-top pt-3">
-                  <div class="d-flex align-items-center ms-lg-auto">
-                    <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow"
-                      class="btn custom-btn">
-                      Quero usar isso a meu favor
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow" class="btn custom-btn">
+                Quero usar isso a meu favor
+              </a>
             </div>
           </div>
         </div>
@@ -197,82 +806,231 @@
     </section>
 
     <!-- ==================== SERVICES SECTION ==================== -->
-    <section class="services-section reveal" aria-labelledby="services-title">
+    <section class="section-padding" aria-labelledby="services-title">
       <div class="container">
         <div class="row">
           <div class="col-lg-6 col-12">
             <div class="section-bg-image-block">
-              <h2 id="services-title" class="mb-lg-3">
+              <h2 id="services-title" class="mb-4">
                 Eu não crio sites.<br>
                 Eu construo estruturas digitais que trabalham por você.
-                <i class="fas fa-arrow-down"></i>
               </h2>
 
-              <p>
-                Cada projeto que desenvolvo tem um objetivo claro: fazer o digital parar de ser promessa e virar
-                ferramenta de crescimento.
-              </p>
+              <p>Cada projeto que desenvolvo tem um objetivo claro: fazer o digital parar de ser promessa e virar ferramenta de crescimento.</p>
 
               <p>Tudo é pensado para:</p>
 
-              <ul class="strategy-list mt-3">
-                <li>→ <strong>Atrair o cliente certo</strong>, aquele que entende o valor do que você oferece e chega
-                  preparado para avançar
-                </li>
-                <li>→ <strong>Eliminar dúvidas</strong>, respondendo objeções antes mesmo que elas apareçam
-                </li>
-                <li>→ <strong>Conduzir decisões</strong>, guiando o visitante com clareza até a ação
-                </li>
-                <li>→ <strong>Sustentar escala</strong>, garantindo que o crescimento não dependa de improviso
-                </li>
+              <ul style="margin-left: 0; padding-left: 0;">
+                <li>→ <strong>Atrair o cliente certo</strong>, aquele que entende o valor do que você oferece</li>
+                <li>→ <strong>Eliminar dúvidas</strong>, respondendo objeções antes mesmo que apareçam</li>
+                <li>→ <strong>Conduzir decisões</strong>, guiando o visitante com clareza até a ação</li>
+                <li>→ <strong>Sustentar escala</strong>, garantindo crescimento sustentável</li>
               </ul>
+
+              <p class="mt-5">
+                Tecnologia sem estratégia é joguinho.<br>
+                Aqui, ela vira negócio.
+              </p>
+
+              <!-- Skills Section -->
+              <section id="skills" class="mt-5">
+                <article>
+                  <h3>Domínio Frontend</h3>
+                  <p>No front-end, cada pixel decide: o visitante confia em você ou vai embora.</p>
+                  
+                  <ul style="margin-left: 0; padding-left: 0;">
+                    <li>🎯 Atrai o cliente certo</li>
+                    <li>🛡️ Elimina dúvidas antes que surjam</li>
+                    <li>🚀 Guia decisões com clareza</li>
+                    <li>📈 Sustenta escala</li>
+                  </ul>
+
+                  <p style="margin-top: 20px;">
+                    <i class="fab fa-html5"></i> <strong>HTML</strong> — estrutura limpa<br>
+                    <i class="fab fa-css3-alt"></i> <strong>CSS</strong> — estilo com autoridade<br>
+                    <i class="fab fa-js-square"></i> <strong>JavaScript</strong> — interatividade que vende<br>
+                    <i class="fab fa-react"></i> <strong>React Native</strong> — mobile premium
+                  </p>
+                </article>
+
+                <article class="mt-5">
+                  <h3>Expertise Backend</h3>
+                  <p>No back-end, um negócio previsível se separa do amador.</p>
+                  
+                  <ul style="margin-left: 0; padding-left: 0;">
+                    <li>💾 Dados precisos para decisões</li>
+                    <li>🔒 Controle absoluto</li>
+                    <li>🛡️ Segurança robusta</li>
+                    <li>⚙️ Automação inteligente</li>
+                  </ul>
+
+                  <p style="margin-top: 20px;">
+                    <i class="fab fa-java"></i> <strong>Java</strong> — motor sólido<br>
+                    <i class="fas fa-database"></i> <strong>MySQL</strong> — dados organizados<br>
+                    <i class="fas fa-leaf"></i> <strong>Spring Boot</strong> — back-end moderno
+                  </p>
+                </article>
+              </section>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== VISME CONTACT FORM ==================== -->
-    <section id="contact" class="section-padding">
+    <!-- ==================== PRICING CAROUSEL ==================== -->
+    <section class="section-padding" aria-labelledby="pricing-title">
       <div class="container">
-        <div class="visme_d" data-title="Contatos analist.com" data-url="4d7zz8yz-contatos-analist-com"
-          data-domain="forms" data-full-page="false" data-min-height="500px" data-form-id="34148"></div>
-        <script src="https://static-bundles.visme.co/forms/vismeforms-embed.js" async></script>
+        <h2 id="pricing-title" class="text-center mb-5">Nossos Serviços</h2>
+        
+        <div class="carousel">
+          <article class="item">
+            <img src="images/site01.svg" alt="Site profissional" loading="lazy" style="width: 100%; height: auto;">
+            <h3 style="margin-top: 20px;">Site profissional que gera confiança</h3>
+            <p style="font-size: 18px; font-weight: 700; color: #F2CC8F;">A partir de R$ 997,00</p>
+            <p>Para quem quer parar de parecer pequeno e começar a ser levado a sério.</p>
+          </article>
+
+          <article class="item">
+            <img src="images/site02.svg" alt="Site com cadastro" loading="lazy" style="width: 100%; height: auto;">
+            <h3 style="margin-top: 20px;">Site com cadastro de clientes</h3>
+            <p style="font-size: 18px; font-weight: 700; color: #F2CC8F;">A partir de R$ 2.497,00</p>
+            <p>Site personalizado com design exclusivo e integração com redes sociais.</p>
+          </article>
+
+          <article class="item">
+            <img src="images/sistema03.svg" alt="Sistema completo" loading="lazy" style="width: 100%; height: auto;">
+            <h3 style="margin-top: 20px;">Sistema completo</h3>
+            <p style="font-size: 18px; font-weight: 700; color: #F2CC8F;">A partir de R$ 4.997,00</p>
+            <p>Sistema com painel admin, segurança avançada e suporte contínuo.</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="site-footer">
+    <!-- ==================== PREMIUM SECTION ==================== -->
+    <section class="premium-section" aria-labelledby="about-analist">
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-            <p>Entre em contato</p>
-          </div>
-          <div class="col-lg-6 col-10">
-            <img src="images/WorldMap.svg" class="img-fluid" alt="Mapa-múndi" loading="lazy">
-          </div>
-        </div>
-        <div class="row mt-5 pt-5 border-top">
-          <div class="col-lg-12">
-            <ul class="social-icon mb-4" aria-label="Redes sociais">
-              <li class="social-icon-item"><a href="#" class="social-icon-link bi-instagram" aria-label="Instagram"></a></li>
-              <li class="social-icon-item"><a href="#" class="social-icon-link bi-twitter" aria-label="Twitter"></a></li>
-              <li class="social-icon-item"><a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Estou%20entrando%20em%20contato%20pelo%20seu%20site."
-                  target="_blank" class="social-icon-link bi-whatsapp" aria-label="WhatsApp"></a></li>
+          <div class="col-lg-3 col-md-6 col-12" style="text-align: center;">
+            <div class="member-media">
+              <img src="images/logoanalisti1.jpeg" alt="Logo analist.com" class="member-image" loading="lazy">
+            </div>
+
+            <ul class="social-icon">
+              <li><a href="#" class="social-icon-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="https://api.whatsapp.com/send?phone=5566981312846" target="_blank" class="social-icon-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
             </ul>
-            <p class="copyright-text">
-              Design: <a rel="nofollow" href="mailto:analist.com@outlook.com">© analist.com@outlook.com</a>
-            </p>
+
+            <footer class="member-info" id="about-analist" style="margin-top: 20px;">
+              <span>© 2022–2026</span>
+            </footer>
           </div>
         </div>
       </div>
-    </footer>
+    </section>
   </main>
 
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row mb-5">
+        <!-- Contact Form Section -->
+        <section id="contact" class="col-lg-6 col-12 mb-5">
+          <h2 class="sr-only">Entre em contato</h2>
+          
+          <div class="visme_d" data-title="Contatos analist.com" data-url="4d7zz8yz-contatos-analist-com" data-domain="forms" data-full-page="false" data-min-height="500px" data-form-id="34148"></div>
+          <script src="https://static-bundles.visme.co/forms/vismeforms-embed.js" async></script>
+        </section>
+
+        <!-- Contact Info -->
+        <div class="col-lg-6 col-10">
+          <div class="contact-info mt-5">
+            <div class="contador">
+              <p id="mensagem"></p>
+            </div>
+            
+            <img src="images/WorldMap.svg" alt="Mapa-múndi" loading="lazy" style="width: 100%; height: auto;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="row mt-5 pt-5 border-top">
+        <div class="col-lg-12">
+          <ul class="social-icon">
+            <li><a href="#" class="social-icon-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#" class="social-icon-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://api.whatsapp.com/send?phone=5566981312846" target="_blank" class="social-icon-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+          </ul>
+          
+          <p style="margin-top: 20px;">
+            Design: <a href="mailto:analist.com@outlook.com">© analist.com@outlook.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position: absolute; bottom: 0; left: 0; right: 0; width: 100%;" aria-hidden="true">
+      <path fill="#81B29A" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path>
+    </svg>
+  </footer>
+
   <!-- ==================== JAVASCRIPT SCRIPTS ==================== -->
+  
+  <!-- jQuery (ainda necessário para alguns plugins) -->
   <script src="js/jquery.min.js" defer></script>
+  
+  <!-- jQuery Plugins -->
+  <script src="js/jquery.sticky.js" defer></script>
+  <script src="js/click-scroll.js" defer></script>
+  <script src="js/animated-headline.js" defer></script>
+  
+  <!-- Utilities -->
+  <script src="js/modernizr.js" defer></script>
+  
+  <!-- Application Core (sem dependência Bootstrap) -->
   <script src="js/main-organized.js" defer></script>
+  
+  <!-- Visitor Counter -->
+  <script src="js/balanced-visitor-counter.js" defer></script>
+  
+  <!-- Custom -->
   <script src="js/custom.js" defer></script>
 
+  <!-- Mobile Menu Toggle (sem Bootstrap) -->
+  <script>
+    document.getElementById('navbar-toggle').addEventListener('click', function() {
+      const menu = document.getElementById('navbar-menu');
+      menu.classList.toggle('active');
+    });
+
+    // Fechar menu ao clicar em um link
+    document.querySelectorAll('#navbar-menu a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.getElementById('navbar-menu').classList.remove('active');
+      });
+    });
+
+    // Toggle dropdown (mobile)
+    document.querySelectorAll('.dropdown > a').forEach(dropdown => {
+      dropdown.addEventListener('click', function(e) {
+        if (window.innerWidth < 992) {
+          e.preventDefault();
+          this.parentElement.classList.toggle('active');
+        }
+      });
+    });
+
+    // Sticky navbar
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('sticky');
+      } else {
+        navbar.classList.remove('sticky');
+      }
+    });
+  </script>
 </body>
+
 </html>
