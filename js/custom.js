@@ -33,40 +33,44 @@
 // Contador
 
 document.addEventListener('DOMContentLoaded', function () {
-      let contador = parseInt(localStorage.getItem('visitas')) || 2025;
-      const mensagemElemento = document.getElementById('mensagem');
 
-      function saudacao() {
-        const hora = new Date().getHours();
-        if (hora < 12) return "☀️ Bom dia";
-        if (hora < 18) return "🌤️ Boa tarde";
-        return "🌙 Boa noite";
-      }
+  // Recupera o contador do localStorage ou inicia em 2025
+  let contador = parseInt(localStorage.getItem('visitas')) || 2025;
 
-      function gerarMensagem(numero) {
-        if (numero % 100 === 0) {
-          return `🏆 UAU! Você é o visitante ${numero}! Um número histórico!`;
-        } else if (numero % 10 === 0) {
-          return `✨ Visitante ${numero}! Número redondo dá sorte!`;
-        } else {
-          return `🎉 Você é o nosso ${numero}º visitante!`;
-        }
-      }
+  const saudacaoElemento = document.getElementById('saudacao');
+  const mensagemElemento = document.getElementById('mensagem');
 
-      function atualizarContador() {
-        contador++;
-        localStorage.setItem('visitas', contador);
+  // Função para definir saudação conforme horário
+  function saudacao() {
+    const hora = new Date().getHours();
+    if (hora < 12) return "☀️ Bom dia!";
+    if (hora < 18) return "🌤️ Boa tarde!";
+    return "🌙 Boa noite!";
+  }
 
-        const mensagemFinal = `
-          ${saudacao()}!<br><br>
-          ${gerarMensagem(contador)}
-        `;
+  // Função para gerar mensagem personalizada
+  function gerarMensagem(numero) {
+    if (numero % 100 === 0) {
+      return `🏆 UAU! Você é o visitante ${numero}! Um número histórico!`;
+    } else if (numero % 10 === 0) {
+      return `✨ Visitante ${numero}! Número redondo dá sorte!`;
+    } else {
+      return `🎉 Você é o nosso ${numero}º visitante!`;
+    }
+  }
 
-        mensagemElemento.innerHTML = mensagemFinal;
-      }
+  // Atualiza contador
+  function atualizarContador() {
+    contador++;
+    localStorage.setItem('visitas', contador);
 
-      atualizarContador();
-    });
+    saudacaoElemento.textContent = saudacao();
+    mensagemElemento.textContent = gerarMensagem(contador);
+  }
+
+  atualizarContador();
+
+});
 
 
 
