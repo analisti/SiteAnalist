@@ -33,16 +33,40 @@
 // Contador
 
 document.addEventListener('DOMContentLoaded', function () {
-  let contador = localStorage.getItem('visitas') || 100;
-  const mensagemElemento = document.getElementById('mensagem');
+      let contador = parseInt(localStorage.getItem('visitas')) || 2025;
+      const mensagemElemento = document.getElementById('mensagem');
 
-  function atualizarContador() {
-    mensagemElemento.textContent = `Você é o nosso ${++contador}º visitante!`;
-    localStorage.setItem('visitas', contador);
-  }
+      function saudacao() {
+        const hora = new Date().getHours();
+        if (hora < 12) return "☀️ Bom dia";
+        if (hora < 18) return "🌤️ Boa tarde";
+        return "🌙 Boa noite";
+      }
 
-  atualizarContador();
-});
+      function gerarMensagem(numero) {
+        if (numero % 100 === 0) {
+          return `🏆 UAU! Você é o visitante ${numero}! Um número histórico!`;
+        } else if (numero % 10 === 0) {
+          return `✨ Visitante ${numero}! Número redondo dá sorte!`;
+        } else {
+          return `🎉 Você é o nosso ${numero}º visitante!`;
+        }
+      }
+
+      function atualizarContador() {
+        contador++;
+        localStorage.setItem('visitas', contador);
+
+        const mensagemFinal = `
+          ${saudacao()}!<br><br>
+          ${gerarMensagem(contador)}
+        `;
+
+        mensagemElemento.innerHTML = mensagemFinal;
+      }
+
+      atualizarContador();
+    });
 
 
 
