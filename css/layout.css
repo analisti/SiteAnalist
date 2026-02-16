@@ -287,3 +287,144 @@
     padding: 0 var(--spacing-sm);
   }
 }
+
+/* ========== NAVBAR TOGGLE - MOBILE ==========*/
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  z-index: 102;
+}
+
+.navbar__toggle-icon {
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-text);
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.navbar__toggle[aria-expanded="true"] .navbar__toggle-icon:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.navbar__toggle[aria-expanded="true"] .navbar__toggle-icon:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar__toggle[aria-expanded="true"] .navbar__toggle-icon:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* ========== NAVBAR MENU MOBILE ========== */
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+@media (max-width: 767px) {
+  .navbar__toggle {
+    display: flex;
+  }
+
+  .navbar__menu {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg-secondary);
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    border-bottom: 1px solid var(--color-border);
+    gap: 0;
+  }
+
+  .navbar__menu.active {
+    max-height: 600px;
+  }
+
+  .navbar__list {
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+  }
+
+  .navbar__item {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .navbar__link {
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: block;
+    text-align: left;
+    width: 100%;
+  }
+
+  .navbar__submenu {
+    position: static;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    transform: none;
+    background-color: var(--color-bg-tertiary);
+    border: none;
+    box-shadow: none;
+    margin-top: 0;
+    transition: all 0.3s ease;
+  }
+
+  .dropdown-wrapper.active .navbar__submenu {
+    opacity: 1;
+    visibility: visible;
+    max-height: 300px;
+  }
+
+  .navbar__link--dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar__link--dropdown i {
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown-wrapper.active .navbar__link--dropdown i {
+    transform: rotate(180deg);
+  }
+}
+
+/* ========== DESKTOP ========== */
+@media (min-width: 768px) {
+  .navbar__toggle {
+    display: none !important;
+  }
+
+  .navbar__menu {
+    display: flex !important;
+    max-height: none !important;
+    position: static !important;
+    border: none !important;
+  }
+
+  .navbar__menu.active {
+    max-height: none !important;
+  }
+
+  .navbar__list {
+    display: flex !important;
+  }
+
+  .navbar__item {
+    border: none !important;
+  }
+}

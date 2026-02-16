@@ -1,5 +1,5 @@
 /* ============================================================================
-   APP.JS - APLICAÇÃO MINIMALISTA
+   APP.JS - APLICAÇÃO COM NAVBAR CORRIGIDA
    ============================================================================ */
 
 class App {
@@ -11,11 +11,22 @@ class App {
   init() {
     try {
       this.setupNavigation();
+      console.log('✅ Navigation inicializado');
+      
       this.setupSmoothScroll();
+      console.log('✅ Smooth Scroll inicializado');
+      
       this.setupVisitorCounter();
+      console.log('✅ Visitor Counter inicializado');
+      
       this.setupScrollAnimations();
+      console.log('✅ Scroll Animations inicializado');
+      
       this.setupMarquee();
+      console.log('✅ Marquee inicializado');
+      
       this.setupThemeToggle();
+      console.log('✅ Theme Toggle inicializado');
       
       console.log('✅ Aplicação inicializada com sucesso');
     } catch (error) {
@@ -25,49 +36,122 @@ class App {
 
   // ========== NAVIGATION ==========
   setupNavigation() {
+    console.log('🔧 Configurando Navigation...');
+    
     const toggle = document.querySelector('[data-nav-toggle]');
     const menu = document.querySelector('[data-nav-menu]');
     const links = document.querySelectorAll('[data-nav-link]');
     const dropdownTriggers = document.querySelectorAll('[data-dropdown-trigger]');
 
-    if (!toggle || !menu) return;
+    console.log('📍 Toggle encontrado:', !!toggle);
+    console.log('📍 Menu encontrado:', !!menu);
+    console.log('📍 Links encontrados:', links.length);
+    console.log('📍 Dropdowns encontrados:', dropdownTriggers.length);
+
+    if (!toggle || !menu) {
+      console.error('❌ Navbar toggle ou menu não encontrado!');
+      return;
+    }
 
     // Toggle menu mobile
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', !isExpanded);
-      menu.classList.toggle('active');
+      const newState = !isExpanded;
+      
+      console.log('📱 Menu clicado. Novo estado:', newState);
+      
+      toggle.setAttribute('aria-expanded', newState);
+      
+      if (newState) {
+        menu.classList.add('active');
+      } else {
+        menu.classList.remove('active');
+      }
     });
 
     // Fechar menu ao clicar em link
-    links.forEach(link => {
-      link.addEventListener('click', () => {
+    links.forEach((link, index) => {
+      link.addEventListener('click', (e) => {
+        console.log('🔗 Link clicado:', index);
+        
         toggle.setAttribute('aria-expanded', 'false');
         menu.classList.remove('active');
       });
     });
 
-    // Dropdown
-    dropdownTriggers.forEach(trigger => {
+    // Dropdown toggle
+    dropdownTriggers.forEach((trigger, index) => {
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('🔽 Dropdown clicado:', index);
+        
         const wrapper = trigger.closest('.dropdown-wrapper');
         if (wrapper) {
-          wrapper.classList.toggle('active');
+          const isActive = wrapper.classList.contains('active');
+          
+          // Fechar outros dropdowns
+          document.querySelectorAll('.dropdown-wrapper.active').forEach(w => {
+            if (w !== wrapper) {
+              w.classList.remove('active');
+            }
+          });
+          
+          // Toggle dropdown atual
+          if (isActive) {
+            wrapper.classList.remove('active');
+          } else {
+            wrapper.classList.add('active');
+          }
+          
+          console.log('✓ Dropdown toggled');
         }
       });
     });
+
+    // Fechar menu ao clicar fora
+    document.addEventListener('click', (e) => {
+      const isNavbar = e.target.closest('.navbar');
+      const isMenu = e.target.closest('[data-nav-menu]');
+      const isToggle = e.target.closest('[data-nav-toggle]');
+      
+      if (!isNavbar && !isMenu && !isToggle) {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('active');
+      }
+    });
+
+    console.log('✅ Navigation configurado com sucesso');
   }
 
   // ========== SMOOTH SCROLL ==========
   setupSmoothScroll() {
-    document.querySelectorAll('[data-smooth-scroll]').forEach(link => {
+    const smoothScrollLinks = document.querySelectorAll('[data-smooth-scroll]');
+    console.log('📍 Links com smooth scroll encontrados:', smoothScrollLinks.length);
+
+    smoothScrollLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
+        
         const href = link.getAttribute('href');
         const target = document.querySelector(href);
         
+        console.log('📍 Smooth scroll para:', href, '| Alvo encontrado:', !!target);
+        
         if (target) {
+          // Fechar menu se aberto
+          const menu = document.querySelector('[data-nav-menu]');
+          const toggle = document.querySelector('[data-nav-toggle]');
+          if (menu && toggle) {
+            toggle.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('active');
+          }
+          
+          // Scroll suave
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
@@ -79,13 +163,17 @@ class App {
     const STORAGE_KEY = 'analist_visitors';
     const counter = document.querySelector('[data-visitor-counter]');
     
-    if (!counter) return;
+    if (!counter) {
+      console.warn('⚠️ Elemento [data-visitor-counter] não encontrado');
+      return;
+    }
 
     const getCount = () => {
       try {
         const stored = localStorage.getItem(STORAGE_KEY);
         return stored ? parseInt(stored, 10) + 1 : 2025;
       } catch (e) {
+        console.warn('⚠️ localStorage erro:', e);
         return 2025;
       }
     };
@@ -94,7 +182,7 @@ class App {
       try {
         localStorage.setItem(STORAGE_KEY, count);
       } catch (e) {
-        console.warn('⚠️ localStorage não disponível');
+        console.warn('⚠️ Não foi possível salvar contador');
       }
     };
 
@@ -120,7 +208,10 @@ class App {
   setupScrollAnimations() {
     const sections = document.querySelectorAll('[data-section]');
     
-    if (!sections.length) return;
+    if (!sections.length) {
+      console.warn('⚠️ Nenhuma seção com [data-section] encontrada');
+      return;
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -141,11 +232,17 @@ class App {
   setupMarquee() {
     const marqueeWrapper = document.querySelector('[data-marquee]');
     
-    if (!marqueeWrapper) return;
+    if (!marqueeWrapper) {
+      console.warn('⚠️ Marquee wrapper não encontrado');
+      return;
+    }
 
     const marqueeContent = marqueeWrapper.querySelector('.marquee-content');
     
-    if (!marqueeContent) return;
+    if (!marqueeContent) {
+      console.warn('⚠️ Marquee content não encontrado');
+      return;
+    }
 
     // Pause/Play ao hover (desktop)
     marqueeWrapper.addEventListener('mouseenter', () => {
@@ -170,10 +267,15 @@ class App {
   setupThemeToggle() {
     const toggle = document.querySelector('[data-theme-toggle]');
     
-    if (!toggle) return;
+    if (!toggle) {
+      console.warn('⚠️ Theme toggle não encontrado');
+      return;
+    }
 
     toggle.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
+      
       const current = document.documentElement.getAttribute('data-theme') || 'light';
       const newTheme = current === 'light' ? 'dark' : 'light';
       
@@ -185,6 +287,7 @@ class App {
         console.warn('⚠️ localStorage não disponível');
       }
 
+      console.log('🎨 Tema alterado para:', newTheme);
       this.syncVismeTheme(newTheme);
     });
   }
