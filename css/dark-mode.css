@@ -119,3 +119,55 @@ a {
     --color-text: black;
   }
 }
+/* ========== VISME COLOR SYNC ========== */
+.visme_d {
+  background-color: var(--color-bg-secondary) !important;
+  transition: background-color 400ms ease-out;
+}
+
+[data-theme="light"] .visme_d {
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] .visme_d {
+  background-color: #131d2a !important;
+}
+
+/* Forçar sincronização em iframe */
+.visme_d * {
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+.visme_d input,
+.visme_d textarea,
+.visme_d select {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.visme_d button {
+  background-color: var(--color-primary) !important;
+  color: var(--color-bg) !important;
+}
+
+/* ========== MARQUEE DARK MODE ========== */
+.skills-marquee {
+  background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, var(--color-bg) 100%);
+  border-color: var(--color-border);
+}
+
+.marquee-item {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.marquee-item:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(129, 178, 154, 0.2);
+}
+
+[data-theme="dark"] .marquee-item:hover {
+  box-shadow: 0 0 20px rgba(129, 178, 154, 0.15);
+}

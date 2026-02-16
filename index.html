@@ -41,8 +41,10 @@
             </svg>
           </a>
 
-          <!-- Mobile Toggle -->
+          <!-- Mobile Toggle (3 spans para hambúrguer!) -->
           <button class="navbar__toggle" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
+            <span class="navbar__toggle-icon"></span>
+            <span class="navbar__toggle-icon"></span>
             <span class="navbar__toggle-icon"></span>
           </button>
 
@@ -52,7 +54,7 @@
               <li class="navbar__item"><a href="#hero" class="navbar__link" data-nav-link>Home</a></li>
               <li class="navbar__item"><a href="#about" class="navbar__link" data-nav-link>Sobre</a></li>
               <li class="navbar__item"><a href="#ai" class="navbar__link" data-nav-link>IA</a></li>
-              <li class="navbar__item">
+              <li class="navbar__item dropdown-wrapper">
                 <button class="navbar__link navbar__link--dropdown" aria-expanded="false" data-dropdown-trigger>
                   Páginas <i class="fas fa-chevron-down"></i>
                 </button>
@@ -87,12 +89,12 @@
             ele não é <em>digital</em>. Ele é <em>invisível</em>.
           </h1>
 
-          <div class="hero__headline" data-animated-headline>
+          <div class="hero__headline">
             <p class="hero__subtitle">analist.com FAZ</p>
             <div class="hero__words">
-              <span class="hero__word" data-word>Sistemas que vendem</span>
-              <span class="hero__word" data-word>Presença online</span>
-              <span class="hero__word" data-word>Crescimento real</span>
+              <span class="hero__word">Sistemas que vendem</span>
+              <span class="hero__word">Presença online</span>
+              <span class="hero__word">Crescimento real</span>
             </div>
           </div>
 
@@ -124,6 +126,261 @@
       <svg class="wave" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
         <path d="M0,64L120,69.3C240,75,480,85,720,80C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z" fill="currentColor"></path>
       </svg>
+    </section>
+
+    <!-- SKILLS MARQUEE SECTION -->
+    <section class="section skills-marquee" id="skills-marquee" data-section="skills-marquee">
+      <div class="skills-marquee__background"></div>
+      
+      <div class="section__container">
+        <div class="skills-marquee__content">
+          <h2 class="skills-marquee__title">Tecnologias que transformam visões em realidade</h2>
+          <p class="skills-marquee__subtitle">Frontend | Backend | Full Stack</p>
+
+          <!-- MARQUEE CONTAINER -->
+          <div class="marquee-wrapper" data-marquee>
+            <div class="marquee-content">
+              <!-- Frontend Skills -->
+              <div class="marquee-item">
+                <i class="fab fa-html5"></i>
+                <span>HTML</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fab fa-css3-alt"></i>
+                <span>CSS</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fab fa-js-square"></i>
+                <span>JavaScript</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fab fa-react"></i>
+                <span>React Native</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Mobile First</span>
+              </div>
+
+              <!-- Separador -->
+              <div class="marquee-separator"></div>
+
+              <!-- Backend Skills -->
+              <div class="marquee-item">
+                <i class="fab fa-java"></i>
+                <span>Java</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-database"></i>
+                <span>MySQL</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-leaf"></i>
+                <span>Spring Boot</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-cogs"></i>
+                <span>APIs REST</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-lock"></i>
+                <span>Segurança</span>
+              </div>
+
+              <!-- REPETIR para efeito infinito -->
+              <div class="marquee-item">
+                <i class="fab fa-html5"></i>
+                <span>HTML</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fab fa-css3-alt"></i>
+                <span>CSS</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fab fa-js-square"></i>
+                <span>JavaScript</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fab fa-react"></i>
+                <span>React Native</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Mobile First</span>
+              </div>
+
+              <div class="marquee-separator"></div>
+
+              <div class="marquee-item">
+                <i class="fab fa-java"></i>
+                <span>Java</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-database"></i>
+                <span>MySQL</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-leaf"></i>
+                <span>Spring Boot</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-cogs"></i>
+                <span>APIs REST</span>
+              </div>
+              <div class="marquee-item">
+                <i class="fas fa-lock"></i>
+                <span>Segurança</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERTISE SECTION -->
+    <section class="section expertise" id="expertise" data-section="expertise">
+      <div class="section__container">
+        <h2 class="section__title">Estruturas digitais que trabalham por você</h2>
+
+        <div class="expertise__intro">
+          <p class="expertise__intro-text">
+            Eu não crio sites. <strong>Eu construo estruturas digitais que trabalham por você.</strong>
+          </p>
+          <p class="expertise__intro-text">
+            Cada projeto que desenvolvo tem um objetivo claro: fazer o digital parar de ser promessa e virar <strong>ferramenta de crescimento.</strong>
+          </p>
+        </div>
+
+        <div class="expertise__grid">
+          <!-- STRATEGY COLUMN -->
+          <div class="expertise__strategy">
+            <h3 class="expertise__heading">Estratégia que vende</h3>
+            <p class="expertise__description">Tudo é pensado para:</p>
+
+            <ul class="expertise__list">
+              <li class="expertise__item">
+                <span class="expertise__icon">→</span>
+                <div>
+                  <strong>Atrair o cliente certo</strong>
+                  <p>Aquele que entende o valor do que você oferece e chega preparado para avançar.</p>
+                </div>
+              </li>
+              <li class="expertise__item">
+                <span class="expertise__icon">→</span>
+                <div>
+                  <strong>Eliminar dúvidas</strong>
+                  <p>Respondendo objeções antes mesmo que elas apareçam.</p>
+                </div>
+              </li>
+              <li class="expertise__item">
+                <span class="expertise__icon">→</span>
+                <div>
+                  <strong>Conduzir decisões</strong>
+                  <p>Guiando o visitante com clareza até a ação.</p>
+                </div>
+              </li>
+              <li class="expertise__item">
+                <span class="expertise__icon">→</span>
+                <div>
+                  <strong>Sustentar escala</strong>
+                  <p>Garantindo que o crescimento não dependa de improviso.</p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="expertise__tagline">
+              <p><strong>Tecnologia sem estratégia é joguinho.</strong></p>
+              <p><strong>Aqui, ela vira negócio.</strong></p>
+            </div>
+          </div>
+
+          <!-- FRONTEND EXPERTISE -->
+          <div class="expertise__card expertise__card--frontend">
+            <div class="expertise__card-header">
+              <h3 class="expertise__card-title">
+                <i class="fas fa-palette"></i> Domínio Frontend
+              </h3>
+            </div>
+
+            <p class="expertise__card-intro">
+              No front-end, <strong>cada pixel decide</strong>: o visitante confia em você ou vai embora.
+            </p>
+            <p class="expertise__card-intro">
+              Cada detalhe visual é uma chance de <strong>converter atenção em ação.</strong>
+            </p>
+
+            <h4 class="expertise__subheading">Benefícios:</h4>
+            <ul class="expertise__benefits">
+              <li><i class="fas fa-check"></i> <strong>Atrai o cliente certo</strong> que entende valor</li>
+              <li><i class="fas fa-check"></i> <strong>Elimina dúvidas</strong> antes que surjam</li>
+              <li><i class="fas fa-check"></i> <strong>Guia decisões</strong> com clareza</li>
+              <li><i class="fas fa-check"></i> <strong>Sustenta escala</strong> sem improviso</li>
+            </ul>
+
+            <p class="expertise__conclusion">
+              Design e performance trabalham juntos: <strong>o digital deixa de ser promessa e vira ferramenta de crescimento.</strong>
+            </p>
+
+            <h4 class="expertise__subheading">Tecnologias:</h4>
+            <div class="expertise__techs">
+              <span class="expertise__tech">
+                <i class="fab fa-html5"></i> HTML — estrutura limpa
+              </span>
+              <span class="expertise__tech">
+                <i class="fab fa-css3-alt"></i> CSS — autoridade
+              </span>
+              <span class="expertise__tech">
+                <i class="fab fa-js-square"></i> JavaScript — vende
+              </span>
+              <span class="expertise__tech">
+                <i class="fab fa-react"></i> React — premium
+              </span>
+            </div>
+          </div>
+
+          <!-- BACKEND EXPERTISE -->
+          <div class="expertise__card expertise__card--backend">
+            <div class="expertise__card-header">
+              <h3 class="expertise__card-title">
+                <i class="fas fa-cogs"></i> Expertise Backend
+              </h3>
+            </div>
+
+            <p class="expertise__card-intro">
+              No back-end, <strong>um negócio previsível se separa do amador.</strong> Aqui ficam os pilares que sustentam crescimento.
+            </p>
+
+            <h4 class="expertise__subheading">Competências:</h4>
+            <ul class="expertise__benefits">
+              <li><i class="fas fa-check"></i> <strong>Dados precisos</strong> para decisões</li>
+              <li><i class="fas fa-check"></i> <strong>Controle absoluto</strong> sem surpresas</li>
+              <li><i class="fas fa-check"></i> <strong>Segurança robusta</strong> contra falhas</li>
+              <li><i class="fas fa-check"></i> <strong>Automação inteligente</strong> em escala</li>
+            </ul>
+
+            <p class="expertise__warning">
+              <i class="fas fa-exclamation-circle"></i>
+              <strong>Sem isso, não existe crescimento sustentável. Existe sorte — e você não aposta o futuro do seu negócio na sorte.</strong>
+            </p>
+
+            <h4 class="expertise__subheading">Tecnologias:</h4>
+            <div class="expertise__techs">
+              <span class="expertise__tech">
+                <i class="fab fa-java"></i> Java — motor sólido
+              </span>
+              <span class="expertise__tech">
+                <i class="fas fa-database"></i> MySQL — dados
+              </span>
+              <span class="expertise__tech">
+                <i class="fas fa-leaf"></i> Spring Boot — moderno
+              </span>
+              <span class="expertise__tech">
+                <i class="fas fa-cogs"></i> APIs — integração
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ABOUT SECTION -->
@@ -182,7 +439,7 @@
         <h2 class="section__title">Nossos Serviços</h2>
 
         <div class="services__grid">
-          <article class="service-card" data-service-card>
+          <article class="service-card">
             <div class="service-card__icon">
               <i class="fas fa-globe"></i>
             </div>
@@ -196,7 +453,7 @@
             </ul>
           </article>
 
-          <article class="service-card" data-service-card>
+          <article class="service-card">
             <div class="service-card__icon">
               <i class="fas fa-database"></i>
             </div>
@@ -210,7 +467,7 @@
             </ul>
           </article>
 
-          <article class="service-card" data-service-card>
+          <article class="service-card">
             <div class="service-card__icon">
               <i class="fas fa-cog"></i>
             </div>
@@ -248,7 +505,7 @@
       </div>
     </section>
 
-<!-- CONTACT SECTION -->
+    <!-- CONTACT SECTION -->
     <section class="section contact" id="contact" data-section="contact">
       <div class="section__container">
         <h2 class="section__title">Vamos conversar?</h2>
@@ -263,7 +520,6 @@
                  data-full-page="false" 
                  data-min-height="500px" 
                  data-form-id="34148"></div>
-            <script src="https://static-bundles.visme.co/forms/vismeforms-embed.js" async></script>
           </div>
 
           <!-- VISITOR COUNTER + MAP -->
@@ -276,6 +532,7 @@
         </div>
       </div>
     </section>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -313,33 +570,14 @@
         <p>Design: <a href="mailto:analist.com@outlook.com" class="footer__link">analist.com@outlook.com</a></p>
       </div>
     </div>
+
+    <!-- Visme Script (aqui no final) -->
+    <script src="https://static-bundles.visme.co/forms/vismeforms-embed.js" async></script>
   </footer>
 
-  <!-- SCRIPTS -->
-  <!-- ==================== JAVASCRIPT SCRIPTS ==================== -->
-  
-  <!-- Theme Manager (deve ser primeiro!) -->
+  <!-- SCRIPTS (APENAS OS NECESSÁRIOS) -->
   <script src="js/theme-manager.js" defer></script>
-  
-  <!-- jQuery (ainda necessário para alguns plugins) -->
-  <script src="js/jquery.min.js" defer></script>
-  
-  <!-- jQuery Plugins -->
-  <script src="js/jquery.sticky.js" defer></script>
-  <script src="js/click-scroll.js" defer></script>
-  <script src="js/animated-headline.js" defer></script>
-  
-  <!-- Utilities -->
-  <script src="js/modernizr.js" defer></script>
-  
-  <!-- Application Core -->
-  <script src="js/main.js" defer></script>
-  
-  <!-- Visitor Counter -->
-  <script src="js/balanced-visitor-counter.js" defer></script>
-  
-  <!-- Custom -->
-  <script src="js/custom.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 
 </html>
