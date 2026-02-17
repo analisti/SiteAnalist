@@ -627,3 +627,34 @@
     display: block;
   }
 }
+
+/* ========== LOGO ========== */
+
+.navbar__logo {
+  height: 32px;        /* controla tamanho no desktop */
+  width: auto;         /* mantém proporção */
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Efeito premium no hover (opcional) */
+.navbar__brand:hover .navbar__logo {
+  transform: scale(1.05);
+}
+
+/* ========== MOBILE ========== */
+@media (max-width: 767px) {
+  .navbar__logo {
+    height: 24px;      /* menor no mobile */
+    width: auto;       /* nunca fixe largura */
+  }
+}
+
+/* ========== SUPER MOBILE ========== */
+@media (max-width: 480px) {
+  .navbar__logo {
+    height: 22px;
+  }
+}
