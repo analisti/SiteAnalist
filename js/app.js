@@ -1,5 +1,5 @@
 /* ============================================================================
-   APP.JS - APLICAÇÃO COM NAVBAR CORRIGIDA
+   APP.JS - APLICAÇÃO COM NAVBAR CORRIGIDA (SEM THEME MANAGER)
    ============================================================================ */
 
 class App {
@@ -24,9 +24,6 @@ class App {
       
       this.setupMarquee();
       console.log('✅ Marquee inicializado');
-      
-      this.setupThemeToggle();
-      console.log('✅ Theme Toggle inicializado');
       
       console.log('✅ Aplicação inicializada com sucesso');
     } catch (error) {
@@ -260,54 +257,6 @@ class App {
 
     marqueeWrapper.addEventListener('touchend', () => {
       marqueeContent.style.animationPlayState = 'running';
-    });
-  }
-
-  // ========== THEME TOGGLE ==========
-  setupThemeToggle() {
-    const toggle = document.querySelector('[data-theme-toggle]');
-    
-    if (!toggle) {
-      console.warn('⚠️ Theme toggle não encontrado');
-      return;
-    }
-
-    toggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const current = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = current === 'light' ? 'dark' : 'light';
-      
-      document.documentElement.setAttribute('data-theme', newTheme);
-      
-      try {
-        localStorage.setItem('analist-theme', newTheme);
-      } catch (e) {
-        console.warn('⚠️ localStorage não disponível');
-      }
-
-      console.log('🎨 Tema alterado para:', newTheme);
-      this.syncVismeTheme(newTheme);
-    });
-  }
-
-  // ========== SINCRONIZAR VISME COM TEMA ==========
-  syncVismeTheme(theme) {
-    const vismeFrames = document.querySelectorAll('.visme_d iframe');
-    
-    vismeFrames.forEach(frame => {
-      try {
-        if (frame.contentDocument) {
-          const bgColor = theme === 'dark' ? '#131d2a' : '#ffffff';
-          const textColor = theme === 'dark' ? '#f0ebe6' : '#1a1a1a';
-          
-          frame.contentDocument.body.style.backgroundColor = bgColor;
-          frame.contentDocument.body.style.color = textColor;
-        }
-      } catch (e) {
-        console.warn('⚠️ Não é possível acessar iframe do Visme');
-      }
     });
   }
 }
