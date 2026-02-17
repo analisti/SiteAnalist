@@ -1,0 +1,292 @@
+/* ============================================================================
+   MOBILE ANIMATIONS FIX - Corrige animações que não executam em mobile
+   ============================================================================ */
+
+/* ========== CORREÇÃO: REMOVER OVERFLOW QUE BLOQUEIA ANIMAÇÕES ========== */
+
+@media (max-width: 767px) {
+  /* Hero - permitir que animações sejam visíveis */
+  .hero {
+    overflow: visible; /* Mudado de hidden para visible */
+    overflow-x: hidden; /* Mantém controle horizontal */
+  }
+
+  .hero__container {
+    overflow: visible; /* Permitir animações */
+  }
+
+  .hero__content {
+    overflow: visible; /* Permitir fadeIn */
+  }
+
+  .hero__headline {
+    overflow: visible; /* Permitir animação das palavras */
+  }
+
+  .hero__words {
+    overflow: visible; /* CRÍTICO: permitir wordRotate */
+  }
+
+  /* Garantir que animação de palavras funcione */
+  .hero__word {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    will-change: opacity, transform;
+    animation: wordRotate 9s infinite ease-in-out;
+  }
+
+  /* Garantir que marquee funcione */
+  .marquee-wrapper {
+    overflow: hidden; /* Este pode ficar hidden */
+  }
+
+  .marquee-content {
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+  }
+
+  /* Garantir que background flutue */
+  .hero__bg {
+    animation: float 6s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Garantir que botões apareçam */
+  .hero__cta .btn {
+    animation: slideInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  /* Garantir intersection observer elements */
+  [data-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  [data-animate].in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Service cards stagger */
+  .service-card[data-service-card] {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+}
+
+/* Super mobile */
+@media (max-width: 480px) {
+  /* Reduzir intensidade mas manter animações */
+  .hero__word {
+    animation-duration: 9s; /* Manter velocidade */
+  }
+
+  .marquee-content {
+    animation-duration: 30s; /* Manter velocidade */
+  }
+
+  .hero__bg {
+    animation-duration: 8s; /* Levemente mais lento */
+  }
+}
+
+/* ========== GARANTIR TOUCH EVENTS NÃO BLOQUEIAM ========== */
+
+@media (max-width: 767px) {
+  /* Permitir interação com elementos animados */
+  .hero__word,
+  .marquee-item,
+  .hero__bg,
+  [data-animate] {
+    pointer-events: auto;
+  }
+
+  /* Apenas imagem no hero bg não deve interceptar clicks */
+  .hero__bg img {
+    pointer-events: none;
+  }
+}
+
+/* ========== PERFORMANCE: FORÇAR ACELERAÇÃO GPU ========== */
+
+@media (max-width: 767px) {
+  .hero__word,
+  .marquee-content,
+  .hero__bg,
+  [data-animate] {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  .marquee-item {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
+/* ========== CORREÇÃO: PREVENIR SCROLL HORIZONTAL SEM BLOQUEAR ANIMAÇÕES ========== */
+
+@media (max-width: 767px) {
+  /* Controle de scroll apenas no body */
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Sections podem ter overflow visible para animações */
+  .section {
+    overflow: visible;
+    max-width: 100vw;
+  }
+
+  .section__container {
+    overflow: visible;
+    max-width: 100%;
+  }
+
+  /* Apenas marquee section precisa de overflow hidden */
+  .skills-marquee {
+    overflow: hidden;
+  }
+
+  .skills-marquee__content {
+    overflow: visible; /* Permitir ver animações */
+  }
+}
+
+/* ========== DEBUG: GARANTIR VISIBILIDADE DE ELEMENTOS ANIMADOS ========== */
+
+@media (max-width: 767px) {
+  /* Forçar visibilidade durante desenvolvimento */
+  .hero__word {
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  .marquee-content {
+    visibility: visible !important;
+    display: flex !important;
+  }
+
+  .hero__bg {
+    visibility: visible !important;
+    display: flex !important;
+  }
+
+  /* Garantir que elementos com data-animate estejam visíveis */
+  [data-animate] {
+    visibility: visible !important;
+    display: block !important;
+  }
+}
+
+/* ========== OTIMIZAÇÃO: REDUZIR COMPLEXIDADE EM MOBILE ========== */
+
+@media (max-width: 767px) {
+  /* Simplificar sombras para melhor performance */
+  .marquee-item,
+  .service-card,
+  .hero__bg {
+    box-shadow: none;
+    transition: transform 0.3s ease-out, border-color 0.3s ease-out;
+  }
+
+  /* Reduzir blur effects em mobile */
+  .hero__bg {
+    filter: none;
+  }
+
+  /* Manter animações essenciais apenas */
+  * {
+    animation-play-state: running !important;
+  }
+}
+
+/* ========== IMPORTANTE: NÃO DESABILITAR EM REDUCED MOTION ========== */
+/* Se usuário não pediu reduced motion, manter animações */
+
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  /* Garantir que animações rodem normalmente */
+  .hero__word {
+    animation: wordRotate 9s infinite ease-in-out !important;
+  }
+
+  .marquee-content {
+    animation: marquee 30s linear infinite !important;
+  }
+
+  .hero__bg {
+    animation: float 6s ease-in-out infinite !important;
+  }
+
+  [data-animate].in-view {
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out !important;
+  }
+}
+
+/* ========== FALLBACK: SE ANIMAÇÕES AINDA NÃO FUNCIONAREM ========== */
+
+@media (max-width: 767px) {
+  /* Forçar keyframes */
+  @keyframes wordRotate {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    5% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    30%, 35% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    40%, 100% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0) translateZ(0);
+    }
+    100% {
+      transform: translateX(-50%) translateZ(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateZ(0);
+    }
+    50% {
+      transform: translateY(-20px) translateZ(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px) translateZ(0);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) translateZ(0);
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px) translateZ(0);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) translateZ(0);
+    }
+  }
+}
