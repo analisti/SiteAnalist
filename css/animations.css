@@ -9,9 +9,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   padding: var(--spacing-3xl) 0;
 }
+
+body 
+{ overflow-x: hidden; }
+
+html
+ { overflow-x: hidden; }
 
 .hero__container {
   position: relative;
@@ -328,3 +334,102 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ============================================================================
+   PATCH PARA animations.css - APLICAR ESTAS MUDANÇAS
+   ============================================================================ */
+
+/* ========== LINHA 10 - MUDAR OVERFLOW ========== */
+
+/* ANTES (linha ~8-16): */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;  /* ❌ PROBLEMA: corta animações */
+  padding: var(--spacing-3xl) 0;
+}
+
+/* DEPOIS (substitua por): */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;  /* ✅ CORRIGIDO: permite ver animações */
+  padding: var(--spacing-3xl) 0;
+}
+
+/* ========== ADICIONAR APÓS O BLOCO .hero ========== */
+
+/* Controlar scroll horizontal apenas no body */
+body {
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* GPU acceleration para melhor performance */
+.hero__word,
+.marquee-content,
+.hero__bg {
+  will-change: opacity, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ========== RESPONSIVIDADE MOBILE ========== */
+
+/* Garantir que mobile também funcione */
+@media (max-width: 767px) {
+  .hero {
+    overflow: visible; /* Manter visível em mobile */
+  }
+  
+  .hero__container,
+  .hero__content,
+  .hero__headline,
+  .hero__words {
+    overflow: visible;
+  }
+  
+  /* Ajustar tamanhos mobile */
+  .hero__words {
+    font-size: 1.25rem;
+    min-height: 2.5rem;
+  }
+  
+  .hero__word {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .hero__bg {
+    width: 200px;
+    height: 200px;
+    right: -30px;
+    bottom: 10%;
+    opacity: 0.15;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__words {
+    font-size: 1.125rem;
+  }
+  
+  .hero__bg {
+    width: 150px;
+    height: 150px;
+    opacity: 0.1;
+  }
+}
+
+/* ========== FIM DO PATCH ========== */
