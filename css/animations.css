@@ -146,14 +146,36 @@
   z-index: 1;
   opacity: 0.3;
   animation: float 6s ease-in-out infinite;
+
+  /* NOVO */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
+/* ===== IMAGEM CENTRAL ===== */
+.hero__image {
+  position: absolute;
+  width: 280px; /* ajuste conforme necessário */
+  height: auto;
+  z-index: 2;
+  pointer-events: none; /* evita conflito com hover */
+  transform: translateZ(40px); /* cria profundidade real 3D */
+  will-change: transform;
+}
+
+/* ===== SVG DECORATIVO ===== */
 .hero__decoration {
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 1;
   filter: drop-shadow(0 10px 30px rgba(129, 178, 154, 0.2));
 }
 
+/* ========== FLOAT ANIMATION ========== */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) rotateZ(0deg);
@@ -240,6 +262,7 @@
   height: auto;
   display: block;
 }
+
 
 /* ========== WHATSAPP BUTTON ========== */
 .whatsapp-button {
