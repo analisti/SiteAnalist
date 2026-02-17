@@ -58,17 +58,6 @@
   z-index: 101;
 }
 
-.navbar__logo {
-  width: 160px;
-  height: 32px;
-  color: var(--color-text);
-  transition: color var(--transition-base);
-}
-
-.navbar__brand:hover .navbar__logo {
-  color: var(--color-primary);
-}
-
 /* ========== NAVBAR MENU ========== */
 .navbar__menu {
   display: flex;
@@ -631,7 +620,7 @@
 /* ========== LOGO ========== */
 
 .navbar__logo {
-  height: 32px;        /* controla tamanho no desktop */
+  height: 42px;        /* controla tamanho no desktop */
   width: auto;         /* mantém proporção */
   max-width: 100%;
   object-fit: contain;
@@ -647,7 +636,7 @@
 /* ========== MOBILE ========== */
 @media (max-width: 767px) {
   .navbar__logo {
-    height: 24px;      /* menor no mobile */
+    height: 32px;      /* menor no mobile */
     width: auto;       /* nunca fixe largura */
   }
 }
