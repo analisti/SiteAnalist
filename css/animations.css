@@ -13,11 +13,14 @@
   padding: var(--spacing-3xl) 0;
 }
 
-body 
-{ overflow-x: hidden; }
+/* Controlar scroll horizontal */
+body {
+  overflow-x: hidden;
+}
 
-html
- { overflow-x: hidden; }
+html {
+  overflow-x: hidden;
+}
 
 .hero__container {
   position: relative;
@@ -57,6 +60,7 @@ html
 }
 
 /* ========== ANIMATED HEADLINE ========== */
+
 .hero__headline {
   margin-bottom: var(--spacing-2xl);
 }
@@ -89,38 +93,61 @@ html
   will-change: opacity, transform;
 }
 
-.hero__word:nth-child(1) {
-  animation-delay: 0s;
+.hero__word:nth-child(1) { animation-delay: 0s; }
+.hero__word:nth-child(2) { animation-delay: 3s; }
+.hero__word:nth-child(3) { animation-delay: 6s; }
+
+/* ========== GPU PERFORMANCE ========== */
+
+.hero__word,
+.marquee-content,
+.hero__bg {
+  will-change: opacity, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-.hero__word:nth-child(2) {
-  animation-delay: 3s;
-}
-
-.hero__word:nth-child(3) {
-  animation-delay: 6s;
-}
+/* ========== KEYFRAMES ========== */
 
 @keyframes wordRotate {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) translateX(0);
-  }
-  5% {
-    opacity: 1;
-    transform: translateY(0) translateX(0);
-  }
-  30%, 35% {
-    opacity: 1;
-    transform: translateY(0) translateX(0);
-  }
-  40%, 100% {
-    opacity: 0;
-    transform: translateY(-10px) translateX(0);
-  }
+  0% { opacity: 0; transform: translateY(10px); }
+  5% { opacity: 1; transform: translateY(0); }
+  30%, 35% { opacity: 1; transform: translateY(0); }
+  40%, 100% { opacity: 0; transform: translateY(-10px); }
 }
 
-/* ========== CTA BUTTONS ========== */
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotateZ(0deg); }
+  50% { transform: translateY(-30px) rotateZ(10deg); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ========== CTA ========== */
+
 .hero__cta {
   display: flex;
   gap: var(--spacing-md);
@@ -131,18 +158,8 @@ html
   animation: slideInUp 0.8s ease-out 0.2s backwards;
 }
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* ========== BACKGROUND 3D ========== */
 
-/* ========== 3D BACKGROUND ========== */
 .hero__bg {
   position: absolute;
   top: 0;
@@ -152,265 +169,72 @@ html
   z-index: 1;
   opacity: 0.3;
   animation: float 6s ease-in-out infinite;
-
-  /* NOVO */
   display: flex;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
-  will-change: transform;
 }
 
-/* ===== IMAGEM CENTRAL ===== */
 .hero__image {
   position: absolute;
-  width: 280px; /* ajuste conforme necessário */
+  width: 280px;
   height: auto;
   z-index: 2;
-  pointer-events: none; /* evita conflito com hover */
-  transform: translateZ(40px); /* cria profundidade real 3D */
+  pointer-events: none;
+  transform: translateZ(40px);
   will-change: transform;
 }
 
-/* ===== SVG DECORATIVO ===== */
 .hero__decoration {
   width: 100%;
   height: 100%;
   position: relative;
   z-index: 1;
-  filter: drop-shadow(0 10px 30px rgba(129, 178, 154, 0.2));
+  filter: drop-shadow(0 10px 30px rgba(129,178,154,0.2));
 }
 
-/* ========== FLOAT ANIMATION ========== */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotateZ(0deg);
-  }
-  50% {
-    transform: translateY(-30px) rotateZ(10deg);
-  }
-}
+/* ========== MARQUEE ========== */
 
-/* ========== PARALLAX 3D ========== */
-[data-3d-element] {
-  perspective: 1000px;
-}
-
-[data-3d-element]:hover {
-  animation: tilt 0.6s ease-out;
-}
-
-@keyframes tilt {
-  0% {
-    transform: rotateX(0) rotateY(0) scale(1);
-  }
-  50% {
-    transform: rotateX(5deg) rotateY(-8deg) scale(1.02);
-  }
-  100% {
-    transform: rotateX(0) rotateY(0) scale(1);
-  }
-}
-
-/* ========== SCROLL ANIMATIONS ========== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.fade-in--left {
-  animation: fadeInLeft 0.6s ease-out forwards;
-}
-
-.fade-in--right {
-  animation: fadeInRight 0.6s ease-out forwards;
-}
-
-/* ========== WAVE SVG ========== */
-.wave {
-  color: var(--color-bg);
-  position: absolute;
-  bottom: -1px;
-  left: 0;
+.marquee-wrapper {
+  overflow: hidden;
   width: 100%;
-  height: auto;
-  display: block;
-}
-
-
-/* ========== WHATSAPP BUTTON ========== */
-.whatsapp-button {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 60px;
-  height: 60px;
-  border-radius: var(--border-radius-full);
-  background-color: #25d366;
-  color: white;
-  font-size: var(--font-size-xl);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--z-whatsapp);
-  transition: all var(--transition-base);
-  box-shadow: var(--shadow-lg);
-  animation: slideInUp 0.6s ease-out;
-}
-
-.whatsapp-button:hover {
-  transform: translateY(-5px) scale(1.1);
-  box-shadow: var(--shadow-xl);
-}
-
-.whatsapp-button:active {
-  transform: translateY(-2px) scale(0.95);
-}
-
-@media (max-width: 640px) {
-  .whatsapp-button {
-    bottom: 1rem;
-    right: 1rem;
-  }
-}
-
-/* ========== STAGGER ANIMATION ========== */
-.service-card[data-service-card] {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.service-card[data-service-card]:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.service-card[data-service-card]:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.service-card[data-service-card]:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-/* ========== INTERSECTION OBSERVER ========== */
-[data-animate] {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity var(--transition-base), transform var(--transition-base);
-}
-
-[data-animate].in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ============================================================================
-   PATCH PARA animations.css - APLICAR ESTAS MUDANÇAS
-   ============================================================================ */
-
-/* ========== LINHA 10 - MUDAR OVERFLOW ========== */
-
-/* ANTES (linha ~8-16): */
-.hero {
   position: relative;
-  min-height: 100vh;
+}
+
+.marquee-content {
   display: flex;
+  gap: 1rem;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+
+.marquee-item {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;  /* ❌ PROBLEMA: corta animações */
-  padding: var(--spacing-3xl) 0;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* DEPOIS (substitua por): */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible;  /* ✅ CORRIGIDO: permite ver animações */
-  padding: var(--spacing-3xl) 0;
-}
+/* ========== RESPONSIVO ========== */
 
-/* ========== ADICIONAR APÓS O BLOCO .hero ========== */
-
-/* Controlar scroll horizontal apenas no body */
-body {
-  overflow-x: hidden;
-}
-
-html {
-  overflow-x: hidden;
-}
-
-/* GPU acceleration para melhor performance */
-.hero__word,
-.marquee-content,
-.hero__bg {
-  will-change: opacity, transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* ========== RESPONSIVIDADE MOBILE ========== */
-
-/* Garantir que mobile também funcione */
 @media (max-width: 767px) {
   .hero {
-    overflow: visible; /* Manter visível em mobile */
-  }
-  
-  .hero__container,
-  .hero__content,
-  .hero__headline,
-  .hero__words {
     overflow: visible;
   }
-  
-  /* Ajustar tamanhos mobile */
+
   .hero__words {
     font-size: 1.25rem;
-    min-height: 2.5rem;
+    min-height: 2rem;
   }
-  
+
   .hero__word {
     white-space: normal;
     word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
+    max-width: 90%;
   }
-  
+
   .hero__bg {
     width: 200px;
     height: 200px;
@@ -418,18 +242,38 @@ html {
     bottom: 10%;
     opacity: 0.15;
   }
+
+  .marquee-content {
+    gap: 0.75rem;
+  }
+
+  .marquee-item {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .marquee-item i {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
   .hero__words {
     font-size: 1.125rem;
   }
-  
+
   .hero__bg {
     width: 150px;
     height: 150px;
     opacity: 0.1;
   }
-}
 
-/* ========== FIM DO PATCH ========== */
+  .marquee-content {
+    gap: 0.5rem;
+  }
+
+  .marquee-item {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+}
