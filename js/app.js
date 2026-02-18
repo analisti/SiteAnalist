@@ -269,3 +269,12 @@ if (document.readyState === 'loading') {
 } else {
   new App();
 }
+
+// Garantir animation delays nas palavras do hero
+document.addEventListener('DOMContentLoaded', function() {
+  const heroWords = document.querySelectorAll('.hero__word');
+  heroWords.forEach((word, index) => {
+    word.style.animationDelay = `${index * 3}s`;
+  });
+  console.log('✅ Hero animation delays aplicados');
+});
