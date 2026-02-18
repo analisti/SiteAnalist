@@ -1,8 +1,24 @@
 /* ============================================================================
-   ANIMATIONS - 3D, PARALLAX, TRANSIÇÕES SUAVES
+   ANIMATIONS 
    ============================================================================ */
 
-/* ========== HERO SECTION ========== */
+/* ================= GLOBAL ================= */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Redução de movimento (acessibilidade + Lighthouse) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ================= HERO ================= */
+
 .hero {
   position: relative;
   min-height: 100vh;
@@ -12,12 +28,6 @@
   overflow: visible;
   padding: var(--spacing-3xl) 0;
 }
-
-body 
-{ overflow-x: hidden; }
-
-html
- { overflow-x: hidden; }
 
 .hero__container {
   position: relative;
@@ -32,13 +42,6 @@ html
   align-items: center;
 }
 
-@media (max-width: 767px) {
-  .hero__container {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-  }
-}
-
 .hero__content {
   animation: fadeInUp 0.8s ease-out;
 }
@@ -47,7 +50,6 @@ html
   font-size: var(--font-size-4xl);
   line-height: 1.1;
   margin-bottom: var(--spacing-lg);
-  position: relative;
 }
 
 .hero__title em {
@@ -56,7 +58,8 @@ html
   font-weight: var(--font-weight-bold);
 }
 
-/* ========== ANIMATED HEADLINE ========== */
+/* ================= HEADLINE ================= */
+
 .hero__headline {
   margin-bottom: var(--spacing-2xl);
 }
@@ -76,7 +79,6 @@ html
   color: var(--color-secondary);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .hero__word {
@@ -86,41 +88,15 @@ html
   opacity: 0;
   animation: wordRotate 9s infinite;
   white-space: nowrap;
-  will-change: opacity, transform;
+  will-change: opacity, transform; /* apenas onde anima continuamente */
 }
 
-.hero__word:nth-child(1) {
-  animation-delay: 0s;
-}
+.hero__word:nth-child(1) { animation-delay: 0s; }
+.hero__word:nth-child(2) { animation-delay: 3s; }
+.hero__word:nth-child(3) { animation-delay: 6s; }
 
-.hero__word:nth-child(2) {
-  animation-delay: 3s;
-}
+/* ================= CTA ================= */
 
-.hero__word:nth-child(3) {
-  animation-delay: 6s;
-}
-
-@keyframes wordRotate {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) translateX(0);
-  }
-  5% {
-    opacity: 1;
-    transform: translateY(0) translateX(0);
-  }
-  30%, 35% {
-    opacity: 1;
-    transform: translateY(0) translateX(0);
-  }
-  40%, 100% {
-    opacity: 0;
-    transform: translateY(-10px) translateX(0);
-  }
-}
-
-/* ========== CTA BUTTONS ========== */
 .hero__cta {
   display: flex;
   gap: var(--spacing-md);
@@ -131,18 +107,8 @@ html
   animation: slideInUp 0.8s ease-out 0.2s backwards;
 }
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* ================= 3D BACKGROUND ================= */
 
-/* ========== 3D BACKGROUND ========== */
 .hero__bg {
   position: absolute;
   top: 0;
@@ -152,46 +118,30 @@ html
   z-index: 1;
   opacity: 0.3;
   animation: float 6s ease-in-out infinite;
-
-  /* NOVO */
   display: flex;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
-  will-change: transform;
 }
 
-/* ===== IMAGEM CENTRAL ===== */
 .hero__image {
   position: absolute;
-  width: 280px; /* ajuste conforme necessário */
+  width: 280px;
   height: auto;
   z-index: 2;
-  pointer-events: none; /* evita conflito com hover */
-  transform: translateZ(40px); /* cria profundidade real 3D */
-  will-change: transform;
+  pointer-events: none;
+  transform: translateZ(40px);
 }
 
-/* ===== SVG DECORATIVO ===== */
 .hero__decoration {
   width: 100%;
   height: 100%;
   position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 10px 30px rgba(129, 178, 154, 0.2));
+  filter: drop-shadow(0 10px 30px rgba(129,178,154,0.2));
 }
 
-/* ========== FLOAT ANIMATION ========== */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotateZ(0deg);
-  }
-  50% {
-    transform: translateY(-30px) rotateZ(10deg);
-  }
-}
+/* ================= PARALLAX ================= */
 
-/* ========== PARALLAX 3D ========== */
 [data-3d-element] {
   perspective: 1000px;
 }
@@ -200,77 +150,8 @@ html
   animation: tilt 0.6s ease-out;
 }
 
-@keyframes tilt {
-  0% {
-    transform: rotateX(0) rotateY(0) scale(1);
-  }
-  50% {
-    transform: rotateX(5deg) rotateY(-8deg) scale(1.02);
-  }
-  100% {
-    transform: rotateX(0) rotateY(0) scale(1);
-  }
-}
+/* ================= WHATSAPP ================= */
 
-/* ========== SCROLL ANIMATIONS ========== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.fade-in--left {
-  animation: fadeInLeft 0.6s ease-out forwards;
-}
-
-.fade-in--right {
-  animation: fadeInRight 0.6s ease-out forwards;
-}
-
-/* ========== WAVE SVG ========== */
-.wave {
-  color: var(--color-bg);
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-
-/* ========== WHATSAPP BUTTON ========== */
 .whatsapp-button {
   position: fixed;
   bottom: 2rem;
@@ -279,7 +160,7 @@ html
   height: 60px;
   border-radius: var(--border-radius-full);
   background-color: #25d366;
-  color: white;
+  color: #fff;
   font-size: var(--font-size-xl);
   display: flex;
   align-items: center;
@@ -299,31 +180,50 @@ html
   transform: translateY(-2px) scale(0.95);
 }
 
-@media (max-width: 640px) {
-  .whatsapp-button {
-    bottom: 1rem;
-    right: 1rem;
+/* ================= MARQUEE ================= */
+
+.marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 1rem;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+  will-change: transform; /* apenas aqui */
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Pausar no hover */
+@media (hover: hover) {
+  .marquee-wrapper:hover .marquee-content {
+    animation-play-state: paused;
   }
 }
 
-/* ========== STAGGER ANIMATION ========== */
+/* ================= STAGGER ================= */
+
 .service-card[data-service-card] {
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.service-card[data-service-card]:nth-child(1) {
-  animation-delay: 0.1s;
-}
+.service-card[data-service-card]:nth-child(1) { animation-delay: 0.1s; }
+.service-card[data-service-card]:nth-child(2) { animation-delay: 0.2s; }
+.service-card[data-service-card]:nth-child(3) { animation-delay: 0.3s; }
 
-.service-card[data-service-card]:nth-child(2) {
-  animation-delay: 0.2s;
-}
+/* ================= INTERSECTION ================= */
 
-.service-card[data-service-card]:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-/* ========== INTERSECTION OBSERVER ========== */
 [data-animate] {
   opacity: 0;
   transform: translateY(30px);
@@ -335,82 +235,70 @@ html
   transform: translateY(0);
 }
 
-/* ============================================================================
-   PATCH PARA animations.css - APLICAR ESTAS MUDANÇAS
-   ============================================================================ */
+/* ================= KEYFRAMES ================= */
 
-/* ========== LINHA 10 - MUDAR OVERFLOW ========== */
-
-/* ANTES (linha ~8-16): */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;  /* ❌ PROBLEMA: corta animações */
-  padding: var(--spacing-3xl) 0;
+@keyframes wordRotate {
+  0% { opacity: 0; transform: translateY(10px); }
+  5% { opacity: 1; transform: translateY(0); }
+  30%,35% { opacity: 1; transform: translateY(0); }
+  40%,100% { opacity: 0; transform: translateY(-10px); }
 }
 
-/* DEPOIS (substitua por): */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible;  /* ✅ CORRIGIDO: permite ver animações */
-  padding: var(--spacing-3xl) 0;
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========== ADICIONAR APÓS O BLOCO .hero ========== */
-
-/* Controlar scroll horizontal apenas no body */
-body {
-  overflow-x: hidden;
+@keyframes float {
+  0%,100% { transform: translateY(0) rotateZ(0); }
+  50% { transform: translateY(-30px) rotateZ(10deg); }
 }
 
-html {
-  overflow-x: hidden;
+@keyframes tilt {
+  0% { transform: rotateX(0) rotateY(0) scale(1); }
+  50% { transform: rotateX(5deg) rotateY(-8deg) scale(1.02); }
+  100% { transform: rotateX(0) rotateY(0) scale(1); }
 }
 
-/* GPU acceleration para melhor performance */
-.hero__word,
-.marquee-content,
-.hero__bg {
-  will-change: opacity, transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========== RESPONSIVIDADE MOBILE ========== */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
-/* Garantir que mobile também funcione */
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ================= RESPONSIVO ================= */
+
 @media (max-width: 767px) {
-  .hero {
-    overflow: visible; /* Manter visível em mobile */
+
+  .hero__container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
   }
-  
-  .hero__container,
-  .hero__content,
-  .hero__headline,
-  .hero__words {
-    overflow: visible;
-  }
-  
-  /* Ajustar tamanhos mobile */
+
   .hero__words {
     font-size: 1.25rem;
-    min-height: 2.5rem;
+    min-height: 2rem;
   }
-  
+
   .hero__word {
     white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
+    max-width: 90%;
   }
-  
+
   .hero__bg {
     width: 200px;
     height: 200px;
@@ -418,223 +306,48 @@ html {
     bottom: 10%;
     opacity: 0.15;
   }
+
+  .marquee-content {
+    gap: 0.75rem;
+  }
+
+  .marquee-item {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .marquee-item i {
+    font-size: 1rem;
+  }
+
+  .whatsapp-button {
+    bottom: 1rem;
+    right: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
+
   .hero__words {
     font-size: 1.125rem;
   }
-  
+
   .hero__bg {
     width: 150px;
     height: 150px;
     opacity: 0.1;
   }
-}
 
-@media (max-width: 767px) {
-  .hero__words {
-    font-size: 1.25rem;
-    min-height: 2rem;
-  }
-  
-  .hero__word {
-    white-space: normal;
-    word-wrap: break-word;
-    max-width: 90%;
-  }
-  
-  .marquee-item {
-    padding: 0.625rem 0.875rem;
-    font-size: 0.875rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero__words {
-    font-size: 1.125rem;
-  }
-  
-  .marquee-item {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8125rem;
-  }
-}
-
-/* ============================================================================
-   MARQUEE SCROLL -
-   ============================================================================ */
-
-/* Container principal - controlar overflow */
-.marquee-wrapper {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-
-/* Conteúdo animado */
-.marquee-content {
-  display: flex;
-  gap: 1rem;
-  animation: marquee 30s linear infinite;
-  width: max-content;
-}
-
-/* Items individuais */
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* Keyframe da animação */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* Mobile - ajustes de tamanho */
-@media (max-width: 767px) {
-  .marquee-content {
-    gap: 0.75rem;
-  }
-  
-  .marquee-item {
-    padding: 0.625rem 0.875rem;
-    gap: 0.375rem;
-    font-size: 0.875rem;
-  }
-  
-  .marquee-item i {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
   .marquee-content {
     gap: 0.5rem;
   }
-  
+
   .marquee-item {
     padding: 0.5rem 0.75rem;
     font-size: 0.8125rem;
   }
-  
+
   .marquee-item i {
     font-size: 0.9375rem;
   }
 }
-
-/* Pausar animação ao hover (desktop) */
-@media (hover: hover) {
-  .marquee-wrapper:hover .marquee-content {
-    animation-play-state: paused;
-  }
-}
-
-/* ========== FIM DO PATCH ========== */
-/* ============================================================================
-   EXEMPLO: ONDE ADICIONAR NO animations.css
-   ============================================================================ */
-
-/* ========== CÓDIGO EXISTENTE (NÃO MEXER) ========== */
-
-.hero__word {
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  animation: wordRotate 9s infinite;
-  white-space: nowrap;
-  will-change: opacity, transform;
-}
-
-/* ========== ADICIONAR AQUI (LOGO APÓS .hero__word) ========== */
-
-.hero__word:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.hero__word:nth-child(2) {
-  animation-delay: 3s;
-}
-
-.hero__word:nth-child(3) {
-  animation-delay: 6s;
-}
-
-/* ========== FIM DA ADIÇÃO ========== */
-
-/* ========== CÓDIGO EXISTENTE CONTINUA ========== */
-
-@keyframes wordRotate {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) translateX(0);
-  }
-  5% {
-    opacity: 1;
-    transform: translateY(0) translateX(0);
-  }
-  30%, 35% {
-    opacity: 1;
-    transform: translateY(0) translateX(0);
-  }
-  40%, 100% {
-    opacity: 0;
-    transform: translateY(-10px) translateX(0);
-  }
-}
-
-/* ========== ADICIONAR MOBILE NO FINAL DO ARQUIVO ========== */
-
-@media (max-width: 767px) {
-  .hero__words {
-    font-size: 1.25rem;
-    min-height: 2rem;
-  }
-  
-  .hero__word {
-    white-space: normal;
-    word-wrap: break-word;
-    max-width: 90%;
-  }
-  
-  /* Marquee mobile */
-  .marquee-content {
-    gap: 0.75rem;
-  }
-  
-  .marquee-item {
-    padding: 0.625rem 0.875rem;
-    font-size: 0.875rem;
-  }
-  
-  .marquee-item i {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero__words {
-    font-size: 1.125rem;
-  }
-  
-  .marquee-content {
-    gap: 0.5rem;
-  }
-  
-  .marquee-item {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8125rem;
-  }
-}
-
-/* ========== FIM DAS ADIÇÕES ========== */
