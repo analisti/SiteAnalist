@@ -788,9 +788,11 @@ html, body {
     max-height: none;
   }
 
+  /* Mostra submenu ao passar o mouse no item */
   .dropdown-wrapper:hover .navbar__submenu,
   .dropdown-wrapper:focus-within .navbar__submenu {
     opacity: 1;
     visibility: visible;
   }
 }
+
