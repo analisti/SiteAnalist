@@ -79,7 +79,7 @@ class App {
       });
     });
 
-    // Dropdown toggle
+    /*// Dropdown toggle
     dropdownTriggers.forEach((trigger, index) => {
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
@@ -90,6 +90,7 @@ class App {
         const wrapper = trigger.closest('.dropdown-wrapper');
         if (wrapper) {
           const isActive = wrapper.classList.contains('active');
+          */
           
           // Fechar outros dropdowns
           document.querySelectorAll('.dropdown-wrapper.active').forEach(w => {
@@ -98,7 +99,7 @@ class App {
             }
           });
           
-          // Toggle dropdown atual
+          /*// Toggle dropdown atual
           if (isActive) {
             wrapper.classList.remove('active');
           } else {
@@ -108,7 +109,7 @@ class App {
           console.log('✓ Dropdown toggled');
         }
       });
-    });
+    });*/
 
     // Fechar menu ao clicar fora
     document.addEventListener('click', (e) => {
