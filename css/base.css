@@ -23,12 +23,17 @@
   --font-size-3xl: 2rem;
   --font-size-4xl: 2.5rem;
 
-  /* Colors */
+  /* ==============================
+     LIGHT MODE COLORS (DEFAULT)
+     ============================== */
+
   --color-primary: #0F1923;
   --color-primary-dark: #0A121B;
   --color-accent1: #FF6B6B;
+
   --color-text: #111827;
   --color-text-muted: #4B5563;
+
   --color-bg: #FFFFFF;
   --color-bg-tertiary: #F9FAFB;
   --color-border: #E5E7EB;
@@ -45,6 +50,23 @@
   /* Transitions */
   --transition-fast: 0.2s ease-in-out;
   --transition-slow: 0.4s ease-in-out;
+}
+
+/* ============================================================================
+   DARK MODE OVERRIDE
+   ============================================================================ */
+
+[data-theme="dark"] {
+  --color-primary: #81b29a;
+  --color-primary-dark: #6a9481;
+  --color-accent1: #ff8f7a;
+
+  --color-text: #f0ebe6;
+  --color-text-muted: #a8a8a8;
+
+  --color-bg: #0f1923;
+  --color-bg-tertiary: #1a2635;
+  --color-border: #2a3d4f;
 }
 
 /* ============================================================================
