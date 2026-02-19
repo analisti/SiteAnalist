@@ -12,19 +12,19 @@ class App {
     try {
       this.setupNavigation();
       console.log('✅ Navigation inicializado');
-      
+
       this.setupSmoothScroll();
       console.log('✅ Smooth Scroll inicializado');
-      
+
       this.setupVisitorCounter();
       console.log('✅ Visitor Counter inicializado');
-      
+
       this.setupScrollAnimations();
       console.log('✅ Scroll Animations inicializado');
-      
+
       this.setupMarquee();
       console.log('✅ Marquee inicializado');
-      
+
       console.log('✅ Aplicação inicializada com sucesso');
     } catch (error) {
       console.error('❌ Erro ao inicializar:', error);
@@ -34,7 +34,7 @@ class App {
   // ========== NAVIGATION ==========
   setupNavigation() {
     console.log('🔧 Configurando Navigation...');
-    
+
     const toggle = document.querySelector('[data-nav-toggle]');
     const menu = document.querySelector('[data-nav-menu]');
     const links = document.querySelectorAll('[data-nav-link]');
@@ -54,14 +54,14 @@ class App {
     toggle.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
       const newState = !isExpanded;
-      
+
       console.log('📱 Menu clicado. Novo estado:', newState);
-      
+
       toggle.setAttribute('aria-expanded', newState);
-      
+
       if (newState) {
         menu.classList.add('active');
       } else {
@@ -73,7 +73,7 @@ class App {
     links.forEach((link, index) => {
       link.addEventListener('click', (e) => {
         console.log('🔗 Link clicado:', index);
-        
+
         toggle.setAttribute('aria-expanded', 'false');
         menu.classList.remove('active');
       });
@@ -91,32 +91,67 @@ class App {
         if (wrapper) {
           const isActive = wrapper.classList.contains('active');
           */
-          
+
+    // Dropdown toggle (somente mobile)
+    dropdownTriggers.forEach((trigger, index) => {
+      trigger.addEventListener('click', (e) => {
+        // Detecta se está em mobile (largura < 768px)
+        if (window.innerWidth >= 768) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log('🔽 Dropdown clicado (mobile):', index);
+
+        const wrapper = trigger.closest('.dropdown-wrapper');
+        if (wrapper) {
+          const isActive = wrapper.classList.contains('active');
+
           // Fechar outros dropdowns
           document.querySelectorAll('.dropdown-wrapper.active').forEach(w => {
             if (w !== wrapper) {
               w.classList.remove('active');
             }
           });
-          
-          /*// Toggle dropdown atual
+
+          // Toggle dropdown atual
           if (isActive) {
             wrapper.classList.remove('active');
           } else {
             wrapper.classList.add('active');
           }
-          
-          console.log('✓ Dropdown toggled');
+
+          console.log('✓ Dropdown toggled (mobile)');
         }
       });
-    });*/
+    });
+
+
+    // Fechar outros dropdowns
+    document.querySelectorAll('.dropdown-wrapper.active').forEach(w => {
+      if (w !== wrapper) {
+        w.classList.remove('active');
+      }
+    });
+
+    /*// Toggle dropdown atual
+    if (isActive) {
+      wrapper.classList.remove('active');
+    } else {
+      wrapper.classList.add('active');
+    }
+    
+    console.log('✓ Dropdown toggled');
+  }
+});
+});*/
 
     // Fechar menu ao clicar fora
     document.addEventListener('click', (e) => {
       const isNavbar = e.target.closest('.navbar');
       const isMenu = e.target.closest('[data-nav-menu]');
       const isToggle = e.target.closest('[data-nav-toggle]');
-      
+
       if (!isNavbar && !isMenu && !isToggle) {
         toggle.setAttribute('aria-expanded', 'false');
         menu.classList.remove('active');
@@ -134,12 +169,12 @@ class App {
     smoothScrollLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        
+
         const href = link.getAttribute('href');
         const target = document.querySelector(href);
-        
+
         console.log('📍 Smooth scroll para:', href, '| Alvo encontrado:', !!target);
-        
+
         if (target) {
           // Fechar menu se aberto
           const menu = document.querySelector('[data-nav-menu]');
@@ -148,7 +183,7 @@ class App {
             toggle.setAttribute('aria-expanded', 'false');
             menu.classList.remove('active');
           }
-          
+
           // Scroll suave
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -160,7 +195,7 @@ class App {
   setupVisitorCounter() {
     const STORAGE_KEY = 'analist_visitors';
     const counter = document.querySelector('[data-visitor-counter]');
-    
+
     if (!counter) {
       console.warn('⚠️ Elemento [data-visitor-counter] não encontrado');
       return;
@@ -205,7 +240,7 @@ class App {
   // ========== SCROLL ANIMATIONS ==========
   setupScrollAnimations() {
     const sections = document.querySelectorAll('[data-section]');
-    
+
     if (!sections.length) {
       console.warn('⚠️ Nenhuma seção com [data-section] encontrada');
       return;
@@ -229,14 +264,14 @@ class App {
   // ========== MARQUEE ANIMATION ==========
   setupMarquee() {
     const marqueeWrapper = document.querySelector('[data-marquee]');
-    
+
     if (!marqueeWrapper) {
       console.warn('⚠️ Marquee wrapper não encontrado');
       return;
     }
 
     const marqueeContent = marqueeWrapper.querySelector('.marquee-content');
-    
+
     if (!marqueeContent) {
       console.warn('⚠️ Marquee content não encontrado');
       return;
@@ -272,7 +307,7 @@ if (document.readyState === 'loading') {
 }
 
 // Garantir animation delays nas palavras do hero
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const heroWords = document.querySelectorAll('.hero__word');
   heroWords.forEach((word, index) => {
     word.style.animationDelay = `${index * 3}s`;
