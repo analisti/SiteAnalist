@@ -53,32 +53,73 @@
             <img src="images/logoanalisti1-Photoroom.png" alt="analist.com" class="navbar__logo">
           </a>
 
-          <!-- Mobile Toggle (3 spans para hambúrguer!) -->
-          <button class="navbar__toggle" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
+          <!-- Mobile Toggle -->
+          <button class="navbar__toggle kinetic-toggle" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
             <span class="navbar__toggle-icon"></span>
             <span class="navbar__toggle-icon"></span>
             <span class="navbar__toggle-icon"></span>
           </button>
 
-          <!-- Menu -->
-          <nav class="navbar__menu" data-nav-menu>
-            <ul class="navbar__list">
-              <li class="navbar__item"><a href="#hero" class="navbar__link" data-nav-link>Home</a></li>
-              <li class="navbar__item"><a href="#services" class="navbar__link" data-nav-link>Serviços</a></li>
-              <li class="navbar__item"><a href="#ai" class="navbar__link" data-nav-link>Planejamento</a></li>
-              <li class="navbar__item dropdown-wrapper">
-                <button class="navbar__link navbar__link--dropdown" aria-expanded="false" aria-haspopup="true"
-                  data-dropdown-trigger>
-                  Páginas <i class="fas fa-chevron-down"></i>
-                </button>
+          <!-- FULLSCREEN KINETIC MENU -->
+          <nav class="navbar__menu kinetic-menu" data-nav-menu data-kinetic-menu>
 
+            <!-- Overlay -->
+            <div class="kinetic-overlay"></div>
 
-                <ul class="navbar__submenu" data-dropdown>
-                  <li><a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow"
-                      class="navbar__sublink">Crie um negócio</a></li>
-                </ul>
-              </li>
-            </ul>
+            <!-- Animated Background Panels -->
+            <div class="kinetic-panels">
+              <div class="panel"></div>
+              <div class="panel"></div>
+              <div class="panel"></div>
+            </div>
+
+            <!-- Menu Content -->
+            <div class="kinetic-content">
+
+              <ul class="navbar__list kinetic-links">
+
+                <li class="navbar__item" data-shape="1">
+                  <a href="#hero" class="navbar__link" data-nav-link>Home</a>
+                </li>
+
+                <li class="navbar__item" data-shape="2">
+                  <a href="#services" class="navbar__link" data-nav-link>Serviços</a>
+                </li>
+
+                <li class="navbar__item" data-shape="3">
+                  <a href="#ai" class="navbar__link" data-nav-link>Planejamento</a>
+                </li>
+
+                <li class="navbar__item dropdown-wrapper" data-shape="4">
+
+                  <button class="navbar__link navbar__link--dropdown" aria-expanded="false" aria-haspopup="true"
+                    data-dropdown-trigger>
+                    Páginas <i class="fas fa-chevron-down"></i>
+                  </button>
+
+                  <ul class="navbar__submenu" data-dropdown>
+                    <li>
+                      <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow"
+                        class="navbar__sublink">
+                        Crie um negócio
+                      </a>
+                    </li>
+                  </ul>
+
+                </li>
+
+              </ul>
+
+              <!-- Animated Background Shapes -->
+              <div class="kinetic-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+              </div>
+
+            </div>
+
           </nav>
 
           <!-- Theme Toggle -->
@@ -86,195 +127,194 @@
             <i class="fas fa-sun"></i>
             <i class="fas fa-moon"></i>
           </button>
-        </div>
-      </nav>
-    </header>
 
-    <!-- WHATSAPP BUTTON -->
-    <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Estou%20entrando%20em%20contato%20pelo%20seu%20site."
-      target="_blank" rel="noopener" class="whatsapp-button" aria-label="Contato WhatsApp" data-whatsapp>
-      <i class="fab fa-whatsapp"></i>
-    </a>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="hero" data-section="hero">
-      <div class="hero__container">
-        <div class="hero__content">
-          <h1 class="hero__title">
-            Se seu negócio está na internet mas não gera clientes…<br>
-            ele não é <em>digital</em>. Ele é <em>invisível</em>.
-          </h1>
+          <!-- WHATSAPP BUTTON -->
+          <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Estou%20entrando%20em%20contato%20pelo%20seu%20site."
+            target="_blank" rel="noopener" class="whatsapp-button" aria-label="Contato WhatsApp" data-whatsapp>
+            <i class="fab fa-whatsapp"></i>
+          </a>
 
-          <div class="hero__headline">
-            <p class="hero__subtitle">analist.com FAZ</p>
-            <div class="hero__words">
-              <span class="hero__word">Sistemas que vendem</span>
-              <span class="hero__word">Presença online</span>
-              <span class="hero__word">Crescimento real</span>
-            </div>
-          </div>
+          <!-- HERO SECTION -->
+          <section class="hero" id="hero" data-section="hero">
+            <div class="hero__container">
+              <div class="hero__content">
+                <h1 class="hero__title">
+                  Se seu negócio está na internet mas não gera clientes…<br>
+                  ele não é <em>digital</em>. Ele é <em>invisível</em>.
+                </h1>
 
-          <div class="hero__cta">
-            <a href="#about" class="btn btn--primary" data-smooth-scroll>Conheça a solução</a>
-            <a href="#contact" class="btn btn--secondary" data-smooth-scroll>
-              Falar com especialista
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </div>
+                <div class="hero__headline">
+                  <p class="hero__subtitle">analist.com FAZ</p>
+                  <div class="hero__words">
+                    <span class="hero__word">Sistemas que vendem</span>
+                    <span class="hero__word">Presença online</span>
+                    <span class="hero__word">Crescimento real</span>
+                  </div>
+                </div>
 
-        <!-- 3D Background Element -->
-        <div class="hero__bg" data-3d-element>
-          <img src="images/logoanalisti1-Photoroom.png" alt="analist.com" width="400" height="400" loading="eager"
-            fetchpriority="high">
-          <svg class="hero__decoration" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:var(--color-accent1);stop-opacity:0.3" />
-                <stop offset="100%" style="stop-color:var(--color-primary);stop-opacity:0.1" />
-              </linearGradient>
-            </defs>
-            <circle cx="200" cy="200" r="150" fill="url(#grad1)" />
-            <path d="M 100,200 Q 150,100 200,150 T 300,200" stroke="var(--color-primary)" stroke-width="2" fill="none"
-              opacity="0.3" />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Wave SVG -->
-      <svg class="wave" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-        preserveAspectRatio="none">
-        <path
-          d="M0,64L120,69.3C240,75,480,85,720,80C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z"
-          fill="currentColor"></path>
-      </svg>
-    </section>
-
-    <!-- SKILLS MARQUEE SECTION -->
-    <section class="section skills-marquee" id="skills-marquee" data-section="skills-marquee">
-      <div class="skills-marquee__background"></div>
-
-      <div class="section__container">
-        <div class="skills-marquee__content">
-          <h2 class="skills-marquee__title">Tecnologias que transformam visões em realidade</h2>
-          <p class="skills-marquee__subtitle">Frontend | Backend | Full Stack</p>
-
-          <!-- MARQUEE CONTAINER -->
-          <div class="marquee-wrapper" data-marquee>
-            <div class="marquee-content">
-              <!-- Frontend Skills -->
-              <div class="marquee-item">
-                <i class="fab fa-html5"></i>
-                <span>HTML</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fab fa-css3-alt"></i>
-                <span>CSS</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fab fa-js-square"></i>
-                <span>JavaScript</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fab fa-react"></i>
-                <span>React Native</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-mobile-alt"></i>
-                <span>Mobile First</span>
+                <div class="hero__cta">
+                  <a href="#about" class="btn btn--primary" data-smooth-scroll>Conheça a solução</a>
+                  <a href="#contact" class="btn btn--secondary" data-smooth-scroll>
+                    Falar com especialista
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
               </div>
 
-              <!-- Separador -->
-              <div class="marquee-separator"></div>
-
-              <!-- Backend Skills -->
-              <div class="marquee-item">
-                <i class="fab fa-java"></i>
-                <span>Java</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-database"></i>
-                <span>MySQL</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-leaf"></i>
-                <span>Spring Boot</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-cogs"></i>
-                <span>APIs REST</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-lock"></i>
-                <span>Segurança</span>
-              </div>
-
-              <!-- REPETIR para efeito infinito -->
-              <div class="marquee-item">
-                <i class="fab fa-html5"></i>
-                <span>HTML</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fab fa-css3-alt"></i>
-                <span>CSS</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fab fa-js-square"></i>
-                <span>JavaScript</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fab fa-react"></i>
-                <span>React Native</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-mobile-alt"></i>
-                <span>Mobile First</span>
-              </div>
-
-              <div class="marquee-separator"></div>
-
-              <div class="marquee-item">
-                <i class="fab fa-java"></i>
-                <span>Java</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-database"></i>
-                <span>MySQL</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-leaf"></i>
-                <span>Spring Boot</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-cogs"></i>
-                <span>APIs REST</span>
-              </div>
-              <div class="marquee-item">
-                <i class="fas fa-lock"></i>
-                <span>Segurança</span>
+              <!-- 3D Background Element -->
+              <div class="hero__bg" data-3d-element>
+                <img src="images/logoanalisti1-Photoroom.png" alt="analist.com" width="400" height="400" loading="eager"
+                  fetchpriority="high">
+                <svg class="hero__decoration" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true">
+                  <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:var(--color-accent1);stop-opacity:0.3" />
+                      <stop offset="100%" style="stop-color:var(--color-primary);stop-opacity:0.1" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="200" cy="200" r="150" fill="url(#grad1)" />
+                  <path d="M 100,200 Q 150,100 200,150 T 300,200" stroke="var(--color-primary)" stroke-width="2"
+                    fill="none" opacity="0.3" />
+                </svg>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- EXPERTISE SECTION -->
-    <section class="section expertise" id="expertise" data-section="expertise">
-      <div class="section__container">
-        <h2 class="section__title">Estruturas digitais que trabalham por você</h2>
+            <!-- Wave SVG -->
+            <svg class="wave" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+              preserveAspectRatio="none">
+              <path
+                d="M0,64L120,69.3C240,75,480,85,720,80C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z"
+                fill="currentColor"></path>
+            </svg>
+          </section>
 
-        <div class="expertise__intro">
-          <p class="expertise__intro-text">
-            Eu não crio sites. <strong>Eu construo estruturas digitais que trabalham por você.</strong>
-          </p>
-          <p class="expertise__intro-text">
-            Cada projeto que desenvolvo tem um objetivo claro: fazer o digital parar de ser promessa e virar
-            <strong>ferramenta de crescimento.</strong>
-          </p>
-        </div>
+          <!-- SKILLS MARQUEE SECTION -->
+          <section class="section skills-marquee" id="skills-marquee" data-section="skills-marquee">
+            <div class="skills-marquee__background"></div>
 
-        <!--<div class="expertise__grid">
+            <div class="section__container">
+              <div class="skills-marquee__content">
+                <h2 class="skills-marquee__title">Tecnologias que transformam visões em realidade</h2>
+                <p class="skills-marquee__subtitle">Frontend | Backend | Full Stack</p>
+
+                <!-- MARQUEE CONTAINER -->
+                <div class="marquee-wrapper" data-marquee>
+                  <div class="marquee-content">
+                    <!-- Frontend Skills -->
+                    <div class="marquee-item">
+                      <i class="fab fa-html5"></i>
+                      <span>HTML</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fab fa-css3-alt"></i>
+                      <span>CSS</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fab fa-js-square"></i>
+                      <span>JavaScript</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fab fa-react"></i>
+                      <span>React Native</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-mobile-alt"></i>
+                      <span>Mobile First</span>
+                    </div>
+
+                    <!-- Separador -->
+                    <div class="marquee-separator"></div>
+
+                    <!-- Backend Skills -->
+                    <div class="marquee-item">
+                      <i class="fab fa-java"></i>
+                      <span>Java</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-database"></i>
+                      <span>MySQL</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-leaf"></i>
+                      <span>Spring Boot</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-cogs"></i>
+                      <span>APIs REST</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-lock"></i>
+                      <span>Segurança</span>
+                    </div>
+
+                    <!-- REPETIR para efeito infinito -->
+                    <div class="marquee-item">
+                      <i class="fab fa-html5"></i>
+                      <span>HTML</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fab fa-css3-alt"></i>
+                      <span>CSS</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fab fa-js-square"></i>
+                      <span>JavaScript</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fab fa-react"></i>
+                      <span>React Native</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-mobile-alt"></i>
+                      <span>Mobile First</span>
+                    </div>
+
+                    <div class="marquee-separator"></div>
+
+                    <div class="marquee-item">
+                      <i class="fab fa-java"></i>
+                      <span>Java</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-database"></i>
+                      <span>MySQL</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-leaf"></i>
+                      <span>Spring Boot</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-cogs"></i>
+                      <span>APIs REST</span>
+                    </div>
+                    <div class="marquee-item">
+                      <i class="fas fa-lock"></i>
+                      <span>Segurança</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- EXPERTISE SECTION -->
+          <section class="section expertise" id="expertise" data-section="expertise">
+            <div class="section__container">
+              <h2 class="section__title">Estruturas digitais que trabalham por você</h2>
+
+              <div class="expertise__intro">
+                <p class="expertise__intro-text">
+                  Eu não crio sites. <strong>Eu construo estruturas digitais que trabalham por você.</strong>
+                </p>
+                <p class="expertise__intro-text">
+                  Cada projeto que desenvolvo tem um objetivo claro: fazer o digital parar de ser promessa e virar
+                  <strong>ferramenta de crescimento.</strong>
+                </p>
+              </div>
+
+              <!--<div class="expertise__grid">
           STRATEGY COLUMN 
           <div class="expertise__strategy">
             <h3 class="expertise__heading">Estratégia que vende</h3>
@@ -409,167 +449,168 @@
       </div>
     </section>-->
 
-        <!-- ABOUT SECTION 
+              <!-- ABOUT SECTION 
     <section class="section about" id="about" data-section="about">
       <div class="section__container">
         <h2 class="section__title">Transforme seu negócio em digital de verdade</h2>-->
 
-        <div class="about__grid">
-          <article class="about__card">
-            <h3 class="about__heading">O Problema Real</h3>
-            <p>Não é falta de internet. É <strong>excesso de amadorismo digital</strong>.</p>
-            <p>Qualquer empresa consegue "ter um site". Mas a maioria deles não gera confiança, não conduz e não
-              transforma atenção em resultado.</p>
-          </article>
+              <div class="about__grid">
+                <article class="about__card">
+                  <h3 class="about__heading">O Problema Real</h3>
+                  <p>Não é falta de internet. É <strong>excesso de amadorismo digital</strong>.</p>
+                  <p>Qualquer empresa consegue "ter um site". Mas a maioria deles não gera confiança, não conduz e não
+                    transforma atenção em resultado.</p>
+                </article>
 
-          <article class="about__card">
-            <h3 class="about__heading">Nossa Abordagem</h3>
-            <p>Estruturas digitais que <strong>trabalham por você</strong>.</p>
-            <p>Atrativos. Claros. Persuasivos. Escaláveis. Cada detalhe foi pensado para converter visitantes em
-              clientes.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- AI SECTION -->
-    <section class="section ai" id="ai" data-section="ai">
-      <div class="section__container">
-        <div class="ai__grid">
-          <div class="ai__content">
-            <h2 class="ai__title">Transforme seu negócio em digital de verdade</h2>
-            <p class="ai__subtitle">Ideias não quebram negócios. Decisões erradas sim.</p>
-
-            <p>Apresentamos nossa plataforma de IA revolucionária:</p>
-
-            <ul class="ai__features">
-              <li><strong>Reduz risco</strong> com análise inteligente</li>
-              <li><strong>Acelera clareza</strong> em decisões estratégicas</li>
-              <li><strong>Mostra caminhos</strong> onde havia dúvida</li>
-            </ul>
-
-            <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow"
-              class="btn btn--primary">
-              Explorar a plataforma
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-
-          <div class="ai__visual" data-3d-element>
-            <img src="images/diversidade-tec.jpg" alt="Plataforma de IA" class="ai__image" loading="lazy">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES SECTION -->
-    <section class="section services" id="services" data-section="services">
-      <div class="section__container">
-        <h2 class="section__title">Nossos Serviços</h2>
-
-        <div class="services__grid">
-          <!-- Presença Web -->
-          <article class="service-card highlight">
-            <div class="service-card__icon">
-              <i class="fas fa-globe"></i>
+                <article class="about__card">
+                  <h3 class="about__heading">Nossa Abordagem</h3>
+                  <p>Estruturas digitais que <strong>trabalham por você</strong>.</p>
+                  <p>Atrativos. Claros. Persuasivos. Escaláveis. Cada detalhe foi pensado para converter visitantes em
+                    clientes.</p>
+                </article>
+              </div>
             </div>
-            <h3 class="service-card__title">Presença Web</h3>
-            <p class="service-card__price">A partir de R$ 997</p>
-            <p class="service-card__description">
-              Construa confiança com um site moderno e responsivo que impressiona em qualquer dispositivo.
-            </p>
-            <ul class="service-card__features">
-              <li>Experiência perfeita em desktop e mobile</li>
-              <li>Mais visibilidade no Google</li>
-              <li>Velocidade e performance de ponta</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send?phone=5566981312846" class="cta-button">Solicitar orçamento</a>
-          </article>
+          </section>
 
-          <!-- Sistema Web -->
-          <article class="service-card">
-            <div class="service-card__icon">
-              <i class="fas fa-database"></i>
+          <!-- AI SECTION -->
+          <section class="section ai" id="ai" data-section="ai">
+            <div class="section__container">
+              <div class="ai__grid">
+                <div class="ai__content">
+                  <h2 class="ai__title">Transforme seu negócio em digital de verdade</h2>
+                  <p class="ai__subtitle">Ideias não quebram negócios. Decisões erradas sim.</p>
+
+                  <p>Apresentamos nossa plataforma de IA revolucionária:</p>
+
+                  <ul class="ai__features">
+                    <li><strong>Reduz risco</strong> com análise inteligente</li>
+                    <li><strong>Acelera clareza</strong> em decisões estratégicas</li>
+                    <li><strong>Mostra caminhos</strong> onde havia dúvida</li>
+                  </ul>
+
+                  <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="nofollow"
+                    class="btn btn--primary">
+                    Explorar a plataforma
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+
+                <div class="ai__visual" data-3d-element>
+                  <img src="images/diversidade-tec.jpg" alt="Plataforma de IA" class="ai__image" loading="lazy">
+                </div>
+              </div>
             </div>
-            <h3 class="service-card__title">Sistema Web</h3>
-            <p class="service-card__price">A partir de R$ 2.497</p>
-            <p class="service-card__description">
-              Organize e simplifique sua gestão com sistemas sob medida para clientes e produtos.
-            </p>
-            <ul class="service-card__features">
-              <li>Painel administrativo intuitivo</li>
-              <li>Integração com APIs e serviços externos</li>
-              <li>Segurança avançada para seus dados</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send?phone=5566981312846" class="cta-button">Quero meu sistema</a>
-          </article>
+          </section>
 
-          <!-- Plataforma Completa -->
-          <article class="service-card">
-            <div class="service-card__icon">
-              <i class="fas fa-cog"></i>
+          <!-- SERVICES SECTION -->
+          <section class="section services" id="services" data-section="services">
+            <div class="section__container">
+              <h2 class="section__title">Nossos Serviços</h2>
+
+              <div class="services__grid">
+                <!-- Presença Web -->
+                <article class="service-card highlight">
+                  <div class="service-card__icon">
+                    <i class="fas fa-globe"></i>
+                  </div>
+                  <h3 class="service-card__title">Presença Web</h3>
+                  <p class="service-card__price">A partir de R$ 997</p>
+                  <p class="service-card__description">
+                    Construa confiança com um site moderno e responsivo que impressiona em qualquer dispositivo.
+                  </p>
+                  <ul class="service-card__features">
+                    <li>Experiência perfeita em desktop e mobile</li>
+                    <li>Mais visibilidade no Google</li>
+                    <li>Velocidade e performance de ponta</li>
+                  </ul>
+                  <a href="https://api.whatsapp.com/send?phone=5566981312846" class="cta-button">Solicitar orçamento</a>
+                </article>
+
+                <!-- Sistema Web -->
+                <article class="service-card">
+                  <div class="service-card__icon">
+                    <i class="fas fa-database"></i>
+                  </div>
+                  <h3 class="service-card__title">Sistema Web</h3>
+                  <p class="service-card__price">A partir de R$ 2.497</p>
+                  <p class="service-card__description">
+                    Organize e simplifique sua gestão com sistemas sob medida para clientes e produtos.
+                  </p>
+                  <ul class="service-card__features">
+                    <li>Painel administrativo intuitivo</li>
+                    <li>Integração com APIs e serviços externos</li>
+                    <li>Segurança avançada para seus dados</li>
+                  </ul>
+                  <a href="https://api.whatsapp.com/send?phone=5566981312846" class="cta-button">Quero meu sistema</a>
+                </article>
+
+                <!-- Plataforma Completa -->
+                <article class="service-card">
+                  <div class="service-card__icon">
+                    <i class="fas fa-cog"></i>
+                  </div>
+                  <h3 class="service-card__title">Plataforma Completa</h3>
+                  <p class="service-card__price">A partir de R$ 4.997</p>
+                  <p class="service-card__description">
+                    Uma solução empresarial escalável que acompanha o crescimento do seu negócio.
+                  </p>
+                  <ul class="service-card__features">
+                    <li>Arquitetura modular e flexível</li>
+                    <li>Suporte contínuo e personalizado</li>
+                    <li>Escalabilidade garantida para o futuro</li>
+                  </ul>
+                  <a href="https://api.whatsapp.com/send?phone=5566981312846" class="cta-button">Falar com
+                    especialista</a>
+                </article>
+              </div>
             </div>
-            <h3 class="service-card__title">Plataforma Completa</h3>
-            <p class="service-card__price">A partir de R$ 4.997</p>
-            <p class="service-card__description">
-              Uma solução empresarial escalável que acompanha o crescimento do seu negócio.
-            </p>
-            <ul class="service-card__features">
-              <li>Arquitetura modular e flexível</li>
-              <li>Suporte contínuo e personalizado</li>
-              <li>Escalabilidade garantida para o futuro</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send?phone=5566981312846" class="cta-button">Falar com especialista</a>
-          </article>
-        </div>
-      </div>
-    </section>
+          </section>
 
 
-    <!-- ABOUT ANALIST -->
-    <section class="section about-brand" id="brand" data-section="brand">
-      <div class="section__container">
-        <div class="about-brand__content">
-          <div class="about-brand__logo">
-            <img src="images/logoanalisti1.jpeg" alt="Logo analist.com" loading="lazy">
-          </div>
+          <!-- ABOUT ANALIST -->
+          <section class="section about-brand" id="brand" data-section="brand">
+            <div class="section__container">
+              <div class="about-brand__content">
+                <div class="about-brand__logo">
+                  <img src="images/logoanalisti1.jpeg" alt="Logo analist.com" loading="lazy">
+                </div>
 
-          <h2 class="about-brand__title">analist.com</h2>
-          <p class="about-brand__tagline">Transformando negócios através de tecnologia estratégica</p>
+                <h2 class="about-brand__title">analist.com</h2>
+                <p class="about-brand__tagline">Transformando negócios através de tecnologia estratégica</p>
 
-          <div class="about-brand__social">
-            <a href="#" aria-label="Twitter" class="social-link"><i class="fab fa-twitter"></i></a>
-            <a href="https://api.whatsapp.com/send?phone=5566981312846" target="_blank" aria-label="WhatsApp"
-              class="social-link"><i class="fab fa-whatsapp"></i></a>
-          </div>
+                <div class="about-brand__social">
+                  <a href="#" aria-label="Twitter" class="social-link"><i class="fab fa-twitter"></i></a>
+                  <a href="https://api.whatsapp.com/send?phone=5566981312846" target="_blank" aria-label="WhatsApp"
+                    class="social-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
 
-          <p class="about-brand__copyright">© 2022–2026 analist.com. Todos os direitos reservados.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="section contact" id="contact" data-section="contact">
-      <div class="section__container">
-        <h2 class="section__title">Vamos conversar?</h2>
-
-        <div class="contact__grid">
-          <!-- FORMULÁRIO VISME -->
-          <div class="contact__form">
-            <div class="visme_d" data-title="Contatos analist.com" data-url="4d7zz8yz-contatos-analist-com"
-              data-domain="forms" data-full-page="false" data-min-height="500px" data-form-id="34148"></div>
-          </div>
-
-          <!-- VISITOR COUNTER + MAP -->
-          <div class="contact__info">
-            <div class="contact__visitor">
-              <p id="visitor-counter" data-visitor-counter></p>
+                <p class="about-brand__copyright">© 2022–2026 analist.com. Todos os direitos reservados.</p>
+              </div>
             </div>
-            <img src="images/WorldMap.svg" alt="Presença global" loading="lazy" class="contact__map">
-          </div>
-        </div>
-      </div>
-    </section>
+          </section>
+
+          <!-- CONTACT SECTION -->
+          <section class="section contact" id="contact" data-section="contact">
+            <div class="section__container">
+              <h2 class="section__title">Vamos conversar?</h2>
+
+              <div class="contact__grid">
+                <!-- FORMULÁRIO VISME -->
+                <div class="contact__form">
+                  <div class="visme_d" data-title="Contatos analist.com" data-url="4d7zz8yz-contatos-analist-com"
+                    data-domain="forms" data-full-page="false" data-min-height="500px" data-form-id="34148"></div>
+                </div>
+
+                <!-- VISITOR COUNTER + MAP -->
+                <div class="contact__info">
+                  <div class="contact__visitor">
+                    <p id="visitor-counter" data-visitor-counter></p>
+                  </div>
+                  <img src="images/WorldMap.svg" alt="Presença global" loading="lazy" class="contact__map">
+                </div>
+              </div>
+            </div>
+          </section>
   </main>
 
   <!-- FOOTER -->
@@ -616,6 +657,7 @@
 
   <!-- SCRIPTS (APENAS NECESSÁRIOS) -->
   <script src="js/theme-manager.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="js/app.js" defer></script>
 
 </body>

@@ -314,3 +314,62 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   console.log('✅ Hero animation delays aplicados');
 });
+
+/* ===============================
+   KINETIC MENU
+=================================*/
+
+function setupKineticMenu() {
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const menu = document.querySelector('[data-kinetic-menu]');
+  const overlay = menu.querySelector('.kinetic-overlay');
+  const panels = menu.querySelectorAll('.panel');
+  const links = menu.querySelectorAll('.kinetic-links a');
+  const items = menu.querySelectorAll('[data-shape]');
+  const shapes = menu.querySelectorAll('.shape');
+
+  let isOpen = false;
+
+  const openMenu = () => {
+    menu.style.display = 'block';
+    isOpen = true;
+
+    const tl = gsap.timeline();
+    tl.to(overlay, { opacity: 1, duration: 0.4 })
+      .to(panels, { x: 0, stagger: 0.1, duration: 0.6 }, "<")
+      .to(links, { y: 0, stagger: 0.1, duration: 0.6 }, "-=0.3");
+  };
+
+  const closeMenu = () => {
+    const tl = gsap.timeline({
+      onComplete: () => menu.style.display = 'none'
+    });
+
+    tl.to(links, { y: 120, stagger: 0.05, duration: 0.3 })
+      .to(panels, { x: "100%", stagger: 0.1, duration: 0.4 }, "<")
+      .to(overlay, { opacity: 0, duration: 0.3 }, "<");
+
+    isOpen = false;
+  };
+
+  toggle.addEventListener('click', () => {
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) closeMenu();
+  });
+
+  items.forEach(item => {
+    const shapeIndex = item.dataset.shape;
+    const shape = menu.querySelector(`.shape-${shapeIndex}`);
+    item.addEventListener('mouseenter', () => {
+      shapes.forEach(s => s.classList.remove('active'));
+      shape.classList.add('active');
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', setupKineticMenu);
