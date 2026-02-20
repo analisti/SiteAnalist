@@ -74,15 +74,17 @@
 
 /* ========== SERVICE CARDS ========== */
 .service-card {
-  background-color: var(--color-bg-secondary);
+  background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
-  transition: all var(--transition-base);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
+/* Linha animada no topo */
 .service-card::before {
   content: '';
   position: absolute;
@@ -91,48 +93,81 @@
   width: 100%;
   height: 3px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-  transition: left var(--transition-base);
+  transition: left 0.4s ease;
 }
 
+/* Efeito de hover com profundidade */
 .service-card:hover {
   border-color: var(--color-primary);
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
 .service-card:hover::before {
   left: 0;
 }
 
+/* Ícone com animação */
 .service-card__icon {
   font-size: 2.5rem;
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
-  transition: color var(--transition-base), transform var(--transition-base);
+  transition: color 0.4s ease, transform 0.4s ease;
 }
 
 .service-card:hover .service-card__icon {
   color: var(--color-secondary);
-  transform: scale(1.1) rotate(-5deg);
+  transform: scale(1.15) rotate(-8deg);
 }
 
+/* Título com destaque */
 .service-card__title {
   font-size: var(--font-size-xl);
   margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.5px;
+  position: relative;
 }
 
+.service-card__title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--color-secondary);
+  margin-top: var(--spacing-xs);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.service-card:hover .service-card__title::after {
+  width: 80px;
+}
+
+/* Preço com gradiente */
 .service-card__price {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: var(--spacing-xs);
 }
 
+/* Descrição com fade */
 .service-card__description {
   margin-bottom: var(--spacing-md);
   color: var(--color-text-muted);
+  line-height: 1.5;
+  opacity: 0.9;
+  transition: opacity 0.4s ease;
 }
 
+.service-card:hover .service-card__description {
+  opacity: 1;
+}
+
+/* Lista de features */
 .service-card__features {
   list-style: none;
   padding-left: 0;
@@ -144,6 +179,7 @@
   margin-bottom: var(--spacing-xs);
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+  transition: color 0.3s ease;
 }
 
 .service-card__features li::before {
@@ -152,7 +188,31 @@
   left: 0;
   color: var(--color-secondary);
   font-weight: bold;
+  transition: transform 0.3s ease;
 }
+
+.service-card:hover .service-card__features li::before {
+  transform: scale(1.2);
+}
+
+/* Botão CTA */
+.cta-button {
+  display: inline-block;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: #fff;
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  transition: background 0.4s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+  transform: translateY(-3px);
+}
+
 
 /* ========== FORMS ========== */
 .form__group {
