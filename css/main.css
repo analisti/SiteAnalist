@@ -373,7 +373,7 @@
   align-items: center;
   animation: marquee linear infinite;
   animation-timeline: marquee-timeline;
-  animation-duration: 1s;
+  animation-duration: 30s;
   will-change: transform;
 }
 
