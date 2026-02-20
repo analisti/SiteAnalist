@@ -1,480 +1,1093 @@
-/* ==========================================================================
-   GLOBAL OVERFLOW CONTROL
-   ========================================================================== */
+/* ============================================================================
+   ANIMATE.CSS — ANALIST.COM
+   Sistema de Animação Brutalista
+   
+   DEPENDÊNCIAS: base.css → design-tones.css → layout.css → este arquivo
+   
+   ARQUITETURA:
+   @layer motion-tokens    — variáveis e @property de animação
+   @layer keyframes        — todas as @keyframes centralizadas
+   @layer scroll-driven    — animation-timeline: scroll() e view()
+   @layer entrance         — animações de entrada (intersection / @starting-style)
+   @layer microinteraction — hover, focus, active states
+   @layer components       — animações específicas de componente
+   @layer reduced-motion   — override global para prefers-reduced-motion
+   ============================================================================ */
 
-html,
-body {
-  overflow-x: hidden;
+@layer reset, tokens, base, brand, themes, atmosphere,
+       layout, navigation, hero, patterns, components,
+       motion-tokens, keyframes, scroll-driven, entrance,
+       microinteraction, motion-components, states, utilities,
+       overrides, reduced-motion;
+
+
+/* ─────────────────────────────────────────────────
+   1. MOTION TOKENS — Variáveis de Animação
+───────────────────────────────────────────────── */
+@layer motion-tokens {
+
+  :root {
+
+    /* ── @PROPERTY ANIMÁVEIS ─────────────────────
+       Diferença crítica: propriedades tipadas podem
+       ser interpoladas. Variáveis CSS comuns, não. */
+
+    /* Já declarados no base.css — referenciados aqui */
+    /* --gradient-angle, --noise-opacity, --line-width */
+    /* --brand-accent, --data-fill, --scan-pos */
+
+    /* ── TOKENS DE STAGGER ───────────────────────
+       Sistema de stagger via custom property.
+       Ao invés de hardcodar nth-child delays,
+       o elemento declara seu próprio índice. */
+    --stagger-base:  80ms;
+    --stagger-index: 0;  /* override no elemento: style="--stagger-index:3" */
+    --stagger-delay: calc(var(--stagger-index) * var(--stagger-base));
+
+    /* ── TOKENS DE REVEAL ────────────────────────
+       Controle fino de entrada via scroll view() */
+    --reveal-from-y:   40px;
+    --reveal-from-x:   0px;
+    --reveal-duration: var(--duration-slow);
+    --reveal-ease:     var(--ease-reveal);
+
+    /* ── TOKENS DE GLITCH ────────────────────────*/
+    --glitch-intensity: 4px;
+    --glitch-color-1:   var(--analist-red);
+    --glitch-color-2:   var(--analist-electric);
+
+    /* ── TOKENS DE PARALLAX ──────────────────────*/
+    --parallax-factor: 0.3;  /* override por elemento */
+
+    /* ── TOKENS DE CONTAGEM ──────────────────────*/
+    --count-from: 0;
+    --count-to:   100;
+    --count-duration: var(--duration-count);
+  }
 }
 
-/* ==========================================================================
-   HERO SECTION
-   ========================================================================== */
 
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible; /* Allow animations overflow */
-  padding: var(--spacing-3xl) 0;
+/* ─────────────────────────────────────────────────
+   2. KEYFRAMES — Biblioteca Central
+   
+   Filosofia: keyframes são funções, não estilos.
+   Nomeados pelo QUE fazem, não pelo WHERE são usados.
+   Nenhum keyframe duplicado.
+───────────────────────────────────────────────── */
+@layer keyframes {
+
+  /* ── ENTRADA ─────────────────────────────────── */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 var(--reveal-from-y, 40px);
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes descend {
+    from { opacity: 0; translate: 0 -40px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  @keyframes slide-right {
+    from { opacity: 0; translate: -60px 0; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  @keyframes slide-left {
+    from { opacity: 0; translate: 60px 0; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  @keyframes emerge {
+    from { opacity: 0; scale: 0.92; }
+    to   { opacity: 1; scale: 1; }
+  }
+
+  @keyframes wipe-right {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+
+  @keyframes wipe-up {
+    from { clip-path: inset(100% 0 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
+  }
+
+  /* ── ATENÇÃO ─────────────────────────────────── */
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-accent) 60%, transparent); }
+    50%       { box-shadow: 0 0 0 8px color-mix(in srgb, var(--brand-accent) 0%, transparent); }
+  }
+
+  @keyframes shake {
+    0%, 100% { translate: 0 0; }
+    20%       { translate: -4px 0; }
+    40%       { translate: 4px 0; }
+    60%       { translate: -2px 0; }
+    80%       { translate: 2px 0; }
+  }
+
+  @keyframes bounce-vertical {
+    0%, 100% { translate: 0 0; animation-timing-function: var(--ease-heavy); }
+    50%       { translate: 0 -12px; animation-timing-function: var(--ease-spring); }
+  }
+
+  /* ── CONTÍNUAS ───────────────────────────────── */
+  @keyframes float {
+    0%, 100% { translate: 0 0; rotate: 0deg; }
+    33%       { translate: 0 -16px; rotate: 1deg; }
+    66%       { translate: 0 -8px; rotate: -0.5deg; }
+  }
+
+  @keyframes spin {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
+  }
+
+  @keyframes spin-slow {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
+  }
+
+  /* ── TICKER / MARQUEE ────────────────────────── */
+  @keyframes ticker {
+    from { translate: 0 0; }
+    to   { translate: -50% 0; }
+  }
+
+  /* ── GLITCH ──────────────────────────────────── */
+  @keyframes glitch-clip {
+    0%  { clip-path: inset(20% 0 60% 0); translate: calc(var(--glitch-intensity) * -1) 0; }
+    20% { clip-path: inset(60% 0 10% 0); translate: var(--glitch-intensity) 0; }
+    40% { clip-path: inset(40% 0 30% 0); translate: calc(var(--glitch-intensity) * -1) 0; }
+    60% { clip-path: inset(80% 0 5% 0);  translate: var(--glitch-intensity) 0; }
+    80% { clip-path: inset(5% 0 75% 0);  translate: 0 0; }
+    100%{ clip-path: inset(0 0 0 0);     translate: 0 0; }
+  }
+
+  @keyframes glitch-color {
+    0%  { color: var(--glitch-color-1); }
+    50% { color: var(--glitch-color-2); }
+    100%{ color: inherit; }
+  }
+
+  /* ── WORD ROTATE ─────────────────────────────── */
+  /* Brutalista: snap, não fade suave */
+  @keyframes word-in {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      translate: 0 0;
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0% 0 0);
+      translate: 0 0;
+    }
+  }
+
+  @keyframes word-out {
+    from {
+      opacity: 1;
+      clip-path: inset(0 0% 0 0);
+    }
+    to {
+      opacity: 0;
+      clip-path: inset(0 0 0 100%);
+    }
+  }
+
+  @keyframes word-cycle {
+    0%   { opacity: 0; clip-path: inset(0 100% 0 0); }
+    6%   { opacity: 1; clip-path: inset(0 0% 0 0); }
+    30%  { opacity: 1; clip-path: inset(0 0% 0 0); }
+    36%  { opacity: 0; clip-path: inset(0 0 0 100%); }
+    100% { opacity: 0; clip-path: inset(0 0 0 100%); }
+  }
+
+  /* ── LOADING / SKELETON ──────────────────────── */
+  @keyframes skeleton-sweep {
+    from {
+      background-position: -200% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+
+  /* ── PROGRESS LINE ───────────────────────────── */
+  @keyframes progress-fill {
+    from { width: 0%; }
+    to   { width: var(--progress-target, 100%); }
+  }
+
+  /* ── BORDER DRAW ─────────────────────────────── */
+  /* Usado com stroke-dasharray em SVG inline */
+  @keyframes draw-line {
+    from { stroke-dashoffset: var(--path-length, 1000); }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  /* ── GRADIENT ROTATION (via @property) ──────── */
+  @keyframes rotate-gradient {
+    from { --gradient-angle: 0deg; }
+    to   { --gradient-angle: 360deg; }
+  }
+
+  /* ── SCAN LINE ───────────────────────────────── */
+  @keyframes scan-live {
+    from { --scan-pos: -10%; }
+    to   { --scan-pos: 110%; }
+  }
+
+  /* ── CURSOR BLINK ────────────────────────────── */
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* ── REVEAL DE NÚMERO (counter via CSS) ─────── */
+  @keyframes count-up {
+    from { --data-fill: 0%; }
+    to   { --data-fill: var(--count-target, 100%); }
+  }
 }
 
-.hero__container {
-  position: relative;
-  z-index: 2;
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-3xl);
-  align-items: center;
+/* ─────────────────────────────────────────────────
+   3. SCROLL-DRIVEN ANIMATIONS — CSS Nativo
+   
+   Usando animation-timeline: scroll() e view()
+   Suporte: Chrome 115+, Firefox 110+ (com flag)
+   
+   Dois tipos:
+   - scroll() → relativo ao scroll do scroller
+   - view()   → relativo à posição do elemento na viewport
+───────────────────────────────────────────────── */
+@layer scroll-driven {
+
+  /* ── BARRA DE PROGRESSO DE LEITURA ──────────── */
+  /* O exemplo mais puro de scroll-driven.
+     Cresce conforme a página é rolada. */
+  .scroll-progress {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: var(--border-width-brutal);
+    background: var(--brand-accent);
+    transform-origin: left;
+    z-index: var(--z-cursor);
+
+    /* Scroll-driven: escala no eixo X com o scroll */
+    animation: scale-progress linear both;
+    animation-timeline: scroll(root block);
+    animation-fill-mode: both;
+  }
+
+  @keyframes scale-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* ── PARALLAX — Elementos que movem com o scroll */
+  /* Usa scroll() para offset vertical suave */
+  .parallax-slow {
+    animation: parallax-move-slow linear both;
+    animation-timeline: scroll(nearest block);
+  }
+
+  .parallax-fast {
+    animation: parallax-move-fast linear both;
+    animation-timeline: scroll(nearest block);
+  }
+
+  @keyframes parallax-move-slow {
+    from { translate: 0 -30px; }
+    to   { translate: 0 30px; }
+  }
+
+  @keyframes parallax-move-fast {
+    from { translate: 0 -80px; }
+    to   { translate: 0 80px; }
+  }
+
+  /* ── STICKY HEADER — escurece ao scrollar ────── */
+  .header {
+    animation: header-scroll linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px 120px;
+  }
+
+  @keyframes header-scroll {
+    from {
+      background-color: var(--paper);
+      border-block-end-color: var(--border-default);
+    }
+    to {
+      background-color: color-mix(in srgb, var(--paper) 92%, transparent);
+      border-block-end-color: var(--ink);
+    }
+  }
+
+  /* ── VIEW TIMELINE — elementos entram na view ── */
+
+  /* Reveal padrão: sobe e aparece */
+  .reveal {
+    animation: rise linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 35%;
+  }
+
+  /* Reveal com wipe horizontal (brutalista) */
+  .reveal-wipe {
+    animation: wipe-right linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 40%;
+  }
+
+  /* Reveal da esquerda */
+  .reveal-right {
+    animation: slide-right linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 35%;
+  }
+
+  /* Reveal da direita */
+  .reveal-left {
+    animation: slide-left linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 35%;
+  }
+
+  /* Emerge — escala suave */
+  .reveal-emerge {
+    animation: emerge linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 40%;
+  }
+
+  /* ── STAGGER VIA CUSTOM PROPERTY ────────────── */
+  /* Cada filho declara: style="--stagger-index: 2"
+     O delay é calculado automaticamente. */
+  .stagger-reveal > * {
+    animation: rise linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 40%;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+
+  /* ── FADE DE SAÍDA ───────────────────────────── */
+  /* Elemento desaparece ao sair da viewport */
+  .fade-out-exit {
+    animation: fade-exit linear both;
+    animation-timeline: view(block);
+    animation-range: exit 0% exit 30%;
+  }
+
+  @keyframes fade-exit {
+    from { opacity: 1; }
+    to   { opacity: 0; translate: 0 -20px; }
+  }
+
+  /* ── TÍTULO COM PARALLAX ─────────────────────── */
+  /* Headline que se move mais devagar que o scroll */
+  .headline-parallax {
+    animation: headline-drift linear both;
+    animation-timeline: view(block);
+    animation-range: entry -50% exit 50%;
+  }
+
+  @keyframes headline-drift {
+    from { translate: 0 -40px; }
+    to   { translate: 0 40px; }
+  }
+
+  /* ── STICKY SECTION REVEAL ───────────────────── */
+  /* Número grande que aparece via view + range */
+  .stat-reveal {
+    animation: stat-pop linear both;
+    animation-timeline: view(block);
+    animation-range: entry 10% entry 50%;
+  }
+
+  @keyframes stat-pop {
+    from {
+      opacity: 0;
+      scale: 0.7;
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+      filter: blur(0px);
+    }
+  }
+
+  /* ── LINHA QUE CRESCE ────────────────────────── */
+  /* Linha horizontal que se expande ao entrar na view */
+  .line-grow {
+    block-size: var(--border-width-brutal);
+    background: var(--ink);
+    transform-origin: left;
+    animation: line-expand linear both;
+    animation-timeline: view(inline);
+    animation-range: entry 0% entry 100%;
+  }
+
+  @keyframes line-expand {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* ── CARD LIFT AO ENTRAR NA VIEW ─────────────── */
+  .card-reveal {
+    animation: card-enter linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 35%;
+  }
+
+  @keyframes card-enter {
+    from {
+      opacity: 0;
+      translate: 0 var(--space-8);
+      box-shadow: none;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      box-shadow: var(--shadow-card);
+    }
+  }
+
+  /* ── ROTAÇÃO DE TEXTO AO SCROLL ──────────────── */
+  /* Elemento que rotaciona levemente com o scroll */
+  .rotate-on-scroll {
+    animation: rotate-scroll linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  @keyframes rotate-scroll {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
+  }
 }
 
-.hero__content {
-  animation: fadeInUp 0.8s ease-out;
+
+/* ─────────────────────────────────────────────────
+   4. ENTRANCE — Animações de Entrada
+   
+   @starting-style: a feature mais nova do CSS.
+   Permite animar elementos no PRIMEIRO render,
+   incluindo popups, dialogs e elementos com display:none.
+   Suporte: Chrome 117+, Firefox 129+
+───────────────────────────────────────────────── */
+@layer entrance {
+
+  /* ── @STARTING-STYLE — Entrada de elementos ─── */
+
+  /* Dialog nativo com animação de entrada */
+  dialog[open] {
+    animation: rise var(--duration-slow) var(--ease-spring) both;
+  }
+
+  @starting-style {
+    dialog[open] {
+      opacity: 0;
+      translate: 0 30px;
+    }
+  }
+
+  /* Elementos com display:none → algo → animam */
+  [popover]:popover-open {
+    animation: emerge var(--duration-base) var(--ease-spring) both;
+  }
+
+  @starting-style {
+    [popover]:popover-open {
+      opacity: 0;
+      scale: 0.92;
+    }
+  }
+
+  /* ── ANIMAÇÃO DE LOAD DA PÁGINA ──────────────── */
+  /* Apenas no primeiro elemento visível.
+     Não em tudo indiscriminadamente. */
+  .hero__heading {
+    animation: wipe-right var(--duration-dramatic) var(--ease-snap) both;
+    animation-delay: var(--duration-fast);
+  }
+
+  .hero__kicker {
+    animation: slide-right var(--duration-slow) var(--ease-snap) both;
+  }
+
+  .hero__subheading {
+    animation: rise var(--duration-slow) var(--ease-reveal) both;
+    animation-delay: calc(var(--duration-fast) * 2);
+  }
+
+  .hero__actions {
+    animation: rise var(--duration-slow) var(--ease-reveal) both;
+    animation-delay: calc(var(--duration-fast) * 3);
+  }
+
+  .hero__stats {
+    animation: rise var(--duration-slow) var(--ease-reveal) both;
+    animation-delay: calc(var(--duration-fast) * 4);
+  }
+
+  /* ── WORD ROTATOR ────────────────────────────── */
+  /* Troca de palavras com wipe brutal */
+  .hero__word {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    white-space: nowrap;
+    animation: word-cycle var(--word-duration, 9s) var(--ease-brutal) infinite;
+    animation-delay: var(--word-delay, 0s);
+  }
+
+  /* Cada palavra declara seu delay via custom property */
+  /* No HTML: style="--word-delay: 0s" / "3s" / "6s" */
+  /* Se não declarado: herda 0s */
+
+  /* Cursor piscando após a última palavra */
+  .hero__words::after {
+    content: '_';
+    color: var(--brand-accent);
+    animation: cursor-blink var(--duration-slow) var(--ease-flicker) infinite;
+    font-family: var(--font-body);
+  }
+
+  /* ── STAGGER PARA ITEMS DE LISTA ─────────────── */
+  /* Use: <ul class="stagger-list">
+         <li style="--stagger-index: 0">...</li>
+         <li style="--stagger-index: 1">...</li>
+     Ou use JS para adicionar o style automaticamente */
+  .stagger-list > * {
+    opacity: 0;
+    translate: 0 20px;
+    animation: rise var(--duration-slow) var(--ease-reveal) forwards;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+
+  /* ── SKELETON LOADER ─────────────────────────── */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--surface-secondary) 25%,
+      var(--mark) 50%,
+      var(--surface-secondary) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-sweep 1.5s var(--ease-linear) infinite;
+    color: transparent !important;
+  }
+
+  .skeleton > * { visibility: hidden; }
 }
 
-.hero__title {
-  position: relative;
-  font-size: var(--font-size-4xl);
-  line-height: 1.1;
-  margin-bottom: var(--spacing-lg);
-}
-
-.hero__title em {
-  font-style: normal;
-  color: var(--color-primary);
-  font-weight: var(--font-weight-bold);
-}
-
-/* ==========================================================================
-   HERO HEADLINE (ANIMATED TEXT)
-   ========================================================================== */
-
-.hero__headline {
-  margin-bottom: var(--spacing-2xl);
-}
-
-.hero__subtitle {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-muted);
-  margin-bottom: var(--spacing-sm);
-  font-weight: var(--font-weight-medium);
-}
-
-.hero__words {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-secondary);
-
-  min-height: 2.5rem;
-  overflow: visible;
-}
-
-.hero__word {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  opacity: 0;
-  white-space: nowrap;
-
-  animation: wordRotate 9s infinite;
-
-  will-change: opacity, transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Controlled animation delays */
-.hero__word:nth-child(1) { animation-delay: 0s; }
-.hero__word:nth-child(2) { animation-delay: 3s; }
-.hero__word:nth-child(3) { animation-delay: 6s; }
-
-/* ==========================================================================
-   CTA BUTTONS
-   ========================================================================== */
-
-.hero__cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
-}
-
-.hero__cta .btn {
-  animation: slideInUp 0.8s ease-out 0.2s backwards;
-}
-
-/* ==========================================================================
-   3D BACKGROUND
-   ========================================================================== */
-
-.hero__bg {
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  width: 500px;
-  height: 500px;
-
-  z-index: 1;
-  opacity: 0.3;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transform-style: preserve-3d;
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-
-  animation: float 6s ease-in-out infinite;
-}
-
-.hero__image {
-  position: absolute;
-  width: 280px;
-  height: auto;
-
-  z-index: 2;
-  pointer-events: none;
-
-  transform: translateZ(40px);
-  will-change: transform;
-}
-
-.hero__decoration {
-  position: relative;
-  width: 100%;
-  height: 100%;
-
-  z-index: 1;
-  filter: drop-shadow(0 10px 30px rgba(129, 178, 154, 0.2));
-}
-
-/* ==========================================================================
-   PARALLAX 3D
-   ========================================================================== */
-
-[data-3d-element] {
-  perspective: 1000px;
-}
-
-[data-3d-element]:hover {
-  animation: tilt 0.6s ease-out;
-}
-
-/* ==========================================================================
-   SCROLL ANIMATIONS
-   ========================================================================== */
-
-.fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.fade-in--left {
-  animation: fadeInLeft 0.6s ease-out forwards;
-}
-
-.fade-in--right {
-  animation: fadeInRight 0.6s ease-out forwards;
-}
-
-[data-animate] {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity var(--transition-base),
-              transform var(--transition-base);
-}
-
-[data-animate].in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ==========================================================================
-   WAVE SVG
-   ========================================================================== */
-
-.wave {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-
-  width: 100%;
-  height: auto;
-  display: block;
-
-  color: var(--color-bg);
-}
-
-/* ==========================================================================
-   WHATSAPP BUTTON
-   ========================================================================== */
-
-.whatsapp-button {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-
-  width: 60px;
-  height: 60px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: var(--border-radius-full);
-  background-color: #25d366;
-  color: #fff;
-  font-size: var(--font-size-xl);
-
-  z-index: var(--z-whatsapp);
-  box-shadow: var(--shadow-lg);
-
-  transition: transform var(--transition-base),
-              box-shadow var(--transition-base);
-
-  animation: slideInUp 0.6s ease-out;
-}
-
-.whatsapp-button:hover {
-  transform: translateY(-5px) scale(1.1);
-  box-shadow: var(--shadow-xl);
-}
-
-.whatsapp-button:active {
-  transform: translateY(-2px) scale(0.95);
-}
-
-/* ==========================================================================
-   SERVICE CARD STAGGER
-   ========================================================================== */
-
-.service-card[data-service-card] {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.service-card[data-service-card]:nth-child(1) { animation-delay: 0.1s; }
-.service-card[data-service-card]:nth-child(2) { animation-delay: 0.2s; }
-.service-card[data-service-card]:nth-child(3) { animation-delay: 0.3s; }
-
-//* ==========================================================================
-   MARQUEE REVOLUCIONÁRIO
-   ========================================================================== */
-
-.marquee-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-/* Scroll-driven animation */
-@scroll-timeline marquee-timeline {
-  source: auto;
-  orientation: inline;
-}
-
-.marquee-content {
-  display: flex;
-  gap: 1rem;
-  width: max-content;
-
-  animation: marquee linear infinite;
-  animation-timeline: marquee-timeline;
-  animation-duration: 1s;
-
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  padding: 0.75rem 1rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-
-  border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  cursor: default;
-}
-
-.marquee-item i,
-.marquee-item span {
-  background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80, #06b6d4, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 8s ease infinite;
-}
-
-@media (hover: hover) {
-  .marquee-wrapper:hover .marquee-content {
+
+/* ─────────────────────────────────────────────────
+   5. MICROINTERACTIONS — Hover, Focus, Active
+   
+   Filosofia: microinteração deve comunicar algo.
+   Não é decoração — é feedback.
+───────────────────────────────────────────────── */
+@layer microinteraction {
+
+  /* ── LINK UNDERLINE ANIMADO ──────────────────── */
+  /* Já declarado no base.css via background-size.
+     Aqui adicionamos variações específicas. */
+
+  /* Link que sublinha ao hover do pai */
+  .parent-hover:hover .child-underline {
+    background-size: 100% 100%;
+    color: var(--paper);
+  }
+
+  /* ── BOTÃO BRUTALISTA ────────────────────────── */
+  /* Já declarado no layout.css.
+     Enhancement: ripple effect puro em CSS. */
+  .btn {
+    overflow: hidden;
+  }
+
+  /* Sombra que aparece no hover via pseudo */
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    opacity: 0;
+    transition: opacity var(--transition-snap);
+    pointer-events: none;
+    mix-blend-mode: difference;
+  }
+
+  /* ── CARD HOVER ──────────────────────────────── */
+  /* Já declarado no layout.css.
+     Enhancement: efeito de luz interna. */
+  .card {
+    --card-light-x: 50%;
+    --card-light-y: 50%;
+  }
+
+  /* Spotlight interno — requer JS para mover x/y
+     mas já tem o CSS pronto */
+  .card--spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--card-light-x) var(--card-light-y),
+      color-mix(in srgb, var(--signal) 8%, transparent) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .card--spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* ── GLITCH EFFECT ───────────────────────────── */
+  /* Texto que glitcha ao hover — dois pseudo-elementos */
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .glitch::before {
+    color: var(--glitch-color-1);
+    opacity: 0;
+    mix-blend-mode: screen;
+  }
+
+  .glitch::after {
+    color: var(--glitch-color-2);
+    opacity: 0;
+    mix-blend-mode: screen;
+  }
+
+  .glitch:hover::before {
+    opacity: 0.8;
+    animation: glitch-clip var(--duration-instant) var(--ease-brutal) infinite;
+  }
+
+  .glitch:hover::after {
+    opacity: 0.6;
+    animation: glitch-clip var(--duration-instant) var(--ease-brutal) infinite reverse;
+    animation-delay: calc(var(--duration-instant) / 2);
+  }
+
+  /* ── INPUT FOCUS ─────────────────────────────── */
+  /* Linha que cresce ao focar — já tem border no base.
+     Enhancement: sombra lateral característica. */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    box-shadow:
+      var(--shadow-brutal),
+      inset 0 -var(--border-width-brutal) 0 var(--brand-accent);
+  }
+
+  /* ── NAV LINK HOVER ──────────────────────────── */
+  /* Já tem a linha inferior no layout.css.
+     Enhancement: cor muda com flash rápido. */
+  .navbar__link {
+    transition:
+      color var(--duration-fast) var(--ease-brutal),
+      background-color var(--transition-snap);
+  }
+
+  /* ── TOGGLE DE TEMA ──────────────────────────── */
+  /* Ícone rotaciona ao trocar tema — já no layout.css */
+
+  /* ── SECTION EYEBROW ─────────────────────────── */
+  /* Linha antes do eyebrow cresce ao entrar na view */
+  .section__eyebrow::before {
+    animation: line-in linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 30%;
+  }
+
+  @keyframes line-in {
+    from { width: 0; opacity: 0; }
+    to   { width: var(--space-8); opacity: 1; }
+  }
+
+  /* ── CURSOR PERSONALIZADO ────────────────────── */
+  /* Custom cursor via JS + CSS vars.
+     JS passa: document.documentElement.style.setProperty('--cx', x+'px') */
+  .cursor-dot {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--brand-accent);
+    translate: calc(var(--cx, 0px) - 4px) calc(var(--cy, 0px) - 4px);
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    transition: scale var(--duration-fast) var(--ease-spring);
+  }
+
+  .cursor-ring {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 36px;
+    height: 36px;
+    border: var(--border-width-brutal) solid var(--ink);
+    translate: calc(var(--cx, 0px) - 18px) calc(var(--cy, 0px) - 18px);
+    pointer-events: none;
+    z-index: calc(var(--z-cursor) - 1);
+    transition:
+      translate var(--duration-fast) var(--ease-snap),
+      scale var(--duration-fast) var(--ease-spring);
+  }
+
+  /* Cursor expande sobre links e botões */
+  a:hover ~ .cursor-ring,
+  button:hover ~ .cursor-ring,
+  [role="button"]:hover ~ .cursor-ring {
+    scale: 2;
+    border-color: var(--brand-accent);
+  }
+
+  /* ── HOVER REVEAL ────────────────────────────── */
+  /* Conteúdo oculto que aparece ao hover no pai */
+  .hover-reveal {
+    opacity: 0;
+    translate: 0 var(--space-2);
+    transition:
+      opacity var(--transition-snap),
+      translate var(--transition-snap);
+    pointer-events: none;
+  }
+
+  .hover-parent:hover .hover-reveal {
+    opacity: 1;
+    translate: 0 0;
+    pointer-events: auto;
+  }
+
+  /* ── MAGNETIC EFFECT ─────────────────────────── */
+  /* Requer JS para mover, mas CSS define a transição */
+  .magnetic {
+    transition: translate var(--duration-slow) var(--ease-spring);
+  }
+
+  /* ── MARQUEE HOVER PAUSE ─────────────────────── */
+  .ticker-container:hover .ticker-track {
     animation-play-state: paused;
   }
-
-  .marquee-item:hover {
-    transform: scale(1.1) rotateY(8deg);
-    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
-  }
 }
 
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
 
-@media (max-width: 767px) {
-  .hero {
+/* ─────────────────────────────────────────────────
+   6. MOTION COMPONENTS — Animações de Componente
+───────────────────────────────────────────────── */
+@layer motion-components {
+
+  /* ── MARQUEE / TICKER ────────────────────────── */
+  .ticker-track {
+    animation: ticker 30s var(--ease-linear) infinite;
+  }
+
+  /* Velocidade variável via custom property */
+  .ticker-track--slow  { animation-duration: 50s; }
+  .ticker-track--fast  { animation-duration: 15s; }
+
+  /* Direção reversa */
+  .ticker-track--reverse {
+    animation-direction: reverse;
+  }
+
+  /* ── WORD ROTATOR ────────────────────────────── */
+  /* Container */
+  .hero__words {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-inline-size: 20ch; /* evita layout shift */
+    block-size: 1.2em;
     overflow: visible;
   }
 
-  .hero__container {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+  /* ── NÚMERO ANIMADO ──────────────────────────── */
+  /* Usando counter CSS + @property --data-fill.
+     Não é contagem real de número (CSS não faz isso),
+     mas animação de barra associada. */
+  .animated-number {
+    animation: count-up var(--count-duration) var(--ease-count) both;
+    animation-timeline: view(block);
+    animation-range: entry 10% entry 60%;
   }
 
-  .hero__words {
-    font-size: 1.25rem;
-    min-height: 2rem;
+  /* ── LOADER ──────────────────────────────────── */
+  .loader {
+    display: inline-flex;
+    gap: var(--space-1);
+    align-items: center;
   }
 
-  .hero__word {
-    white-space: normal;
-    overflow-wrap: break-word;
-    max-width: 90%;
+  .loader__dot {
+    width: var(--space-2);
+    height: var(--space-2);
+    background: var(--ink);
+    animation: bounce-vertical var(--duration-slow) var(--ease-spring) infinite;
+    animation-delay: calc(var(--stagger-index, 0) * 120ms);
   }
 
-  .hero__bg {
-    width: 200px;
-    height: 200px;
-    right: -30px;
-    bottom: 10%;
-    opacity: 0.15;
+  .loader__dot:nth-child(1) { --stagger-index: 0; }
+  .loader__dot:nth-child(2) { --stagger-index: 1; }
+  .loader__dot:nth-child(3) { --stagger-index: 2; }
+
+  /* ── LIVE INDICATOR ──────────────────────────── */
+  /* Já no design-tones.css */
+
+  /* ── FLOAT ELEMENT ───────────────────────────── */
+  .float-anim {
+    animation: float 6s var(--ease-heavy) infinite;
   }
 
-  .marquee-content {
-    gap: 0.75rem;
+  /* ── SPIN ────────────────────────────────────── */
+  .spin-anim {
+    animation: spin-slow 20s var(--ease-linear) infinite;
   }
 
-  .marquee-item {
-    padding: 0.625rem 0.875rem;
-    font-size: 0.875rem;
+  /* ── GRADIENT BORDER ANIMADO ─────────────────── */
+  .gradient-border {
+    position: relative;
   }
 
-  .marquee-item i {
-    font-size: 1rem;
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--border-width-brutal));
+    background: conic-gradient(
+      from var(--gradient-angle),
+      var(--brand-accent),
+      var(--analist-electric),
+      var(--brand-accent)
+    );
+    z-index: var(--z-below);
+    animation: rotate-gradient 3s var(--ease-linear) infinite;
   }
 
-  .whatsapp-button {
-    bottom: 1rem;
-    right: 1rem;
+  .gradient-border > * {
+    position: relative;
+    z-index: var(--z-base);
+    background: var(--surface-bg);
+  }
+
+  /* ── TYPEWRITER ──────────────────────────────── */
+  /* Cursor piscando em campos de input vazios */
+  .typewriter {
+    border-inline-end: var(--border-width-brutal) solid var(--brand-accent);
+    white-space: nowrap;
+    overflow: hidden;
+    width: fit-content;
+    animation:
+      typewriter-expand var(--duration-dramatic) var(--ease-brutal) steps(30) both,
+      cursor-blink var(--duration-slow) var(--ease-flicker) infinite;
+    animation-delay: var(--stagger-delay, 0s), var(--duration-dramatic);
+  }
+
+  @keyframes typewriter-expand {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+
+  /* ── SCROLL DOWN INDICATOR ───────────────────── */
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .scroll-indicator__line {
+    width: var(--border-width-brutal);
+    height: var(--space-12);
+    background: var(--border-default);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-indicator__line::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    block-size: 40%;
+    background: var(--brand-accent);
+    animation: scroll-fall 1.5s var(--ease-heavy) infinite;
+  }
+
+  @keyframes scroll-fall {
+    from { translate: 0 -100%; }
+    to   { translate: 0 300%; }
+  }
+
+  /* ── BENTO HOVER ─────────────────────────────── */
+  .bento__item {
+    transition:
+      transform var(--transition-snap),
+      box-shadow var(--transition-snap),
+      background-color var(--transition-snap);
+  }
+
+  .bento__item:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .bento__item--hero:hover {
+    box-shadow: var(--shadow-brand-lg);
   }
 }
 
-@media (max-width: 480px) {
-  .hero__words {
-    font-size: 1.125rem;
+
+/* ─────────────────────────────────────────────────
+   7. REDUCED-MOTION — Não opcional
+   
+   Cada animação scroll-driven tem um fallback.
+   O conteúdo deve ser legível sem animação.
+───────────────────────────────────────────────── */
+@layer reduced-motion {
+
+  @media (prefers-reduced-motion: reduce) {
+
+    /* Remove TODAS as animações de entrada */
+    .reveal,
+    .reveal-wipe,
+    .reveal-right,
+    .reveal-left,
+    .reveal-emerge,
+    .stagger-reveal > *,
+    .card-reveal,
+    .stat-reveal,
+    .hero__heading,
+    .hero__kicker,
+    .hero__subheading,
+    .hero__actions,
+    .hero__stats,
+    .stagger-list > * {
+      animation: none;
+      opacity: 1;
+      translate: none;
+      scale: none;
+      clip-path: none;
+    }
+
+    /* Mantém elementos visíveis */
+    [data-animate] {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Remove parallax */
+    .parallax-slow,
+    .parallax-fast,
+    .headline-parallax {
+      animation: none;
+      translate: none;
+    }
+
+    /* Mantém barra de progresso estática */
+    .scroll-progress {
+      display: none;
+    }
+
+    /* Remove glitch */
+    .glitch::before,
+    .glitch::after {
+      display: none;
+    }
+
+    /* Remove float */
+    .float-anim,
+    .spin-anim {
+      animation: none;
+    }
+
+    /* Ticker: sem movimento */
+    .ticker-track {
+      animation: none;
+    }
+
+    /* Word rotator: mostra apenas a primeira palavra */
+    .hero__word {
+      animation: none;
+      opacity: 0;
+      clip-path: none;
+    }
+
+    .hero__word:first-child {
+      opacity: 1;
+      clip-path: none;
+    }
+
+    /* Cursor piscando: sem piscar */
+    .hero__words::after {
+      animation: none;
+    }
+
+    /* Skeleton: sem movimento */
+    .skeleton {
+      animation: none;
+      background: var(--surface-secondary);
+    }
+
+    /* Loader dots: sem bounce */
+    .loader__dot {
+      animation: none;
+    }
+
+    /* Scroll indicator: sem movimento */
+    .scroll-indicator__line::after {
+      animation: none;
+      translate: 0 0;
+    }
+
+    /* Live indicator: estático */
+    .live-indicator::before {
+      animation: none;
+    }
+
+    /* Gradient border: sem rotação */
+    .gradient-border::before {
+      animation: none;
+    }
+
+    /* Typewriter: sem efeito */
+    .typewriter {
+      animation: none;
+      width: auto;
+    }
   }
-
-  .hero__bg {
-    width: 150px;
-    height: 150px;
-    opacity: 0.1;
-  }
-
-  .marquee-content {
-    gap: 0.5rem;
-  }
-
-  .marquee-item {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8125rem;
-  }
-
-  .marquee-item i {
-    font-size: 0.9375rem;
-  }
-}
-
-/* ==========================================================================
-   KEYFRAMES
-   ========================================================================== */
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-
-/* ==========================================================================
-   KEYFRAMES (Preserved All)
-   ========================================================================== */
-
-@keyframes wordRotate {
-  0%   { opacity: 0; transform: translateY(10px); }
-  5%   { opacity: 1; transform: translateY(0); }
-  30%,
-  35%  { opacity: 1; transform: translateY(0); }
-  40%,
-  100% { opacity: 0; transform: translateY(-10px); }
-}
-
-@keyframes slideInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotateZ(0deg); }
-  50%      { transform: translateY(-30px) rotateZ(10deg); }
-}
-
-@keyframes tilt {
-  0%   { transform: rotateX(0) rotateY(0) scale(1); }
-  50%  { transform: rotateX(5deg) rotateY(-8deg) scale(1.02); }
-  100% { transform: rotateX(0) rotateY(0) scale(1); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(50px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-50px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(50px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }

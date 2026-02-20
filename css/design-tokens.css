@@ -1,218 +1,827 @@
 /* ============================================================================
-   DESIGN TOKENS - PALETA EXCLUSIVA ANALIST.COM (Refatorado)
-   - Todos os tokens originais foram preservados.
-   - Organização por blocos semânticos para manutenção e escalabilidade.
+   DESIGN TONES — ANALIST.COM
+   Identidade Visual: Brutalismo Analítico
+   Conceito: Dado cru. Autoridade. Precisão sem adornos.
+   
+   DEPENDÊNCIA: base.css deve ser carregado antes.
+   Este arquivo ESTENDE e SOBRESCREVE tokens do base.css
+   com a personalidade específica da marca.
    ============================================================================ */
 
-/* ===========================
-   BASE TOKENS (cores, tipografia, espaçamento, etc.)
-   - Defina aqui todos os tokens "brutos" (valores originais).
-   - Não mapear semanticamente aqui; apenas declarar.
-   =========================== */
-:root{
-  /* ========== CORES BASE ========== */
+/* ─────────────────────────────────────────────────
+   ARQUITETURA DE CAMADAS (extende base.css)
+───────────────────────────────────────────────── */
+@layer reset, tokens, base, brand, themes, atmosphere, states, utilities;
 
-  /* Background (Light Mode) */
-  --color-bg-light: #f9f7f5;
-  --color-bg-light-secondary: #ffffff;
-  --color-bg-light-tertiary: #f0ebe6;
 
-  /* Background (Dark Mode) */
-  --color-bg-dark: #0f1923;
-  --color-bg-dark-secondary: #131d2a;
-  --color-bg-dark-tertiary: #1a2635;
+/* ─────────────────────────────────────────────────
+   @PROPERTY — Animáveis específicos da marca
+   Propriedades tipadas para animações únicas.
+───────────────────────────────────────────────── */
 
-  /* Text */
-  --color-text-light: #1a1a1a;
-  --color-text-dark: #f0ebe6;
-  --color-text-muted-light: #6b6b6b;
-  --color-text-muted-dark: #a8a8a8;
-
-  /* Cores Primárias */
-  --color-primary: #81b29a;
-  --color-primary-dark: #6a9481;
-  --color-primary-light: #9eceb8;
-
-  /* Cores Secundárias */
-  --color-secondary: #d4735f;
-  --color-secondary-dark: #b85d4f;
-  --color-secondary-light: #e68f7f;
-
-  /* Acentos Exclusivos */
-  --color-accent1: #2a5f7f;
-  --color-accent1-dark: #1e4557;
-  --color-accent1-light: #3d7fa3;
-
-  --color-accent2: #6b9f6b;
-  --color-accent2-dark: #5a8859;
-  --color-accent2-light: #7fb17f;
-
-  /* Status Colors */
-  --color-success: #7cb342;
-  --color-warning: #ffa726;
-  --color-error: #e74c3c;
-  --color-info: #29b6f6;
-
-  /* Borders & Dividers */
-  --color-border-light: #e0dcd9;
-  --color-border-dark: #2a3d4f;
-
-  /* ========== TIPOGRAFIA ========== */
-  --font-primary: 'DM Sans', sans-serif;
-  --font-secondary: 'Inter', sans-serif;
-
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.5rem;
-  --font-size-2xl: 2rem;
-  --font-size-3xl: 2.5rem;
-  --font-size-4xl: 3.5rem;
-
-  --font-weight-light: 300;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  --line-height-tight: 1.2;
-  --line-height-base: 1.6;
-  --line-height-relaxed: 1.8;
-
-  /* ========== SPACING ========== */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 3rem;
-  --spacing-2xl: 4rem;
-  --spacing-3xl: 6rem;
-
-  /* ========== BORDERS ========== */
-  --border-radius-sm: 0.5rem;
-  --border-radius-md: 0.75rem;
-  --border-radius-lg: 1rem;
-  --border-radius-xl: 1.5rem;
-  --border-radius-full: 9999px;
-
-  --border-width-light: 1px;
-  --border-width-medium: 2px;
-
-  /* ========== SHADOWS ========== */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-
-  /* ========== TRANSITIONS ========== */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 400ms cubic-bezier(0.2, 0, 0.2, 1);
-
-  /* ========== Z-INDEX ========== */
-  --z-dropdown: 100;
-  --z-fixed: 1000;
-  --z-modal: 2000;
-  --z-whatsapp: 999;
-
-  /* ========== BREAKPOINTS ========== */
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
+@property --brand-accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #c8001e;
 }
 
-/* ===========================
-   SEMANTIC ALIASES (mapeamento por tema)
-   - Use estas propriedades nos componentes (ex.: --surface-bg, --text-primary).
-   - Mantém os tokens base intactos e facilita troca de tema.
-   =========================== */
-
-/* Light Mode (padrão) */
-[data-theme="light"],
-:root {
-  /* Surface / Background */
-  --surface-bg: var(--color-bg-light);
-  --surface-secondary: var(--color-bg-light-secondary);
-  --surface-tertiary: var(--color-bg-light-tertiary);
-
-  /* Text */
-  --text-primary: var(--color-text-light);
-  --text-muted: var(--color-text-muted-light);
-
-  /* Borders */
-  --border-default: var(--color-border-light);
-
-  /* Semantic color aliases (mantém primários/acentos originais) */
-  --accent-primary: var(--color-primary);
-  --accent-primary-dark: var(--color-primary-dark);
-  --accent-primary-light: var(--color-primary-light);
-
-  --accent-secondary: var(--color-secondary);
-  --accent-secondary-dark: var(--color-secondary-dark);
-  --accent-secondary-light: var(--color-secondary-light);
-
-  --accent-1: var(--color-accent1);
-  --accent-1-dark: var(--color-accent1-dark);
-  --accent-1-light: var(--color-accent1-light);
-
-  --accent-2: var(--color-accent2);
-  --accent-2-dark: var(--color-accent2-dark);
-  --accent-2-light: var(--color-accent2-light);
-
-  --status-success: var(--color-success);
-  --status-warning: var(--color-warning);
-  --status-error: var(--color-error);
-  --status-info: var(--color-info);
+@property --data-fill {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
 }
 
-/* Dark Mode */
-[data-theme="dark"]{
-  /* Surface / Background */
-  --surface-bg: var(--color-bg-dark);
-  --surface-secondary: var(--color-bg-dark-secondary);
-  --surface-tertiary: var(--color-bg-dark-tertiary);
-
-  /* Text */
-  --text-primary: var(--color-text-dark);
-  --text-muted: var(--color-text-muted-dark);
-
-  /* Borders */
-  --border-default: var(--color-border-dark);
-
-  /* Semantic color aliases (reaproveita os mesmos acentos) */
-  --accent-primary: var(--color-primary);
-  --accent-primary-dark: var(--color-primary-dark);
-  --accent-primary-light: var(--color-primary-light);
-
-  --accent-secondary: var(--color-secondary);
-  --accent-secondary-dark: var(--color-secondary-dark);
-  --accent-secondary-light: var(--color-secondary-light);
-
-  --accent-1: var(--color-accent1);
-  --accent-1-dark: var(--color-accent1-dark);
-  --accent-1-light: var(--color-accent1-light);
-
-  --accent-2: var(--color-accent2);
-  --accent-2-dark: var(--color-accent2-dark);
-  --accent-2-light: var(--color-accent2-light);
-
-  --status-success: var(--color-success);
-  --status-warning: var(--color-warning);
-  --status-error: var(--color-error);
-  --status-info: var(--color-info);
+@property --scan-pos {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: -10%;
 }
 
-/* ===========================
-   NOTAS DE USO
-   - Use as variáveis semânticas nos componentes:
-     background: var(--surface-secondary);
-     color: var(--text-primary);
-     border-color: var(--border-default);
-   - Para cores de ação, use --accent-primary / --accent-secondary.
-   - Todos os tokens originais permanecem disponíveis para casos específicos.
-   =========================== */
+@property --ticker-offset {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+
+/* ─────────────────────────────────────────────────
+   BRAND TOKENS — DNA da Analist.com
+   
+   Conceito cromático: Tinta de impressora + vermelho
+   de alerta. Como um relatório financeiro impresso
+   com carimbo de urgência. Sem cores de conforto.
+───────────────────────────────────────────────── */
+@layer brand {
+
+  :root {
+
+    /* ─────────────────────────────────────────────
+       PALETA BRUTA — ANALIST
+       
+       ABANDONADO do original:
+       ✗ #81b29a  — verde "spa", sem autoridade
+       ✗ #d4735f  — terracota "decoração", não dado
+       ✗ #2a5f7f  — azul corporativo genérico
+       
+       NOVO — Paleta de autoridade analítica:
+       Preto tipográfico + vermelho de alerta +
+       amarelo de planilha + branco de papel técnico
+    ───────────────────────────────────────────── */
+
+    /* Cores da marca — valores brutos */
+    --analist-black:      #0a0a0a;
+    --analist-near-black: #111111;
+    --analist-charcoal:   #1e1e1e;
+    --analist-graphite:   #2d2d2d;
+    --analist-ash:        #3d3d3d;
+    --analist-smoke:      #6e6e6e;
+    --analist-silver:     #9e9e9e;
+    --analist-fog:        #d4d4d4;
+    --analist-cloud:      #ebebeb;
+    --analist-paper:      #f5f0e8;   /* papel técnico, não branco digital */
+    --analist-white:      #fafaf8;
+
+    /* Acentos — cada um tem propósito único */
+    --analist-red:        #c8001e;   /* alerta, CTA, dado crítico */
+    --analist-red-deep:   #8c0012;   /* hover, pressed */
+    --analist-red-glow:   #e8001f;   /* estado ativo no dark */
+    --analist-amber:      #d4900a;   /* aviso, insight */
+    --analist-amber-deep: #b37800;
+    --analist-electric:   #0038cc;   /* link, dado positivo */
+    --analist-electric-deep: #002299;
+    --analist-data:       #00875a;   /* dado positivo / crescimento */
+    --analist-data-deep:  #006644;
+
+    /* ── SOBRESCRITA DE TOKENS BASE ──────────────
+       Aqui é onde a marca toma controle do sistema.
+    ───────────────────────────────────────────── */
+
+    /* Tinta e papel da marca */
+    --paper: var(--analist-paper);
+    --ink:   var(--analist-black);
+
+    /* Acento primário: vermelho, não verde musgo */
+    --strike:  var(--analist-red);
+    --signal:  var(--analist-amber);
+    --void:    var(--analist-charcoal);
+    --scar:    var(--analist-graphite);
+    --mark:    color-mix(in srgb, var(--analist-black) 6%, var(--analist-paper));
+
+    /* Brand accent para @property */
+    --brand-accent: var(--analist-red);
+
+    /* ── TIPOGRAFIA DA MARCA ─────────────────────
+       Fontes que comunicam: dado, precisão, peso.
+       
+       ABANDONADO:
+       ✗ DM Sans   — amigável demais para dados
+       ✗ Inter     — todo SaaS do mundo usa isso
+       
+       NOVO:
+       ✓ Bebas Neue  — display de alto impacto (do base)
+       ✓ Space Mono  — mono para dados (do base)
+       ✓ + DM Serif  — contraste editorial para body
+       
+       Adicione no HTML:
+       <link href="https://fonts.googleapis.com/css2?
+         family=Bebas+Neue&
+         family=Space+Mono:ital,wght@0,400;0,700;1,400&
+         family=DM+Serif+Display:ital@0;1&
+         display=swap" rel="stylesheet">
+    ───────────────────────────────────────────── */
+    --font-editorial: 'DM Serif Display', Georgia, serif;
+
+    /* Override contextual — alguns textos de marca
+       usam serifado para autoridade editorial */
+    --font-brand-body: var(--font-editorial);
+
+    /* ── ESCALA DE COMPONENTE EXTRA ──────────────
+       Valores além da escala do base, específicos
+       para os componentes da analist.com
+    ───────────────────────────────────────────── */
+    --text-stat:  clamp(3rem, 8vw, 7rem);     /* números de destaque */
+    --text-kpi:   clamp(2rem, 5vw, 4.5rem);   /* KPIs em cards */
+    --text-label: var(--text-xs);             /* labels de dados */
+
+    /* ── BORDAS DA MARCA ─────────────────────────
+       Sombras sólidas deslocadas em vermelho.
+       O "peso visual" da analist.com.
+    ───────────────────────────────────────────── */
+    --shadow-brand:      4px 4px 0 var(--analist-red);
+    --shadow-brand-lg:   8px 8px 0 var(--analist-red);
+    --shadow-brand-xl:   12px 12px 0 var(--analist-red);
+    --shadow-data:       3px 3px 0 var(--analist-data);
+    --shadow-amber:      4px 4px 0 var(--analist-amber);
+    --shadow-electric:   4px 4px 0 var(--analist-electric);
+
+    /* ── ESPAÇAMENTO DE SEÇÃO ────────────────────
+       Ritmo específico para layout da landing.
+    ───────────────────────────────────────────── */
+    --section-hero:      clamp(6rem, 15vw, 14rem);
+    --section-primary:   clamp(5rem, 10vw, 10rem);
+    --section-secondary: clamp(3rem,  6vw,  6rem);
+    --section-tight:     clamp(2rem,  4vw,  4rem);
+    --section-micro:     clamp(1rem,  2vw,  2rem);
+
+    /* ── STATUS SEMÂNTICOS ───────────────────────
+       Para dashboards e elementos de dado.
+       Cores funcionais com personalidade.
+    ───────────────────────────────────────────── */
+    --status-positive:      var(--analist-data);
+    --status-positive-bg:   color-mix(in srgb, var(--analist-data) 10%, transparent);
+    --status-negative:      var(--analist-red);
+    --status-negative-bg:   color-mix(in srgb, var(--analist-red) 10%, transparent);
+    --status-neutral:       var(--analist-smoke);
+    --status-neutral-bg:    color-mix(in srgb, var(--analist-smoke) 10%, transparent);
+    --status-warning:       var(--analist-amber);
+    --status-warning-bg:    color-mix(in srgb, var(--analist-amber) 10%, transparent);
+    --status-info:          var(--analist-electric);
+    --status-info-bg:       color-mix(in srgb, var(--analist-electric) 10%, transparent);
+
+    /* ── GRID DA MARCA ───────────────────────────
+       Container mais estreito = mais foco, menos dispersão.
+    ───────────────────────────────────────────── */
+    --container-tight:  min(100% - (var(--gutter) * 2), 60rem);
+    --container-wide:   min(100% - (var(--gutter) * 2), 90rem);
+    --container-full:   100%;
+
+    /* ── LINHAS DE GRADE ─────────────────────────
+       Proporções para layouts colunares.
+    ───────────────────────────────────────────── */
+    --col-1-3:  calc(100% / 3);
+    --col-2-3:  calc(100% / 3 * 2);
+    --col-1-4:  25%;
+    --col-3-4:  75%;
+    --col-golden-sm:  38.2%;
+    --col-golden-lg:  61.8%;
+
+    /* ── DURAÇÕES DE DADO ────────────────────────
+       Animações específicas para elementos de KPI.
+    ───────────────────────────────────────────── */
+    --duration-count:  1800ms;  /* contagem de número */
+    --duration-chart:  1200ms;  /* construção de gráfico */
+    --duration-reveal: 600ms;   /* reveal de seção */
+    --duration-scan:   3000ms;  /* efeito scanline */
+
+    /* ── CURVAS ESPECÍFICAS ──────────────────────*/
+    --ease-count:  cubic-bezier(0, 0.3, 0.3, 1);   /* contagem de KPI */
+    --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);  /* entrada de seção */
+
+    /* ── BORDAS DE CONTEXTO ──────────────────────*/
+    --outline-focus:    var(--border-width-brutal) solid var(--analist-red);
+    --outline-selected: var(--border-width-brutal) solid var(--analist-black);
+    --border-data:      var(--border-width-thin) solid var(--analist-fog);
+    --border-section:   var(--border-width-brutal) solid var(--analist-black);
+    --border-accent:    var(--border-width-brutal) solid var(--analist-red);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────
+   THEMES — LIGHT / DARK com personalidade própria
+   
+   Diferença filosófica do original:
+   Original: dark = mesmas cores em fundo escuro
+   Novo:     dark = outro estado emocional da marca
+───────────────────────────────────────────────── */
+@layer themes {
+
+  /* ── LIGHT MODE ─────────────────────────────── */
+  [data-theme="light"],
+  :root:not([data-theme="dark"]) {
+
+    /* Superfícies */
+    --surface-bg:        var(--analist-paper);
+    --surface-secondary: var(--analist-white);
+    --surface-tertiary:  var(--analist-cloud);
+    --surface-inverse:   var(--analist-black);
+    --surface-accent:    color-mix(in srgb, var(--analist-red) 6%, var(--analist-paper));
+    --surface-data:      color-mix(in srgb, var(--analist-electric) 4%, var(--analist-paper));
+
+    /* Texto */
+    --text-primary:      var(--analist-black);
+    --text-secondary:    var(--analist-charcoal);
+    --text-muted:        var(--analist-smoke);
+    --text-inverse:      var(--analist-paper);
+    --text-accent:       var(--analist-red);
+    --text-link:         var(--analist-electric);
+
+    /* Bordas */
+    --border-default:    var(--analist-fog);
+    --border-strong:     var(--analist-charcoal);
+    --border-accent:     var(--analist-red);
+
+    /* Sombras contextuais */
+    --shadow-card:       4px 4px 0 var(--analist-charcoal);
+    --shadow-card-hover: 6px 6px 0 var(--analist-black);
+    --shadow-modal:      8px 8px 0 var(--analist-red);
+
+    /* Efeitos de superfície */
+    --glass-bg:          rgba(245, 240, 232, 0.85);
+    --glass-border:      rgba(10, 10, 10, 0.12);
+    --noise-opacity:     0.035;
+    --grain-opacity:     0.06;
+
+    /* Scanline — sutil em light */
+    --scanline-color:    rgba(10, 10, 10, 0.03);
+    --scanline-size:     3px;
+  }
+
+  /* ── DARK MODE ───────────────────────────────────
+     Dark mode da analist.com não é "apenas escuro".
+     É o terminal. O servidor. O dado às 3am.
+     Neon vermelho no void.
+  ─────────────────────────────────────────────────── */
+  [data-theme="dark"],
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      /* Override de tokens base */
+      --paper: var(--analist-near-black);
+      --ink:   #f0ebe0;
+      --strike:  var(--analist-red-glow);
+      --signal:  #ffe135;
+      --void:    #0a0a0a;
+      --scar:    var(--analist-graphite);
+      --mark:    color-mix(in srgb, #f0ebe0 5%, var(--analist-near-black));
+      --brand-accent: var(--analist-red-glow);
+
+      /* Superfícies */
+      --surface-bg:        var(--analist-near-black);
+      --surface-secondary: var(--analist-charcoal);
+      --surface-tertiary:  var(--analist-graphite);
+      --surface-inverse:   var(--analist-paper);
+      --surface-accent:    color-mix(in srgb, var(--analist-red-glow) 10%, var(--analist-near-black));
+      --surface-data:      color-mix(in srgb, var(--analist-electric) 8%, var(--analist-near-black));
+
+      /* Texto */
+      --text-primary:      #f0ebe0;
+      --text-secondary:    var(--analist-cloud);
+      --text-muted:        var(--analist-silver);
+      --text-inverse:      var(--analist-black);
+      --text-accent:       var(--analist-red-glow);
+      --text-link:         #4d7fff;  /* elétrico mais brilhante no escuro */
+
+      /* Bordas */
+      --border-default:    var(--analist-graphite);
+      --border-strong:     var(--analist-ash);
+      --border-accent:     var(--analist-red-glow);
+
+      /* Sombras — neon no dark */
+      --shadow-card:         4px 4px 0 var(--analist-graphite);
+      --shadow-card-hover:   6px 6px 0 var(--analist-red-glow);
+      --shadow-modal:        8px 8px 0 var(--analist-red-glow);
+      --shadow-brand:        4px 4px 0 var(--analist-red-glow);
+      --shadow-brand-lg:     8px 8px 0 var(--analist-red-glow);
+
+      /* Efeitos de superfície */
+      --glass-bg:          rgba(17, 17, 17, 0.88);
+      --glass-border:      rgba(240, 235, 224, 0.1);
+      --noise-opacity:     0.08;
+      --grain-opacity:     0.12;
+
+      /* Scanline — mais pronunciado no dark (terminal) */
+      --scanline-color:    rgba(240, 235, 224, 0.025);
+      --scanline-size:     2px;
+
+      /* Override status para dark */
+      --status-positive:      #00c87a;
+      --status-positive-bg:   color-mix(in srgb, #00c87a 12%, transparent);
+      --status-negative:      var(--analist-red-glow);
+      --status-negative-bg:   color-mix(in srgb, var(--analist-red-glow) 12%, transparent);
+    }
+  }
+
+  /* Dark explícito via atributo */
+  [data-theme="dark"] {
+    --paper: var(--analist-near-black);
+    --ink:   #f0ebe0;
+    --strike:  var(--analist-red-glow);
+    --signal:  #ffe135;
+    --void:    #0a0a0a;
+    --scar:    var(--analist-graphite);
+    --mark:    color-mix(in srgb, #f0ebe0 5%, var(--analist-near-black));
+    --brand-accent: var(--analist-red-glow);
+
+    --surface-bg:        var(--analist-near-black);
+    --surface-secondary: var(--analist-charcoal);
+    --surface-tertiary:  var(--analist-graphite);
+    --surface-inverse:   var(--analist-paper);
+    --surface-accent:    color-mix(in srgb, var(--analist-red-glow) 10%, var(--analist-near-black));
+    --surface-data:      color-mix(in srgb, var(--analist-electric) 8%, var(--analist-near-black));
+
+    --text-primary:      #f0ebe0;
+    --text-secondary:    var(--analist-cloud);
+    --text-muted:        var(--analist-silver);
+    --text-inverse:      var(--analist-black);
+    --text-accent:       var(--analist-red-glow);
+    --text-link:         #4d7fff;
+
+    --border-default:    var(--analist-graphite);
+    --border-strong:     var(--analist-ash);
+    --border-accent:     var(--analist-red-glow);
+
+    --shadow-card:         4px 4px 0 var(--analist-graphite);
+    --shadow-card-hover:   6px 6px 0 var(--analist-red-glow);
+    --shadow-modal:        8px 8px 0 var(--analist-red-glow);
+    --shadow-brand:        4px 4px 0 var(--analist-red-glow);
+    --shadow-brand-lg:     8px 8px 0 var(--analist-red-glow);
+
+    --glass-bg:          rgba(17, 17, 17, 0.88);
+    --glass-border:      rgba(240, 235, 224, 0.1);
+    --noise-opacity:     0.08;
+    --grain-opacity:     0.12;
+    --scanline-color:    rgba(240, 235, 224, 0.025);
+    --scanline-size:     2px;
+
+    --status-positive:      #00c87a;
+    --status-positive-bg:   color-mix(in srgb, #00c87a 12%, transparent);
+    --status-negative:      var(--analist-red-glow);
+    --status-negative-bg:   color-mix(in srgb, var(--analist-red-glow) 12%, transparent);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────
+   ATMOSPHERE — Efeitos de Superfície e Textura
+   
+   O que separa um site "bonito" de um site
+   que as pessoas param pra estudar o código.
+───────────────────────────────────────────────── */
+@layer atmosphere {
+
+  /* ── TEXTURA DE GRAIN ────────────────────────── */
+  .texture-grain {
+    position: relative;
+  }
+
+  .texture-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    opacity: var(--grain-opacity, 0.06);
+    mix-blend-mode: multiply;
+    z-index: var(--z-above);
+    border-radius: inherit;
+  }
+
+  [data-theme="dark"] .texture-grain::after {
+    mix-blend-mode: screen;
+  }
+
+  /* ── SCANLINE ────────────────────────────────── */
+  .texture-scanline {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .texture-scanline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--scanline-color, rgba(0,0,0,0.03)),
+      var(--scanline-color, rgba(0,0,0,0.03)) 1px,
+      transparent 1px,
+      transparent var(--scanline-size, 3px)
+    );
+    z-index: var(--z-above);
+  }
+
+  /* ── SCANLINE ANIMADO ────────────────────────── */
+  .texture-scanline-live::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--brand-accent) 40%, transparent),
+      transparent
+    );
+    top: var(--scan-pos, -10%);
+    animation: scan-sweep var(--duration-scan) var(--ease-linear) infinite;
+    pointer-events: none;
+    z-index: var(--z-above);
+  }
+
+  @keyframes scan-sweep {
+    from { --scan-pos: -10%; }
+    to   { --scan-pos: 110%; }
+  }
+
+  /* ── GLASSMORPHISM BRUTALISTA ────────────────── */
+  /* Nota: glass com bordas rígidas, não suaves */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    border: var(--border-width-brutal) solid var(--glass-border);
+    /* Sem border-radius — brutalismo */
+  }
+
+  /* ── INVERSÃO DE CONTEXTO ────────────────────── */
+  /* Bloco com fundo invertido — contrastes dramáticos */
+  .context-inverse {
+    background-color: var(--ink);
+    color: var(--paper);
+    --text-primary: var(--paper);
+    --text-muted: color-mix(in srgb, var(--paper) 65%, var(--ink));
+    --border-default: color-mix(in srgb, var(--paper) 20%, var(--ink));
+    --surface-bg: var(--ink);
+  }
+
+  /* ── CONTEXTO DE ACENTO ──────────────────────── */
+  /* Bloco de destaque em vermelho */
+  .context-accent {
+    background-color: var(--analist-red);
+    color: var(--analist-paper);
+    --text-primary: var(--analist-paper);
+    --text-muted: rgba(245, 240, 232, 0.75);
+    --border-default: rgba(245, 240, 232, 0.3);
+    --surface-bg: var(--analist-red);
+    --strike: var(--analist-paper);
+  }
+
+  /* ── CONTEXTO DE DADO ────────────────────────── */
+  /* Bloco de dashboard / análise */
+  .context-data {
+    background-color: var(--surface-data);
+    border: var(--border-width-brutal) solid var(--border-default);
+  }
+
+  /* ── DEGRADÊ DE MARCA ────────────────────────── */
+  /* Gradiente de texto — sparingly */
+  .gradient-text {
+    background: linear-gradient(
+      135deg,
+      var(--ink) 0%,
+      var(--analist-red) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  [data-theme="dark"] .gradient-text {
+    background: linear-gradient(
+      135deg,
+      var(--analist-paper) 0%,
+      var(--analist-red-glow) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── FUNDO COM GRADE ─────────────────────────── */
+  /* Grid sutil de análise no fundo */
+  .bg-grid {
+    background-image:
+      linear-gradient(var(--border-default) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-default) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-color: var(--surface-bg);
+  }
+
+  /* ── FUNDO COM PONTOS ────────────────────────── */
+  .bg-dots {
+    background-image: radial-gradient(
+      circle,
+      var(--border-default) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+    background-color: var(--surface-bg);
+  }
+
+  /* ── LINHA DE RUÍDO ──────────────────────────── */
+  /* Separador com noise — mais interessante que hr padrão */
+  .noise-line {
+    position: relative;
+    height: var(--border-width-brutal);
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ink) 0px,
+      var(--ink) 4px,
+      transparent 4px,
+      transparent 8px,
+      var(--analist-red) 8px,
+      var(--analist-red) 10px,
+      transparent 10px,
+      transparent 16px
+    );
+    background-size: 16px 100%;
+    margin: var(--space-12) 0;
+  }
+
+  /* ── MARQUEE / TICKER ────────────────────────── */
+  .ticker-container {
+    overflow: hidden;
+    border-top: var(--border-width-brutal) solid var(--border-strong);
+    border-bottom: var(--border-width-brutal) solid var(--border-strong);
+    background-color: var(--surface-secondary);
+    padding: var(--space-3) 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 30s linear infinite;
+    gap: var(--space-12);
+  }
+
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+
+  .ticker-item {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--text-muted);
+  }
+
+  .ticker-item > strong {
+    color: var(--text-accent);
+    font-weight: var(--weight-bold);
+  }
+
+  .ticker-sep {
+    color: var(--border-accent);
+    font-size: var(--text-base);
+  }
+
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── BADGE DE DADO ───────────────────────────── */
+  .data-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    padding: var(--space-1) var(--space-3);
+    border: var(--border-width-base) solid currentColor;
+    border-radius: var(--radius-none);
+  }
+
+  .data-badge--positive {
+    color: var(--status-positive);
+    border-color: var(--status-positive);
+    background: var(--status-positive-bg);
+  }
+
+  .data-badge--negative {
+    color: var(--status-negative);
+    border-color: var(--status-negative);
+    background: var(--status-negative-bg);
+  }
+
+  .data-badge--neutral {
+    color: var(--text-muted);
+    border-color: var(--border-default);
+  }
+
+  /* ── INDICADOR DE ESTADO AO VIVO ─────────────── */
+  .live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-ui);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--status-positive);
+  }
+
+  .live-indicator::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: currentColor;
+    animation: live-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* ── TIPOGRAFIA DE DADO ──────────────────────── */
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: var(--text-stat);
+    line-height: var(--leading-none);
+    letter-spacing: var(--tracking-tightest);
+    color: var(--ink);
+    position: relative;
+    display: inline-block;
+  }
+
+  .stat-number .stat-unit {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    vertical-align: super;
+    margin-left: var(--space-1);
+  }
+
+  .stat-number .stat-delta {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    display: block;
+    letter-spacing: var(--tracking-wider);
+  }
+
+  .stat-number .stat-delta--up   { color: var(--status-positive); }
+  .stat-number .stat-delta--down { color: var(--status-negative); }
+
+  /* ── BARRA DE PROGRESSO DE DADO ──────────────── */
+  .data-bar {
+    height: var(--border-width-heavy);
+    background: var(--border-default);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .data-bar__fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--data-fill, 0%);
+    background: var(--ink);
+    transition: width var(--duration-chart) var(--ease-count);
+  }
+
+  .data-bar__fill--accent {
+    background: var(--analist-red);
+  }
+
+  .data-bar__fill--positive {
+    background: var(--status-positive);
+  }
+
+  /* ── TABELA DE DADO ──────────────────────────── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: var(--border-width-brutal) solid var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+  }
+
+  .data-table th {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--space-3) var(--space-4);
+    border: none;
+  }
+
+  .data-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: var(--border-width-thin) solid var(--border-default);
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .data-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tr:hover td {
+    background: var(--surface-accent);
+  }
+
+  /* Coluna de número alinhada à direita */
+  .data-table td:is([data-type="number"]),
+  .data-table th:is([data-type="number"]) {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-wide);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────
+   UTILITIES DE MARCA — classes de conveniência
+   específicas da analist.com
+───────────────────────────────────────────────── */
+@layer utilities {
+
+  /* Texto de acento da marca */
+  .text-brand  { color: var(--analist-red); }
+  .text-data   { color: var(--analist-electric); }
+  .text-growth { color: var(--status-positive); }
+  .text-risk   { color: var(--status-negative); }
+  .text-warn   { color: var(--status-warning); }
+
+  /* Fundos */
+  .bg-brand   { background-color: var(--analist-red); color: var(--analist-paper); }
+  .bg-inverse { background-color: var(--ink); color: var(--paper); }
+  .bg-muted   { background-color: var(--surface-secondary); }
+
+  /* Bordas de acento */
+  .border-top-brand    { border-top:    var(--border-accent-brutal); }
+  .border-left-brand   { border-left:   var(--border-accent-brutal); }
+
+  /* Número com fonte tabular */
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* Texto estilo terminal */
+  .terminal {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--status-positive);
+    background: var(--void);
+    padding: var(--space-1) var(--space-3);
+  }
+
+  /* Serifado editorial — para citações e destaques */
+  .editorial {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* Container da seção */
+  .section {
+    padding-block: var(--section-primary);
+  }
+
+  .section--hero {
+    padding-block: var(--section-hero);
+  }
+
+  .section--tight {
+    padding-block: var(--section-tight);
+  }
+}
