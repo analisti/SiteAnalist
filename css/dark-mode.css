@@ -1,307 +1,783 @@
 /* ============================================================================
-   DARK MODE - TRANSIÇÕES SUAVES E SINCRONIZADAS (REFATORADO, COMPLETO)
-   - Escopo: apenas refatoração do CSS fornecido.
-   - Todas as variáveis, seletores e comportamentos originais foram preservados.
-   - Organização por blocos: variáveis, global, temas, componentes, utilitários.
+   DARK-MODE.CSS — ANALIST.COM
+   Orquestrador de Tema
+   
+   DEPENDÊNCIAS (nessa ordem):
+   base.css → design-tones.css → layout.css → animate.css → componente.css → este arquivo
+   
+   FILOSOFIA DESTE ARQUIVO:
+   
+   Este arquivo NÃO define cores. Isso é responsabilidade de design-tones.css.
+   Este arquivo NÃO estiliza componentes. Isso é responsabilidade de componente.css.
+   Este arquivo NÃO duplica tokens. Isso é responsabilidade de base.css.
+   
+   Este arquivo faz UMA COISA:
+   Orquestra COMO o tema muda — a transição, o timing,
+   os hooks de JS, o color-scheme, o meta theme-color,
+   e os edge cases que nenhum outro arquivo resolve.
+   
+   Se você está procurando "quais cores o dark mode usa",
+   vá para design-tones.css — @layer themes.
+   
+   ARQUITETURA:
+   @layer theme-transition  — animação e timing da troca
+   @layer color-scheme      — integração com o sistema do browser
+   @layer theme-utilities   — classes utilitárias de tema
+   @layer theme-exceptions  — edge cases e correções
    ============================================================================ */
 
-/* =========================
-   VARIÁVEIS DE TRANSIÇÃO (semânticas, conservadoras)
-   ========================= */
-:root {
-  --transition-duration-smooth: 400ms;
-  --transition-easing-smooth: cubic-bezier(0.2, 0, 0.2, 1);
-  --transition-global: background-color var(--transition-duration-smooth) var(--transition-easing-smooth),
-                      color var(--transition-duration-smooth) var(--transition-easing-smooth),
-                      border-color var(--transition-duration-smooth) var(--transition-easing-smooth),
-                      box-shadow var(--transition-duration-smooth) var(--transition-easing-smooth);
+@layer reset, tokens, base, brand, themes, atmosphere,
+       layout, navigation, hero, patterns, components,
+       motion-tokens, keyframes, scroll-driven, entrance,
+       microinteraction, motion-components,
+       theme-transition, color-scheme, theme-utilities, theme-exceptions,
+       states, utilities, overrides, reduced-motion;
+
+
+/* ─────────────────────────────────────────────────
+   1. COLOR-SCHEME — Integração com o Browser
+   
+   color-scheme: light dark permite que o browser
+   adapte elementos nativos (scrollbar, inputs,
+   select, date picker) ao tema ativo.
+   
+   light-dark() — função CSS nativa para valores
+   que mudam entre temas sem precisar de seletor.
+───────────────────────────────────────────────── */
+@layer color-scheme {
+
+  /* Declaração no root — já no base.css, mas
+     reforçamos aqui para garantir herança correta */
+  html {
+    color-scheme: light dark;
+  }
+
+  /* Light mode explícito */
+  [data-theme="light"],
+  html:not([data-theme="dark"]) {
+    color-scheme: light;
+  }
+
+  /* Dark mode explícito */
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  /* ── light-dark() em elementos nativos ──────── */
+  /* Usa a função CSS nativa para adaptar elementos
+     que não estão no nosso design system */
+
+  /* Scrollbar de sistema (Firefox) */
+  * {
+    scrollbar-color: light-dark(var(--analist-black), var(--analist-ash))
+                     light-dark(var(--analist-paper), var(--analist-near-black));
+    scrollbar-width: thin;
+  }
+
+  /* Meta theme-color — cor da barra do browser no mobile.
+     Controlado via JS, mas o CSS define os valores:
+     
+     JS para usar:
+     const meta = document.querySelector('meta[name="theme-color"]');
+     meta.content = isDark ? '#111111' : '#f5f0e8';
+     
+     Ou via media query no HTML:
+     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f0e8">
+     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111">
+  */
+
+  /* ── Focus ring adapta ao tema ───────────────── */
+  /* Já definido no base.css, mas a cor adapta */
+  [data-theme="dark"] :focus-visible {
+    outline-color: var(--analist-red-glow);
+  }
+
+  /* ── Seleção de texto no dark ────────────────── */
+  [data-theme="dark"] ::selection {
+    background-color: var(--analist-red-glow);
+    color: var(--analist-near-black);
+  }
+
+  /* ── Imagens no dark: contraste ajustado ─────── */
+  /* Imagens com fundo branco ficam estranhas no dark.
+     Esta regra reduz o brilho apenas de imagens decorativas. */
+  [data-theme="dark"] img:not([data-no-dim]) {
+    filter: brightness(0.92) contrast(1.05);
+  }
+
+  /* Exceção: imagens que não devem ser dimidas */
+  [data-theme="dark"] img[data-no-dim],
+  [data-theme="dark"] .avatar img,
+  [data-theme="dark"] .feature-card__visual img {
+    filter: none;
+  }
+
+  /* ── SVG inline no dark ──────────────────────── */
+  [data-theme="dark"] svg:not([data-no-adapt]) {
+    /* SVGs que usam currentColor já adaptam automaticamente.
+       Aqui tratamos SVGs com fill hardcoded (legados). */
+    color-scheme: dark;
+  }
 }
 
-/* =========================
-   GLOBAL RESET / A11Y
-   ========================= */
-* {
-  transition: var(--transition-global);
-  box-sizing: border-box;
+
+/* ─────────────────────────────────────────────────
+   2. THEME-TRANSITION — Como o Tema Muda
+   
+   Filosofia: a transição deve ser NOTADA mas
+   não deve DISTRAIR. Sem blur, sem flash,
+   sem animações de conteúdo — apenas a cor.
+   
+   Técnica: classe .is-transitioning adicionada
+   por JS no momento do clique, removida após
+   a transição terminar.
+───────────────────────────────────────────────── */
+@layer theme-transition {
+
+  /* ── TRANSITION VIEW — a transição mais moderna ──
+     
+     View Transition API: anima o DOM inteiro na troca.
+     Suporte: Chrome 111+. Progressivo enhancement.
+     
+     JS para usar:
+     
+     async function toggleTheme() {
+       const isDark = document.documentElement.dataset.theme === 'dark';
+       
+       if (!document.startViewTransition) {
+         // fallback sem animação
+         document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+         return;
+       }
+       
+       await document.startViewTransition(() => {
+         document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+       });
+     }
+  */
+
+  /* Pseudo-elements da View Transition API */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--duration-slow);
+    animation-timing-function: var(--ease-heavy);
+    mix-blend-mode: normal;
+  }
+
+  /* Entrada do novo tema — fade puro, sem blur */
+  ::view-transition-new(root) {
+    animation-name: theme-enter;
+  }
+
+  @keyframes theme-enter {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Saída do tema antigo */
+  ::view-transition-old(root) {
+    animation-name: theme-exit;
+  }
+
+  @keyframes theme-exit {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  /* ── TRANSIÇÃO CLÁSSICA (fallback) ────────────── */
+  /* Sem View Transition API: apenas propriedades de cor
+     transitam — nenhuma propriedade de layout ou tamanho */
+
+  html.is-transitioning,
+  html.is-transitioning * {
+    transition:
+      background-color var(--duration-slow) var(--ease-heavy),
+      color var(--duration-slow) var(--ease-heavy),
+      border-color var(--duration-base) var(--ease-heavy),
+      fill var(--duration-base) var(--ease-heavy),
+      stroke var(--duration-base) var(--ease-heavy) !important;
+  }
+
+  /* Exceções — não transicionam nunca */
+  html.is-transitioning img,
+  html.is-transitioning video,
+  html.is-transitioning canvas,
+  html.is-transitioning [data-no-transition] {
+    transition: none !important;
+  }
+
+  /* ── JS HOOK — script mínimo ─────────────────── */
+  /*
+    Script para colocar antes do </body>:
+    
+    (function() {
+      const STORAGE_KEY = 'analist-theme';
+      const html = document.documentElement;
+      
+      // Lê preferência salva
+      const saved = localStorage.getItem(STORAGE_KEY);
+      
+      // Detecta preferência do sistema
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      // Aplica tema sem flash (antes do paint)
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      html.dataset.theme = theme;
+      
+      // Toggle com View Transition
+      window.__toggleTheme = async function() {
+        const isDark = html.dataset.theme === 'dark';
+        const next = isDark ? 'light' : 'dark';
+        
+        if (!document.startViewTransition) {
+          html.classList.add('is-transitioning');
+          html.dataset.theme = next;
+          localStorage.setItem(STORAGE_KEY, next);
+          setTimeout(() => html.classList.remove('is-transitioning'), 600);
+          return;
+        }
+        
+        await document.startViewTransition(() => {
+          html.dataset.theme = next;
+          localStorage.setItem(STORAGE_KEY, next);
+        });
+      };
+      
+      // Sincroniza com mudança de sistema
+      window.matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', e => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            html.dataset.theme = e.matches ? 'dark' : 'light';
+          }
+        });
+    })();
+  */
+
+  /* ── ANTI-FLASH DE TEMA ──────────────────────── */
+  /* Evita o "flash branco" antes do JS carregar.
+     Adicione no <head>, antes de qualquer CSS:
+     
+     <script>
+       (function() {
+         const t = localStorage.getItem('analist-theme') ||
+           (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+         document.documentElement.dataset.theme = t;
+       })();
+     </script>
+     
+     Esta é a técnica mais eficaz — roda antes do
+     primeiro paint sem bloquear o parser. */
 }
 
-html {
-  color-scheme: light dark;
+
+/* ─────────────────────────────────────────────────
+   3. THEME-UTILITIES — Classes de Conveniência de Tema
+───────────────────────────────────────────────── */
+@layer theme-utilities {
+
+  /* ── VISIBILIDADE POR TEMA ───────────────────── */
+  /* Mostra apenas no light mode */
+  .light-only {
+    display: revert;
+  }
+
+  [data-theme="dark"] .light-only {
+    display: none !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) .light-only {
+      display: none !important;
+    }
+  }
+
+  /* Mostra apenas no dark mode */
+  .dark-only {
+    display: none !important;
+  }
+
+  [data-theme="dark"] .dark-only {
+    display: revert !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) .dark-only {
+      display: revert !important;
+    }
+  }
+
+  /* ── FORÇA TEMA LOCAL ────────────────────────── */
+  /* Quando um bloco precisa ser sempre escuro,
+     independente do tema global da página */
+  .force-dark {
+    background-color: var(--analist-near-black);
+    color: #f0ebe0;
+    color-scheme: dark;
+    --paper: var(--analist-near-black);
+    --ink: #f0ebe0;
+    --strike: var(--analist-red-glow);
+    --signal: #ffe135;
+    --void: #0a0a0a;
+    --scar: var(--analist-graphite);
+    --mark: color-mix(in srgb, #f0ebe0 5%, var(--analist-near-black));
+    --surface-bg: var(--analist-near-black);
+    --surface-secondary: var(--analist-charcoal);
+    --text-primary: #f0ebe0;
+    --text-muted: var(--analist-silver);
+    --text-accent: var(--analist-red-glow);
+    --border-default: var(--analist-graphite);
+    --shadow-card: 4px 4px 0 var(--analist-graphite);
+    --shadow-card-hover: 6px 6px 0 var(--analist-red-glow);
+    --shadow-brutal: 6px 6px 0 #f0ebe0;
+  }
+
+  /* Bloco sempre claro */
+  .force-light {
+    background-color: var(--analist-paper);
+    color: var(--analist-black);
+    color-scheme: light;
+    --paper: var(--analist-paper);
+    --ink: var(--analist-black);
+    --strike: var(--analist-red);
+    --signal: var(--analist-amber);
+    --void: var(--analist-charcoal);
+    --scar: var(--analist-graphite);
+    --surface-bg: var(--analist-paper);
+    --surface-secondary: var(--analist-white);
+    --text-primary: var(--analist-black);
+    --text-muted: var(--analist-smoke);
+    --text-accent: var(--analist-red);
+    --border-default: var(--analist-fog);
+    --shadow-card: 4px 4px 0 var(--analist-charcoal);
+    --shadow-brutal: 6px 6px 0 var(--analist-black);
+  }
+
+  /* ── TEMA INVERTIDO ──────────────────────────── */
+  /* Já existe .invert-theme no base.css.
+     Aqui: variante que respeita o tema atual. */
+  .theme-contrast {
+    background-color: var(--ink);
+    color: var(--paper);
+    --text-primary: var(--paper);
+    --text-muted: color-mix(in srgb, var(--paper) 65%, var(--ink));
+    --border-default: color-mix(in srgb, var(--paper) 20%, var(--ink));
+    --surface-bg: var(--ink);
+    --surface-secondary: color-mix(in srgb, var(--paper) 8%, var(--ink));
+  }
+
+  /* ── ICON DE TEMA ────────────────────────────── */
+  /* Classes para ícone SVG do toggle de tema */
+  .theme-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SVG do sol — visível no light */
+  .theme-icon__sun {
+    opacity: 1;
+    transform: rotate(0deg);
+    transition:
+      opacity var(--duration-base) var(--ease-heavy),
+      transform var(--duration-base) var(--ease-spring);
+  }
+
+  /* SVG da lua — visível no dark */
+  .theme-icon__moon {
+    opacity: 0;
+    transform: rotate(-90deg);
+    position: absolute;
+    transition:
+      opacity var(--duration-base) var(--ease-heavy),
+      transform var(--duration-base) var(--ease-spring);
+  }
+
+  /* Troca no dark */
+  [data-theme="dark"] .theme-icon__sun {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+
+  [data-theme="dark"] .theme-icon__moon {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) .theme-icon__sun {
+      opacity: 0;
+      transform: rotate(90deg);
+    }
+
+    html:not([data-theme="light"]) .theme-icon__moon {
+      opacity: 1;
+      transform: rotate(0deg);
+    }
+  }
+
+  /* ── ARIA LABEL DINÂMICO ─────────────────────── */
+  /* O JS deve atualizar o aria-label do botão de tema.
+     CSS não altera aria-label, mas podemos usar ::after
+     para feedback visual adicional. */
+  .navbar__theme-toggle[data-current-theme="light"]::before {
+    content: 'Ativar modo escuro';
+    position: absolute;
+    /* escondido visualmente, mas acessível via tooltip */
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+  }
 }
 
-/* =========================
-   THEME VARIABLES (Light = default)
-   - Mantive os valores originais fornecidos.
-   ========================= */
 
-/* Light mode (padrão) */
-:root {
-  --color-bg: #f9f7f5;
-  --color-bg-secondary: #ffffff;
-  --color-bg-tertiary: #f0ebe6;
-  --color-text: #1a1a1a;
-  --color-text-muted: #6b6b6b;
-  --color-border: #e0dcd9;
+/* ─────────────────────────────────────────────────
+   4. THEME-EXCEPTIONS — Edge Cases e Correções
+   
+   Problemas específicos que aparecem apenas na
+   troca de tema e não têm solução elegante elsewhere.
+───────────────────────────────────────────────── */
+@layer theme-exceptions {
 
-  /* Acentos usados no CSS original (mantidos para referência direta) */
-  --accent-primary: #81b29a; /* usado em hover, destaques */
-  --accent-primary-dark: #6a9481;
-  --accent-secondary-accent: #ff8f7a; /* highlight-2 */
-  --accent-secondary: #d4735f; /* btn--secondary color */
+  /* ── CODE BLOCKS NO DARK ─────────────────────── */
+  /* Syntax highlighting adapta ao tema */
+  [data-theme="dark"] pre {
+    background: #0a0a0a;
+    border-color: var(--analist-graphite);
+  }
+
+  [data-theme="dark"] code {
+    background: color-mix(in srgb, #f0ebe0 6%, var(--analist-near-black));
+    border-color: var(--analist-graphite);
+    color: #f0ebe0;
+  }
+
+  /* ── BLOCKQUOTE NO DARK ──────────────────────── */
+  [data-theme="dark"] blockquote {
+    background: color-mix(in srgb, #f0ebe0 4%, var(--analist-near-black));
+    border-left-color: var(--analist-red-glow);
+  }
+
+  [data-theme="dark"] blockquote::before {
+    color: var(--analist-red-glow);
+  }
+
+  /* ── TABELAS NO DARK ─────────────────────────── */
+  [data-theme="dark"] th {
+    background: #f0ebe0;
+    color: var(--analist-near-black);
+  }
+
+  /* ── HR NO DARK ──────────────────────────────── */
+  [data-theme="dark"] hr {
+    background-color: var(--analist-graphite);
+  }
+
+  /* ── MARK NO DARK ────────────────────────────── */
+  [data-theme="dark"] mark {
+    background-color: var(--analist-amber-deep);
+    color: #f0ebe0;
+  }
+
+  /* ── DETAILS/SUMMARY NO DARK ─────────────────── */
+  [data-theme="dark"] summary {
+    background-color: var(--analist-near-black);
+  }
+
+  [data-theme="dark"] summary:hover {
+    background-color: #f0ebe0;
+    color: var(--analist-near-black);
+  }
+
+  /* ── PLACEHOLDER NO DARK ─────────────────────── */
+  [data-theme="dark"] ::placeholder {
+    color: var(--analist-ash);
+  }
+
+  /* ── SELEÇÃO NO DARK (reforço) ───────────────── */
+  /* Já no color-scheme layer, mas garantindo fallback */
+  [data-theme="dark"] ::selection {
+    background-color: var(--analist-red-glow);
+    color: var(--analist-near-black);
+  }
+
+  /* ── GRADIENTE DE TEXTO NO DARK ──────────────── */
+  /* gradient-text já no design-tones.css — aqui apenas
+     garantimos que não quebra no dark com forced-colors */
+  @media (forced-colors: active) {
+    .gradient-text {
+      -webkit-text-fill-color: ButtonText;
+      background: none;
+    }
+  }
+
+  /* ── SCROLLBAR NO DARK (WebKit) ──────────────── */
+  [data-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--analist-near-black);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: var(--analist-ash);
+    border-color: var(--analist-near-black);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--analist-red-glow);
+  }
+
+  /* ── BARRA DE PROGRESSO NO DARK ──────────────── */
+  [data-theme="dark"] .scroll-progress {
+    background: var(--analist-red-glow);
+  }
+
+  /* ── NOISE LINE NO DARK ──────────────────────── */
+  [data-theme="dark"] .noise-line {
+    background: repeating-linear-gradient(
+      90deg,
+      #f0ebe0 0px,
+      #f0ebe0 4px,
+      transparent 4px,
+      transparent 8px,
+      var(--analist-red-glow) 8px,
+      var(--analist-red-glow) 10px,
+      transparent 10px,
+      transparent 16px
+    );
+  }
+
+  /* ── TEXTURE GRAIN NO DARK ───────────────────── */
+  /* mix-blend-mode muda no dark — já no design-tones.css
+     mas reforçamos aqui para garantir */
+  [data-theme="dark"] .texture-grain::after {
+    mix-blend-mode: screen;
+    opacity: 0.1;
+  }
+
+  /* ── HOVER DE LINK NO DARK ───────────────────── */
+  /* No dark mode, o hover de link (background fill)
+     usa paper como cor de texto, não o ink do light */
+  [data-theme="dark"] a:hover {
+    background-image: linear-gradient(var(--analist-red-glow), var(--analist-red-glow));
+    color: var(--analist-near-black);
+  }
+
+  /* Links sem underline continuam sem hover fill */
+  [data-theme="dark"] a.no-underline:hover,
+  [data-theme="dark"] .navbar__brand:hover,
+  [data-theme="dark"] .footer__brand:hover,
+  [data-theme="dark"] .btn:hover,
+  [data-theme="dark"] .social-link:hover,
+  [data-theme="dark"] .navbar__link:hover,
+  [data-theme="dark"] .navbar__drawer-link:hover {
+    background-image: none;
+    color: inherit;
+  }
+
+  /* ── FORMULÁRIOS NO DARK ─────────────────────── */
+  [data-theme="dark"] .form__input,
+  [data-theme="dark"] .form__textarea,
+  [data-theme="dark"] .form__select {
+    background: var(--analist-near-black);
+    border-color: var(--analist-graphite);
+    color: #f0ebe0;
+  }
+
+  [data-theme="dark"] .form__input:focus,
+  [data-theme="dark"] .form__textarea:focus,
+  [data-theme="dark"] .form__select:focus {
+    background: color-mix(in srgb, #f0ebe0 3%, var(--analist-near-black));
+    border-color: #f0ebe0;
+    box-shadow: var(--shadow-brutal);
+  }
+
+  [data-theme="dark"] .form__check-input {
+    background: var(--analist-near-black);
+    border-color: var(--analist-graphite);
+  }
+
+  /* ── SELECT ARROW NO DARK ────────────────────── */
+  /* Já no componente.css via [data-theme="dark"] .form__select */
+
+  /* ── VISITOR-MESSAGE (legado) ────────────────── */
+  /* Componente do original que pode existir no HTML */
+  [data-theme="dark"] .visitor-message {
+    background: var(--analist-charcoal);
+    border-color: var(--analist-graphite);
+    color: #f0ebe0;
+  }
+
+  [data-theme="dark"] .visitor-message * {
+    color: inherit;
+  }
+
+  /* ── ABOUT CARD (legado) ─────────────────────── */
+  [data-theme="dark"] .about__card,
+  [data-theme="dark"] .expertise__card {
+    background: var(--analist-charcoal);
+    border-color: var(--analist-graphite);
+  }
+
+  [data-theme="dark"] .about__card:hover,
+  [data-theme="dark"] .expertise__card:hover {
+    border-color: var(--analist-red-glow);
+    box-shadow: var(--shadow-brand);
+  }
 }
 
-/* Dark mode variables */
-[data-theme="dark"] {
-  --color-bg: #0f1923;
-  --color-bg-secondary: #131d2a;
-  --color-bg-tertiary: #1a2635;
-  --color-text: #f0ebe6;
-  --color-text-muted: #a8a8a8;
-  --color-border: #2a3d4f;
+
+/* ─────────────────────────────────────────────────
+   5. PREFERS-COLOR-SCHEME — Sistema sem JS
+   
+   Quando não há data-theme no html (JS não carregou),
+   o CSS responde à preferência do sistema diretamente.
+   Isso garante que o site funciona sem JS.
+───────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+
+  /* Aplica tokens do dark apenas se não houver
+     atributo data-theme explícito */
+  html:not([data-theme="light"]) {
+    --paper: var(--analist-near-black);
+    --ink:   #f0ebe0;
+    --strike:  var(--analist-red-glow);
+    --signal:  #ffe135;
+    --void:    #0a0a0a;
+    --scar:    var(--analist-graphite);
+    --mark:    color-mix(in srgb, #f0ebe0 5%, var(--analist-near-black));
+    --brand-accent: var(--analist-red-glow);
+
+    --surface-bg:        var(--analist-near-black);
+    --surface-secondary: var(--analist-charcoal);
+    --surface-tertiary:  var(--analist-graphite);
+    --surface-inverse:   var(--analist-paper);
+    --surface-accent:    color-mix(in srgb, var(--analist-red-glow) 10%, var(--analist-near-black));
+    --surface-data:      color-mix(in srgb, var(--analist-electric) 8%, var(--analist-near-black));
+
+    --text-primary:      #f0ebe0;
+    --text-secondary:    var(--analist-cloud);
+    --text-muted:        var(--analist-silver);
+    --text-inverse:      var(--analist-black);
+    --text-accent:       var(--analist-red-glow);
+    --text-link:         #4d7fff;
+
+    --border-default:    var(--analist-graphite);
+    --border-strong:     var(--analist-ash);
+    --border-accent:     var(--analist-red-glow);
+
+    --shadow-card:         4px 4px 0 var(--analist-graphite);
+    --shadow-card-hover:   6px 6px 0 var(--analist-red-glow);
+    --shadow-brutal:       6px 6px 0 #f0ebe0;
+    --shadow-brand:        4px 4px 0 var(--analist-red-glow);
+    --shadow-brand-lg:     8px 8px 0 var(--analist-red-glow);
+
+    --glass-bg:          rgba(17, 17, 17, 0.88);
+    --glass-border:      rgba(240, 235, 224, 0.1);
+    --noise-opacity:     0.08;
+    --grain-opacity:     0.12;
+    --scanline-color:    rgba(240, 235, 224, 0.025);
+    --scanline-size:     2px;
+
+    --status-positive:      #00c87a;
+    --status-positive-bg:   color-mix(in srgb, #00c87a 12%, transparent);
+    --status-negative:      var(--analist-red-glow);
+    --status-negative-bg:   color-mix(in srgb, var(--analist-red-glow) 12%, transparent);
+  }
 }
 
-/* =========================
-   BASE LAYOUT / BODY
-   ========================= */
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  transition: var(--transition-global);
-}
 
-/* Blindagem global contra textos pretos em dark theme
-   (preserva comportamento original: garantir cor do texto no tema escuro) */
-[data-theme="dark"] {
-  color: var(--color-text);
-}
+/* ─────────────────────────────────────────────────
+   6. FORCED-COLORS — Windows High Contrast
+   
+   Quando o usuário força high contrast,
+   o sistema operacional toma controle das cores.
+   Garantimos que o layout sobrevive.
+───────────────────────────────────────────────── */
+@media (forced-colors: active) {
 
-/* Aplicar borda padrão em elementos quando tema escuro (original tinha [data-theme="dark"] * { border-color })
-   Mantido, mas limitado a elementos que possuem bordas (evita sobrescrever elementos sem borda). */
-[data-theme="dark"] * {
-  border-color: var(--color-border);
-}
+  /* Elementos com background personalizado
+     precisam declarar forced-color-adjust */
+  .btn,
+  .service-card,
+  .stat-card,
+  .badge,
+  .alert,
+  .data-badge,
+  .social-link {
+    forced-color-adjust: auto;
+    border: var(--border-width-brutal) solid ButtonText;
+  }
 
-/* =========================
-   HEADER
-   ========================= */
-.header {
-  background-color: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border);
-}
+  /* Sombras deslocadas não aparecem em forced-colors */
+  .btn,
+  .service-card,
+  .social-link {
+    box-shadow: none;
+    outline: var(--border-width-brutal) solid ButtonText;
+    outline-offset: 2px;
+  }
 
-/* =========================
-   NAVBAR
-   ========================= */
-.navbar__link {
-  color: var(--color-text);
-  transition: color var(--transition-duration-smooth) var(--transition-easing-smooth),
-              background-color var(--transition-duration-smooth) var(--transition-easing-smooth);
-}
+  /* Gradientes de texto não aparecem em forced-colors */
+  .gradient-text {
+    -webkit-text-fill-color: ButtonText;
+    background: none;
+  }
 
-.navbar__link:hover {
-  color: var(--accent-primary);
-  background-color: var(--color-bg-tertiary);
-}
+  /* Scan line e grain são decorações — removemos */
+  .texture-grain::after,
+  .texture-scanline::before,
+  .texture-scanline-live::after {
+    display: none;
+  }
 
-.navbar__submenu {
-  background-color: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-}
+  /* Scroll progress fica visível */
+  .scroll-progress {
+    background: Highlight;
+  }
 
-.navbar__sublink {
-  color: var(--color-text-muted);
-}
+  /* Links: usar cor do sistema */
+  a { color: LinkText; }
+  a:visited { color: VisitedText; }
 
-.navbar__sublink:hover {
-  background-color: var(--color-bg-tertiary);
-  color: var(--accent-primary);
-}
+  /* Botões: usar ButtonFace e ButtonText */
+  .btn {
+    background: ButtonFace;
+    color: ButtonText;
+  }
 
-/* =========================
-   HERO / ABOUT BRAND
-   ========================= */
-.hero,
-.about-brand {
-  color: var(--color-text);
-}
-
-.hero__title,
-.hero__title span {
-  color: var(--color-text);
-}
-
-/* Destaques específicos (mantidos valores hex originais) */
-.hero__title .highlight {
-  color: var(--accent-primary);
-}
-
-.hero__title .highlight-2 {
-  color: var(--accent-secondary-accent);
-}
-
-/* =========================
-   SECTION TITLES
-   ========================= */
-.section__title,
-.section__title * {
-  color: var(--color-text);
-}
-
-/* =========================
-   CARDS (about, service, expertise)
-   ========================= */
-.about__card,
-.service-card,
-.expertise__card {
-  background-color: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-  transition: border-color var(--transition-duration-smooth) var(--transition-easing-smooth),
-              box-shadow var(--transition-duration-smooth) var(--transition-easing-smooth);
-}
-
-.about__card:hover,
-.service-card:hover,
-.expertise__card:hover {
-  border-color: var(--accent-primary);
-  box-shadow: 0 20px 25px -5px rgba(129, 178, 154, 0.15); /* mantido valor original */
-}
-
-/* =========================
-   BUTTONS
-   ========================= */
-.btn--primary {
-  background-color: var(--accent-primary);
-  color: #ffffff;
-  border: none;
-  transition: background-color var(--transition-duration-smooth) var(--transition-easing-smooth),
-              color var(--transition-duration-smooth) var(--transition-easing-smooth);
-}
-
-/* No tema escuro, o CSS original definia cor do texto do botão primário para #0f1923 */
-[data-theme="dark"] .btn--primary {
-  color: #0f1923;
-}
-
-.btn--primary:hover {
-  background-color: var(--accent-primary-dark);
-}
-
-.btn--secondary {
-  color: var(--accent-secondary);
-  border: 1px solid var(--accent-secondary);
-  background: transparent;
-  transition: background-color var(--transition-duration-smooth) var(--transition-easing-smooth),
-              color var(--transition-duration-smooth) var(--transition-easing-smooth);
-}
-
-.btn--secondary:hover {
-  background-color: var(--accent-secondary);
-  color: #ffffff;
-}
-
-/* Dark theme: manter comportamento original onde hover do secondary muda cor do texto para #0f1923 */
-[data-theme="dark"] .btn--secondary:hover {
-  color: #0f1923;
-}
-
-/* =========================
-   FORM ELEMENTS
-   ========================= */
-input,
-textarea,
-select {
-  background-color: var(--color-bg-secondary);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  transition: border-color var(--transition-duration-smooth) var(--transition-easing-smooth),
-              box-shadow var(--transition-duration-smooth) var(--transition-easing-smooth);
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(129, 178, 154, 0.1); /* mantido valor original */
-  outline: none;
-}
-
-/* =========================
-   SOCIAL ICONS (SVG)
-   ========================= */
-.social-icon,
-.social-icon svg {
-  color: var(--color-text);
-  fill: currentColor;
-  transition: color var(--transition-duration-smooth) var(--transition-easing-smooth);
-}
-
-.social-icon:hover {
-  color: var(--accent-primary);
-}
-
-/* =========================
-   VISITOR MESSAGE
-   ========================= */
-.visitor-message,
-.visitor-message * {
-  color: var(--color-text);
-}
-
-.visitor-message {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-}
-
-/* =========================
-   TRANSIÇÃO SUAVE ENTRE TEMAS (ANIMAÇÃO)
-   - Mantive keyframes e classe .theme-transitioning conforme original.
-   ========================= */
-body.theme-transitioning {
-  animation: themeTransition 500ms var(--transition-easing-smooth);
-}
-
-@keyframes themeTransition {
-  0%   { opacity: 1; filter: brightness(1) blur(0px); }
-  50%  { opacity: 0.95; filter: brightness(0.98) blur(1px); }
-  100% { opacity: 1; filter: brightness(1) blur(0px); }
-}
-
-/* =========================
-   ACESSIBILIDADE: PREFERS CONTRAST
-   ========================= */
-@media (prefers-contrast: more) {
   .btn--primary,
-  .service-card {
-    border-width: 2px;
+  .btn--cta,
+  .btn--accent {
+    background: ButtonText;
+    color: ButtonFace;
   }
 }
 
-/* =========================
-   REDUZIR ANIMAÇÃO: PREFERS-REDUCED-MOTION
-   - Mantive comportamento original (forçar durações mínimas e remover animação de transição de tema).
-   ========================= */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
-    transition-delay: 0ms !important;
-  }
 
-  body.theme-transitioning {
-    animation: none !important;
-  }
-}
+/* ─────────────────────────────────────────────────
+   7. REDUCED-MOTION — Transição de tema sem animação
+───────────────────────────────────────────────── */
+@layer reduced-motion {
 
-/* =========================
-   PRINT
-   - Mantido comportamento original para impressão.
-   ========================= */
-@media print {
-  * {
-    background: transparent !important;
-    color: black !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
+  @media (prefers-reduced-motion: reduce) {
+
+    /* View Transition: sem animação */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+    }
+
+    /* Transição clássica: instantânea */
+    html.is-transitioning,
+    html.is-transitioning * {
+      transition: none !important;
+    }
+
+    /* Ícone de tema: sem rotação */
+    .theme-icon__sun,
+    .theme-icon__moon {
+      transition: opacity var(--duration-fast) var(--ease-linear) !important;
+      transform: none !important;
+    }
   }
 }
