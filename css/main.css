@@ -306,29 +306,27 @@
 
 
 /* ============================================================================
-   SKILLS MARQUEE - ANIMAÇÃO INFINITA
-   Observações de refatoração:
-   - Consolidado keyframes marquee em um único bloco (evita duplicação).
-   - Agrupadas regras de .marquee-* e .skills-marquee para clareza.
+   SKILLS MARQUEE - ANIMAÇÃO REVOLUCIONÁRIA
+   - Itens coloridos com gradiente animado
+   - Scroll-driven animation usando @scroll-timeline
+   - Efeitos 3D e glassmorphism para impacto visual
    ============================================================================ */
+
 .skills-marquee {
   position: relative;
   overflow: hidden;
   padding: var(--spacing-2xl) 0;
-  background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, var(--color-bg) 100%);
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
 }
 
 .skills-marquee__background {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background:
-    radial-gradient(circle at 20% 50%, rgba(129, 178, 154, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(212, 115, 95, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(255, 0, 150, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(0, 200, 255, 0.1) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -341,6 +339,10 @@
   text-align: center;
   font-size: var(--font-size-2xl);
   margin-bottom: var(--spacing-sm);
+  background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 8s ease infinite;
 }
 
 .skills-marquee__subtitle {
@@ -359,11 +361,19 @@
   position: relative;
 }
 
+/* Scroll-driven animation */
+@scroll-timeline marquee-timeline {
+  source: auto;
+  orientation: inline;
+}
+
 .marquee-content {
   display: flex;
   gap: var(--spacing-lg);
   align-items: center;
-  animation: marquee 30s linear infinite;
+  animation: marquee linear infinite;
+  animation-timeline: marquee-timeline;
+  animation-duration: 1s;
   will-change: transform;
 }
 
@@ -378,29 +388,35 @@
   gap: var(--spacing-sm);
   padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--border-radius-lg);
-  background-color: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
   white-space: nowrap;
-  transition: all var(--transition-base);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
   min-width: max-content;
   cursor: default;
+  color: white;
 }
 
 .marquee-item:hover {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 20px rgba(129, 178, 154, 0.2);
-  transform: translateY(-4px);
+  transform: scale(1.1) rotateY(10deg);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
 }
 
 .marquee-item i {
   font-size: var(--font-size-xl);
-  color: var(--color-primary);
-  min-width: 24px;
+  background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
 }
 
 .marquee-item span {
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
+  background: linear-gradient(90deg, #4ade80, #06b6d4, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 10s ease infinite;
 }
 
 /* MARQUEE SEPARATOR */
@@ -411,17 +427,19 @@
   margin: 0 var(--spacing-sm);
 }
 
-/* Consolidated keyframes for marquee (single source of truth) */
+/* Keyframes */
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-/* Mobile adjustments for marquee and skills-marquee */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Mobile adjustments */
 @media (max-width: 767px) {
   .skills-marquee {
     padding: var(--spacing-lg) 0;
