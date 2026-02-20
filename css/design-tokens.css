@@ -1,67 +1,74 @@
 /* ============================================================================
-   DESIGN TOKENS - PALETA EXCLUSIVA ANALIST.COM
+   DESIGN TOKENS - PALETA EXCLUSIVA ANALIST.COM (Refatorado)
+   - Todos os tokens originais foram preservados.
+   - Organização por blocos semânticos para manutenção e escalabilidade.
    ============================================================================ */
 
-:root {
+/* ===========================
+   BASE TOKENS (cores, tipografia, espaçamento, etc.)
+   - Defina aqui todos os tokens "brutos" (valores originais).
+   - Não mapear semanticamente aqui; apenas declarar.
+   =========================== */
+:root{
   /* ========== CORES BASE ========== */
-  
+
   /* Background (Light Mode) */
-  --color-bg-light: #f9f7f5;           /* Fundo principal (warmth sutil) */
-  --color-bg-light-secondary: #ffffff; /* Fundo secundário */
-  --color-bg-light-tertiary: #f0ebe6;  /* Fundo terciário */
+  --color-bg-light: #f9f7f5;
+  --color-bg-light-secondary: #ffffff;
+  --color-bg-light-tertiary: #f0ebe6;
 
   /* Background (Dark Mode) */
-  --color-bg-dark: #0f1923;             /* Fundo principal (azul profundo) */
-  --color-bg-dark-secondary: #131d2a;   /* Fundo secundário */
-  --color-bg-dark-tertiary: #1a2635;    /* Fundo terciário */
+  --color-bg-dark: #0f1923;
+  --color-bg-dark-secondary: #131d2a;
+  --color-bg-dark-tertiary: #1a2635;
 
   /* Text */
-  --color-text-light: #1a1a1a;          /* Texto em modo claro */
-  --color-text-dark: #f0ebe6;           /* Texto em modo escuro */
-  --color-text-muted-light: #6b6b6b;    /* Texto muted em claro */
-  --color-text-muted-dark: #a8a8a8;     /* Texto muted em escuro */
+  --color-text-light: #1a1a1a;
+  --color-text-dark: #f0ebe6;
+  --color-text-muted-light: #6b6b6b;
+  --color-text-muted-dark: #a8a8a8;
 
   /* Cores Primárias */
-  --color-primary: #81b29a;             /* Verde mineral (confiança) */
-  --color-primary-dark: #6a9481;        /* Verde mineral darker */
-  --color-primary-light: #9eceb8;       /* Verde mineral lighter */
+  --color-primary: #81b29a;
+  --color-primary-dark: #6a9481;
+  --color-primary-light: #9eceb8;
 
   /* Cores Secundárias */
-  --color-secondary: #d4735f;           /* Coral queimado (ação, energia) */
-  --color-secondary-dark: #b85d4f;      /* Coral queimado darker */
-  --color-secondary-light: #e68f7f;     /* Coral queimado lighter */
+  --color-secondary: #d4735f;
+  --color-secondary-dark: #b85d4f;
+  --color-secondary-light: #e68f7f;
 
   /* Acentos Exclusivos */
-  --color-accent1: #2a5f7f;             /* Azul petróleo (sofisticação) */
-  --color-accent1-dark: #1e4557;        /* Azul petróleo darker */
-  --color-accent1-light: #3d7fa3;       /* Azul petróleo lighter */
+  --color-accent1: #2a5f7f;
+  --color-accent1-dark: #1e4557;
+  --color-accent1-light: #3d7fa3;
 
-  --color-accent2: #6b9f6b;             /* Verde eucalipto (equilíbrio) */
-  --color-accent2-dark: #5a8859;        /* Verde eucalipto darker */
-  --color-accent2-light: #7fb17f;       /* Verde eucalipto lighter */
+  --color-accent2: #6b9f6b;
+  --color-accent2-dark: #5a8859;
+  --color-accent2-light: #7fb17f;
 
   /* Status Colors */
-  --color-success: #7cb342;             /* Sucesso */
-  --color-warning: #ffa726;             /* Aviso */
-  --color-error: #e74c3c;               /* Erro */
-  --color-info: #29b6f6;                /* Informação */
+  --color-success: #7cb342;
+  --color-warning: #ffa726;
+  --color-error: #e74c3c;
+  --color-info: #29b6f6;
 
   /* Borders & Dividers */
-  --color-border-light: #e0dcd9;        /* Borda em modo claro */
-  --color-border-dark: #2a3d4f;         /* Borda em modo escuro */
+  --color-border-light: #e0dcd9;
+  --color-border-dark: #2a3d4f;
 
   /* ========== TIPOGRAFIA ========== */
   --font-primary: 'DM Sans', sans-serif;
   --font-secondary: 'Inter', sans-serif;
 
-  --font-size-xs: 0.75rem;      /* 12px */
-  --font-size-sm: 0.875rem;     /* 14px */
-  --font-size-base: 1rem;       /* 16px */
-  --font-size-lg: 1.125rem;     /* 18px */
-  --font-size-xl: 1.5rem;       /* 24px */
-  --font-size-2xl: 2rem;        /* 32px */
-  --font-size-3xl: 2.5rem;      /* 40px */
-  --font-size-4xl: 3.5rem;      /* 56px */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 3.5rem;
 
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -74,19 +81,19 @@
   --line-height-relaxed: 1.8;
 
   /* ========== SPACING ========== */
-  --spacing-xs: 0.5rem;      /* 8px */
-  --spacing-sm: 1rem;        /* 16px */
-  --spacing-md: 1.5rem;      /* 24px */
-  --spacing-lg: 2rem;        /* 32px */
-  --spacing-xl: 3rem;        /* 48px */
-  --spacing-2xl: 4rem;       /* 64px */
-  --spacing-3xl: 6rem;       /* 96px */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --spacing-3xl: 6rem;
 
   /* ========== BORDERS ========== */
-  --border-radius-sm: 0.5rem;      /* 8px */
-  --border-radius-md: 0.75rem;     /* 12px */
-  --border-radius-lg: 1rem;        /* 16px */
-  --border-radius-xl: 1.5rem;      /* 24px */
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 0.75rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 1.5rem;
   --border-radius-full: 9999px;
 
   --border-width-light: 1px;
@@ -119,23 +126,93 @@
   --breakpoint-2xl: 1536px;
 }
 
-/* Dark Mode */
-[data-theme="dark"] {
-  --color-bg: var(--color-bg-dark);
-  --color-bg-secondary: var(--color-bg-dark-secondary);
-  --color-bg-tertiary: var(--color-bg-dark-tertiary);
-  --color-text: var(--color-text-dark);
-  --color-text-muted: var(--color-text-muted-dark);
-  --color-border: var(--color-border-dark);
-}
+/* ===========================
+   SEMANTIC ALIASES (mapeamento por tema)
+   - Use estas propriedades nos componentes (ex.: --surface-bg, --text-primary).
+   - Mantém os tokens base intactos e facilita troca de tema.
+   =========================== */
 
-/* Light Mode (Default) */
+/* Light Mode (padrão) */
 [data-theme="light"],
 :root {
-  --color-bg: var(--color-bg-light);
-  --color-bg-secondary: var(--color-bg-light-secondary);
-  --color-bg-tertiary: var(--color-bg-light-tertiary);
-  --color-text: var(--color-text-light);
-  --color-text-muted: var(--color-text-muted-light);
-  --color-border: var(--color-border-light);
+  /* Surface / Background */
+  --surface-bg: var(--color-bg-light);
+  --surface-secondary: var(--color-bg-light-secondary);
+  --surface-tertiary: var(--color-bg-light-tertiary);
+
+  /* Text */
+  --text-primary: var(--color-text-light);
+  --text-muted: var(--color-text-muted-light);
+
+  /* Borders */
+  --border-default: var(--color-border-light);
+
+  /* Semantic color aliases (mantém primários/acentos originais) */
+  --accent-primary: var(--color-primary);
+  --accent-primary-dark: var(--color-primary-dark);
+  --accent-primary-light: var(--color-primary-light);
+
+  --accent-secondary: var(--color-secondary);
+  --accent-secondary-dark: var(--color-secondary-dark);
+  --accent-secondary-light: var(--color-secondary-light);
+
+  --accent-1: var(--color-accent1);
+  --accent-1-dark: var(--color-accent1-dark);
+  --accent-1-light: var(--color-accent1-light);
+
+  --accent-2: var(--color-accent2);
+  --accent-2-dark: var(--color-accent2-dark);
+  --accent-2-light: var(--color-accent2-light);
+
+  --status-success: var(--color-success);
+  --status-warning: var(--color-warning);
+  --status-error: var(--color-error);
+  --status-info: var(--color-info);
 }
+
+/* Dark Mode */
+[data-theme="dark"]{
+  /* Surface / Background */
+  --surface-bg: var(--color-bg-dark);
+  --surface-secondary: var(--color-bg-dark-secondary);
+  --surface-tertiary: var(--color-bg-dark-tertiary);
+
+  /* Text */
+  --text-primary: var(--color-text-dark);
+  --text-muted: var(--color-text-muted-dark);
+
+  /* Borders */
+  --border-default: var(--color-border-dark);
+
+  /* Semantic color aliases (reaproveita os mesmos acentos) */
+  --accent-primary: var(--color-primary);
+  --accent-primary-dark: var(--color-primary-dark);
+  --accent-primary-light: var(--color-primary-light);
+
+  --accent-secondary: var(--color-secondary);
+  --accent-secondary-dark: var(--color-secondary-dark);
+  --accent-secondary-light: var(--color-secondary-light);
+
+  --accent-1: var(--color-accent1);
+  --accent-1-dark: var(--color-accent1-dark);
+  --accent-1-light: var(--color-accent1-light);
+
+  --accent-2: var(--color-accent2);
+  --accent-2-dark: var(--color-accent2-dark);
+  --accent-2-light: var(--color-accent2-light);
+
+  --status-success: var(--color-success);
+  --status-warning: var(--color-warning);
+  --status-error: var(--color-error);
+  --status-info: var(--color-info);
+}
+
+/* ===========================
+   NOTAS DE USO
+   - Use as variáveis semânticas nos componentes:
+     background: var(--surface-secondary);
+     color: var(--text-primary);
+     border-color: var(--border-default);
+   - Para cores de ação, use --accent-primary / --accent-secondary.
+   - Todos os tokens originais permanecem disponíveis para casos específicos.
+   =========================== */

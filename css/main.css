@@ -1,7 +1,12 @@
 /* ============================================================================
-   MAIN - AGREGADOR DE TODOS OS ARQUIVOS CSS
+   MAIN - AGREGADOR DE TODOS OS ARQUIVOS CSS (REFATORADO)
+   Objetivos: manter comportamento original; melhorar organização, legibilidade,
+   remover duplicações (keyframes/media queries), e agrupar regras relacionadas.
    ============================================================================ */
 
+/* ---------------------------
+   IMPORTS (mantidos como origem única de tokens e base)
+   --------------------------- */
 @import url('./design-tokens.css');
 @import url('./base.css');
 @import url('./components.css');
@@ -10,11 +15,13 @@
 @import url('./dark-mode.css');
 
 
+/* ============================================================================
+   SEÇÕES ESPECÍFICAS
+   ============================================================================ */
 
-
-/* ========== SEÇÕES ESPECÍFICAS ========== */
-
-/* ABOUT CARDS */
+/* ---------------------------
+   ABOUT CARDS
+   --------------------------- */
 .about__card {
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
@@ -33,7 +40,10 @@
   margin-bottom: var(--spacing-sm);
 }
 
-/* AI SECTION */
+
+/* ---------------------------
+   AI SECTION
+   --------------------------- */
 .ai__content {
   animation: fadeInLeft 0.8s ease-out;
 }
@@ -85,7 +95,10 @@
   transform: scale(1.05);
 }
 
-/* ABOUT BRAND */
+
+/* ---------------------------
+   ABOUT BRAND
+   --------------------------- */
 .about-brand {
   background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-tertiary) 100%);
 }
@@ -138,18 +151,15 @@
   color: var(--color-text-muted);
 }
 
-/* CONTACT SECTION */
+
+/* ---------------------------
+   CONTACT SECTION
+   --------------------------- */
 .contact__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-2xl);
   margin-top: var(--spacing-2xl);
-}
-
-@media (max-width: 767px) {
-  .contact__grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .contact__form {
@@ -189,7 +199,10 @@
   transform: scale(1.02);
 }
 
-/* FOOTER */
+
+/* ---------------------------
+   FOOTER
+   --------------------------- */
 .footer {
   background-color: var(--color-bg-secondary);
   border-top: 1px solid var(--color-border);
@@ -211,6 +224,8 @@
 
 .footer__list {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer__link {
@@ -229,6 +244,8 @@
   display: flex;
   gap: var(--spacing-sm);
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer__bottom {
@@ -244,7 +261,11 @@
   margin-bottom: var(--spacing-xs);
 }
 
-/* ========== VISME RESPONSIVENESS ========== */
+
+/* ============================================================================
+   VISME RESPONSIVENESS
+   Observações: mantém regras específicas e sincronização com data-theme.
+   ============================================================================ */
 .visme_d {
   width: 100%;
   max-width: 100%;
@@ -259,6 +280,7 @@
   border-radius: var(--border-radius-lg) !important;
 }
 
+/* Mobile adjustments for visme and contact form */
 @media (max-width: 767px) {
   .visme_d {
     background-color: var(--color-bg-secondary) !important;
@@ -282,10 +304,13 @@
   background-color: #131d2a !important;
 }
 
+
 /* ============================================================================
    SKILLS MARQUEE - ANIMAÇÃO INFINITA
+   Observações de refatoração:
+   - Consolidado keyframes marquee em um único bloco (evita duplicação).
+   - Agrupadas regras de .marquee-* e .skills-marquee para clareza.
    ============================================================================ */
-
 .skills-marquee {
   position: relative;
   overflow: hidden;
@@ -301,7 +326,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     radial-gradient(circle at 20% 50%, rgba(129, 178, 154, 0.05) 0%, transparent 50%),
     radial-gradient(circle at 80% 50%, rgba(212, 115, 95, 0.05) 0%, transparent 50%);
   pointer-events: none;
@@ -327,7 +352,7 @@
   letter-spacing: 2px;
 }
 
-/* MARQUEE WRAPPER */
+/* MARQUEE WRAPPER & CONTENT */
 .marquee-wrapper {
   overflow: hidden;
   width: 100%;
@@ -344,15 +369,6 @@
 
 .marquee-wrapper:hover .marquee-content {
   animation-play-state: paused;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 /* MARQUEE ITEMS */
@@ -395,7 +411,17 @@
   margin: 0 var(--spacing-sm);
 }
 
-/* MOBILE */
+/* Consolidated keyframes for marquee (single source of truth) */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobile adjustments for marquee and skills-marquee */
 @media (max-width: 767px) {
   .skills-marquee {
     padding: var(--spacing-lg) 0;
@@ -417,21 +443,12 @@
   .marquee-item i {
     font-size: var(--font-size-lg);
   }
-
-  @keyframes marquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
 }
+
 
 /* ============================================================================
    EXPERTISE SECTION
    ============================================================================ */
-
 .expertise__intro {
   text-align: center;
   margin-bottom: var(--spacing-3xl);
@@ -460,6 +477,7 @@
   margin-top: var(--spacing-3xl);
 }
 
+/* Responsividade do grid */
 @media (max-width: 1023px) {
   .expertise__grid {
     grid-template-columns: 1fr;
@@ -506,6 +524,7 @@
 .expertise__list {
   list-style: none;
   margin-bottom: var(--spacing-2xl);
+  padding: 0;
 }
 
 .expertise__item {
@@ -637,6 +656,7 @@
 .expertise__benefits {
   list-style: none;
   margin-bottom: var(--spacing-lg);
+  padding: 0;
 }
 
 .expertise__benefits li {
@@ -741,8 +761,37 @@
   color: var(--color-text);
 }
 
-/* MOBILE */
+/* MOBILE ADJUSTMENTS */
 @media (max-width: 767px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visme_d iframe {
+    min-height: 600px !important;
+  }
+
+  .skills-marquee {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .skills-marquee__title {
+    font-size: var(--font-size-xl);
+  }
+
+  .marquee-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-xs);
+  }
+
+  .marquee-item span {
+    font-size: var(--font-size-sm);
+  }
+
+  .marquee-item i {
+    font-size: var(--font-size-lg);
+  }
+
   .expertise__grid {
     gap: var(--spacing-lg);
   }
@@ -761,3 +810,7 @@
     font-size: var(--font-size-sm);
   }
 }
+
+/* ============================================================================
+   FIM DO ARQUIVO
+   ============================================================================ */

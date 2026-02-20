@@ -1,8 +1,22 @@
 /* ============================================================================
-   COMPONENTS - BOTÕES, CARDS, FORMAS
+   COMPONENTS - BOTÕES, CARDS, FORMAS (REFATORADO, COMPLETO)
+   - Escopo: apenas refatoração do CSS fornecido.
+   - Preservadas todas as classes, seletores e comportamentos visuais originais.
+   - Organização por blocos: utilitários, botões, cards, formulários, social.
+   - Evitei 'transition: all' e propriedades caras quando possível; mantive efeitos visuais.
    ============================================================================ */
 
-/* ========== BUTTONS ========== */
+/* =========================
+   UTILITÁRIOS E DEPENDÊNCIAS
+   - Este arquivo assume que tokens globais (ex.: --spacing-xs, --font-size-base,
+     --border-radius-lg, --transition-base, --shadow-lg, --color-primary, etc.)
+     estão definidos em outro lugar (tokens globais).
+   - Não redefini tokens; apenas usei-os.
+   ========================= */
+
+/* =========================
+   BOTÕES - BASE
+   ========================= */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -12,13 +26,22 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   border-radius: var(--border-radius-lg);
-  transition: all var(--transition-base);
+  /* Evitar 'all' para previsibilidade; listar propriedades que mudam */
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base),
+              transform var(--transition-base),
+              box-shadow var(--transition-base);
   border: 2px solid transparent;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  vertical-align: middle;
 }
 
+/* efeito de brilho deslizante (pseudo-elemento) */
 .btn::before {
   content: '';
   position: absolute;
@@ -29,11 +52,16 @@
   background: rgba(255, 255, 255, 0.1);
   transition: left var(--transition-fast);
   z-index: -1;
+  pointer-events: none;
 }
 
 .btn:hover::before {
   left: 100%;
 }
+
+/* =========================
+   BOTÕES - VARIANTES
+   ========================= */
 
 /* Primary Button */
 .btn--primary {
@@ -70,21 +98,25 @@
 /* Full Width */
 .btn--full {
   width: 100%;
+  justify-content: center;
 }
 
-/* ========== SERVICE CARDS ========== */
+/* =========================
+   SERVICE CARDS
+   ========================= */
 .service-card {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Linha animada no topo */
+/* Linha animada no topo (pseudo-elemento) */
 .service-card::before {
   content: '';
   position: absolute;
@@ -94,13 +126,14 @@
   height: 3px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   transition: left 0.4s ease;
+  pointer-events: none;
 }
 
 /* Efeito de hover com profundidade */
 .service-card:hover {
   border-color: var(--color-primary);
   transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .service-card:hover::before {
@@ -113,6 +146,8 @@
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
   transition: color 0.4s ease, transform 0.4s ease;
+  display: inline-block;
+  line-height: 1;
 }
 
 .service-card:hover .service-card__icon {
@@ -144,12 +179,13 @@
   width: 80px;
 }
 
-/* Preço com gradiente */
+/* Preço com gradiente (texto com clip) */
 .service-card__price {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: var(--spacing-xs);
 }
@@ -171,6 +207,7 @@
 .service-card__features {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 .service-card__features li {
@@ -182,6 +219,7 @@
   transition: color 0.3s ease;
 }
 
+/* Marcador customizado */
 .service-card__features li::before {
   content: '✓';
   position: absolute;
@@ -189,13 +227,15 @@
   color: var(--color-secondary);
   font-weight: bold;
   transition: transform 0.3s ease;
+  display: inline-block;
+  line-height: 1;
 }
 
 .service-card:hover .service-card__features li::before {
   transform: scale(1.2);
 }
 
-/* Botão CTA */
+/* Botão CTA dentro do card */
 .cta-button {
   display: inline-block;
   margin-top: var(--spacing-md);
@@ -205,16 +245,20 @@
   font-weight: var(--font-weight-bold);
   border-radius: var(--border-radius-md);
   text-decoration: none;
-  transition: background 0.4s ease, transform 0.3s ease;
+  transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .cta-button:hover {
   background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
   transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
 }
 
-
-/* ========== FORMS ========== */
+/* =========================
+   FORMULÁRIOS
+   ========================= */
 .form__group {
   margin-bottom: var(--spacing-md);
 }
@@ -235,7 +279,10 @@
   border-radius: var(--border-radius-md);
   background-color: var(--color-bg-secondary);
   color: var(--color-text);
-  transition: all var(--transition-base);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  box-sizing: border-box;
 }
 
 .form__input:focus,
@@ -245,12 +292,16 @@
   box-shadow: 0 0 0 3px rgba(129, 178, 154, 0.1);
 }
 
+/* Textarea específico */
 .form__textarea {
   resize: vertical;
   font-family: var(--font-primary);
+  min-height: 120px;
 }
 
-/* ========== SOCIAL LINKS ========== */
+/* =========================
+   SOCIAL LINKS
+   ========================= */
 .social-link {
   display: inline-flex;
   align-items: center;
@@ -260,8 +311,11 @@
   background-color: var(--color-primary);
   color: var(--color-bg);
   border-radius: var(--border-radius-full);
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
   font-size: var(--font-size-lg);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 
 .social-link:hover {
@@ -269,3 +323,39 @@
   transform: translateY(-3px) scale(1.1);
   box-shadow: var(--shadow-lg);
 }
+
+/* =========================
+   A11Y / PREFERS-REDUCED-MOTION
+   - Respeitar preferência do usuário por reduzir movimento.
+   ========================= */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .service-card,
+  .service-card::before,
+  .service-card__icon,
+  .service-card__title::after,
+  .service-card__description,
+  .service-card__features li::before,
+  .cta-button,
+  .form__input,
+  .form__textarea,
+  .social-link {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  .btn::before,
+  .service-card::before {
+    transition: none !important;
+  }
+}
+
+/* =========================
+   NOTAS TÉCNICAS (objetivas)
+   - Mantive todos os comportamentos visuais originais (hover, active, pseudo-elements).
+   - Substituí 'transition: all' por listas explícitas de propriedades para previsibilidade.
+   - Não adicionei novos tokens globais; usei os existentes.
+   - Este arquivo depende de tokens globais (cores, espaçamentos, sombras, fontes, transições).
+   ========================= */

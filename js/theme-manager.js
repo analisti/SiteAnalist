@@ -1,129 +1,142 @@
 /* ============================================================================
-   THEME MANAGER - GERENCIADOR DE TEMA DARK/LIGHT
+   THEME MANAGER - REFACTORED (SEM DEPENDÊNCIAS)
+   Objetivos: manter todas as funções originais, melhorar legibilidade,
+   encapsular seletores/constantes, tratar erros de storage, usar APIs modernas.
    ============================================================================ */
 
 class ThemeManager {
   constructor() {
-    this.THEME_KEY = 'analist-theme';
-    this.LIGHT = 'light';
-    this.DARK = 'dark';
-    this.html = document.documentElement;
-    
+    // Constantes imutáveis
+    this._KEY = 'analist-theme';
+    this._THEMES = { LIGHT: 'light', DARK: 'dark' };
+    this._META_NAME = 'theme-color';
+    this._TRANSITION_CLASS = 'theme-transitioning';
+    this._TRANSITION_TIMEOUT_MS = 500;
+
+    // Elementos principais
+    this._html = document.documentElement;
+    this._toggleSelector = '[data-theme-toggle]';
+
     console.log('🎨 Inicializando Theme Manager');
     this.init();
   }
 
+  // Inicialização principal (mantém ordem original de operações)
   init() {
     try {
-      // 1. Detectar tema salvo ou preferência do sistema
       this.detectTheme();
-      
-      // 2. Configurar botão toggle
       this.setupToggle();
-      
-      // 3. Observar mudanças do sistema
       this.observeSystemPreference();
-      
       console.log('✅ Theme Manager inicializado');
     } catch (error) {
       console.error('❌ Erro ao inicializar Theme Manager:', error);
     }
   }
 
+  /* ============================
+     DETECTAR E APLICAR TEMA
+     ============================ */
+
   detectTheme() {
     try {
-      const saved = localStorage.getItem(this.THEME_KEY);
-      
+      const saved = this._safeGetItem(this._KEY);
       if (saved) {
         console.log(`📌 Tema salvo encontrado: ${saved}`);
         this.setTheme(saved, false);
-      } else {
-        // Detectar preferência do sistema
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = prefersDark ? this.DARK : this.LIGHT;
-        console.log(`📌 Usando preferência do sistema: ${theme}`);
-        this.setTheme(theme, false);
+        return;
       }
+
+      // Preferência do sistema
+      const prefersDark = this._prefersDark();
+      const theme = prefersDark ? this._THEMES.DARK : this._THEMES.LIGHT;
+      console.log(`📌 Usando preferência do sistema: ${theme}`);
+      this.setTheme(theme, false);
     } catch (error) {
-      console.warn('⚠️ localStorage não disponível, usando light mode:', error);
-      this.setTheme(this.LIGHT, false);
+      console.warn('⚠️ Erro ao detectar tema; usando light por segurança:', error);
+      this.setTheme(this._THEMES.LIGHT, false);
     }
   }
 
   setTheme(theme, animate = true) {
-    // Validar tema
-    if (theme !== this.LIGHT && theme !== this.DARK) {
-      console.warn(`⚠️ Tema inválido: ${theme}, usando light`);
-      theme = this.LIGHT;
+    // Validação estrita do tema
+    if (!this._isValidTheme(theme)) {
+      console.warn(`⚠️ Tema inválido: ${theme}. Aplicando "${this._THEMES.LIGHT}"`);
+      theme = this._THEMES.LIGHT;
     }
 
-    // Adicionar classe de transição
+    // Aplicar classe de transição se solicitado
     if (animate) {
-      document.body.classList.add('theme-transitioning');
+      document.body.classList.add(this._TRANSITION_CLASS);
     }
 
-    // Aplicar tema ao HTML
-    this.html.setAttribute('data-theme', theme);
+    // Aplicar atributo no root (HTML)
+    this._html.setAttribute('data-theme', theme);
     console.log(`✨ data-theme setAttribute("data-theme", "${theme}")`);
 
-    // Salvar preferência
+    // Persistir preferência (tenta, mas falha silenciosa com log)
     try {
-      localStorage.setItem(this.THEME_KEY, theme);
+      this._safeSetItem(this._KEY, theme);
     } catch (e) {
-      console.warn('⚠️ Não foi possível salvar tema em localStorage');
+      console.warn('⚠️ Não foi possível salvar tema em localStorage:', e);
     }
 
-    // Remover classe de transição após animação
+    // Remover classe de transição após timeout previsível
     if (animate) {
+      // Usar setTimeout é aceitável para controle simples de classe
       setTimeout(() => {
-        document.body.classList.remove('theme-transitioning');
-      }, 500);
+        document.body.classList.remove(this._TRANSITION_CLASS);
+      }, this._TRANSITION_TIMEOUT_MS);
     }
 
-    // Log
-    console.log(`🎨 Tema: ${theme}`);
-    
-    // Atualizar meta tag
+    // Atualizar meta tag de cor
     this.updateMetaTag(theme);
+
+    console.log(`🎨 Tema aplicado: ${theme}`);
   }
 
+  /* ============================
+     TOGGLE DO BOTÃO
+     ============================ */
+
   setupToggle() {
-    const toggle = document.querySelector('[data-theme-toggle]');
-    
+    const toggle = document.querySelector(this._toggleSelector);
+
     if (!toggle) {
       console.warn('⚠️ Theme toggle button não encontrado');
       return;
     }
 
-    // Adicionar listener
-    toggle.addEventListener('click', (e) => {
+    // Listener com prevenção mínima (não impede outros handlers)
+    const onClick = (e) => {
       e.preventDefault();
       e.stopPropagation();
       this.toggleTheme();
-    });
+    };
 
-    // Atualizar aria-label inicial
-    const currentTheme = this.html.getAttribute('data-theme') || this.LIGHT;
+    toggle.addEventListener('click', onClick);
+
+    // Atualiza estado/aria do toggle conforme tema atual
+    const currentTheme = this._html.getAttribute('data-theme') || this._THEMES.LIGHT;
     this.updateToggleLabel(currentTheme);
 
     console.log('✅ Theme toggle configurado');
   }
 
   toggleTheme() {
-    const current = this.html.getAttribute('data-theme') || this.LIGHT;
-    const newTheme = current === this.LIGHT ? this.DARK : this.LIGHT;
-    
+    const current = this._html.getAttribute('data-theme') || this._THEMES.LIGHT;
+    const newTheme = current === this._THEMES.LIGHT ? this._THEMES.DARK : this._THEMES.LIGHT;
+
     console.log(`🔄 Alternando tema de ${current} para ${newTheme}`);
-    
+
     this.setTheme(newTheme, true);
     this.updateToggleLabel(newTheme);
   }
 
   updateToggleLabel(theme) {
-    const toggle = document.querySelector('[data-theme-toggle]');
+    const toggle = document.querySelector(this._toggleSelector);
     if (!toggle) return;
 
-    if (theme === this.DARK) {
+    if (theme === this._THEMES.DARK) {
       toggle.setAttribute('aria-label', 'Ativar modo claro');
       toggle.setAttribute('aria-pressed', 'true');
     } else {
@@ -132,47 +145,94 @@ class ThemeManager {
     }
   }
 
+  /* ============================
+     META TAG (THEME-COLOR)
+     ============================ */
+
   updateMetaTag(theme) {
-    let metaTheme = document.querySelector('meta[name="theme-color"]');
-    
-    if (!metaTheme) {
-      metaTheme = document.createElement('meta');
-      metaTheme.setAttribute('name', 'theme-color');
-      document.head.appendChild(metaTheme);
+    let meta = document.querySelector(`meta[name="${this._META_NAME}"]`);
+
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', this._META_NAME);
+      document.head.appendChild(meta);
     }
 
-    // Cores conforme o tema
-    const color = theme === this.DARK ? '#0f1923' : '#f9f7f5';
-    metaTheme.setAttribute('content', color);
+    // Cores definidas explicitamente (mantidas do original)
+    const color = theme === this._THEMES.DARK ? '#0f1923' : '#f9f7f5';
+    meta.setAttribute('content', color);
   }
+
+  /* ============================
+     OBSERVAR PREFERÊNCIA DO SISTEMA
+     ============================ */
 
   observeSystemPreference() {
-    if (!window.matchMedia) return;
+    if (typeof window.matchMedia !== 'function') return;
 
-    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    // Usar addEventListener em vez de addListener (deprecated)
-    if (darkModeQuery.addEventListener) {
-      darkModeQuery.addEventListener('change', (e) => {
-        // Só mudar se o usuário não tiver setado manualmente
-        const saved = localStorage.getItem(this.THEME_KEY);
-        if (!saved) {
-          const theme = e.matches ? this.DARK : this.LIGHT;
-          console.log(`🔄 Preferência do sistema mudou para: ${theme}`);
-          this.setTheme(theme, true);
-        }
-      });
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Handler que só aplica mudança se usuário não tiver salvo preferência
+    const onChange = (e) => {
+      const saved = this._safeGetItem(this._KEY);
+      if (!saved) {
+        const theme = e.matches ? this._THEMES.DARK : this._THEMES.LIGHT;
+        console.log(`🔄 Preferência do sistema mudou para: ${theme}`);
+        this.setTheme(theme, true);
+      }
+    };
+
+    // Modern API: addEventListener; fallback para addListener se necessário
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', onChange);
+    } else if (typeof mq.addListener === 'function') {
+      mq.addListener(onChange);
+    }
+  }
+
+  /* ============================
+     HELPERS E UTILITÁRIOS PRIVADOS
+     ============================ */
+
+  _isValidTheme(theme) {
+    return theme === this._THEMES.LIGHT || theme === this._THEMES.DARK;
+  }
+
+  _prefersDark() {
+    try {
+      return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    } catch (e) {
+      // Em caso de erro, assumir light por segurança
+      console.warn('⚠️ Erro ao verificar prefers-color-scheme:', e);
+      return false;
+    }
+  }
+
+  _safeGetItem(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.warn('⚠️ localStorage.getItem falhou:', e);
+      return null;
+    }
+  }
+
+  _safeSetItem(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      // Propagar não é necessário; apenas logar para diagnóstico
+      console.warn('⚠️ localStorage.setItem falhou:', e);
     }
   }
 }
 
-// ========== INICIALIZAÇÃO ========== 
-// Executar IMEDIATAMENTE (não esperar DOMContentLoaded)
-// Para que o tema seja aplicado antes do render
-if (document.readyState === 'loading') {
-  // DOM ainda está carregando
-  const manager = new ThemeManager();
-} else {
-  // DOM já carregou
-  const manager = new ThemeManager();
-}
+/* ============================
+   INICIALIZAÇÃO IMEDIATA
+   (aplica tema antes do render quando possível)
+   ============================ */
+(function bootstrapThemeManager() {
+  // Instancia imediatamente para aplicar tema antes do paint
+  // (comportamento idêntico ao original)
+  new ThemeManager();
+})();
