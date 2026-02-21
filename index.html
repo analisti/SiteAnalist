@@ -9,21 +9,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="analist.com — Presença Digital que Gera Resultados. Sistemas web, plataformas e estratégia digital que transformam atenção em crescimento real.">
+  <meta name="description"
+    content="analist.com — Presença Digital que Gera Resultados. Sistemas web, plataformas e estratégia digital que transformam atenção em crescimento real.">
   <meta name="author" content="analist.com">
   <meta name="color-scheme" content="light dark">
 
   <!-- Theme-color: gerenciado via JS (ThemeManager.#updateMeta) -->
   <!-- Dois metas para suporte nativo sem JS -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f0e8">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#111111">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111">
 
   <!-- Open Graph -->
-  <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://analist.com/">
-  <meta property="og:title"       content="analist.com — Presença Digital que Gera Resultados">
-  <meta property="og:description" content="Sistemas web e estratégia digital que transformam atenção em crescimento real.">
-  <meta property="og:image"       content="images/og-light.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://analist.com/">
+  <meta property="og:title" content="analist.com — Presença Digital que Gera Resultados">
+  <meta property="og:description"
+    content="Sistemas web e estratégia digital que transformam atenção em crescimento real.">
+  <meta property="og:image" content="images/og-light.png">
 
   <title>analist.com — Presença Digital que Gera Resultados</title>
 
@@ -36,17 +38,17 @@
        Minificado para ~180 bytes.
   ───────────────────────────────────────────────── -->
   <script>
-    (function(){
-      var k='analist-theme';
+    (function () {
+      var k = 'analist-theme';
       var t;
-      try{t=localStorage.getItem(k);}catch(e){}
-      if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
-      document.documentElement.dataset.theme=t;
+      try { t = localStorage.getItem(k); } catch (e) { }
+      if (!t) t = window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
     })();
   </script>
 
   <!-- Favicon -->
-  <link rel="icon"             href="images/ia-mao.svg" type="image/svg+xml">
+  <link rel="icon" href="images/ia-mao.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
   <!-- Preconnect para fontes -->
@@ -64,11 +66,8 @@
     rel="stylesheet">
 
   <!-- Font Awesome — ícones -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
 
   <!-- ─────────────────────────────────────────────
        CSS — ordem obrigatória de dependências
@@ -94,7 +93,7 @@
        Movido por initCursorTracker() no app.js
        Visível apenas em dispositivos com mouse (hover: hover)
   ───────────────────────────────────────────────── -->
-  <div class="cursor-dot"  aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
   <!-- ═════════════════════════════════════════════
@@ -112,40 +111,34 @@
           
           Opção B: SVG texto inline (sem request extra, sem FOUC de imagem)
         -->
-        <svg class="navbar__logo" width="140" height="28" viewBox="0 0 140 28"
-             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <text x="0" y="24" font-family="'Bebas Neue', sans-serif" font-size="26"
-                fill="currentColor">analist</text>
-          <text x="104" y="24" font-family="'Bebas Neue', sans-serif" font-size="26"
-                fill="var(--brand-accent)">.</text>
-          <text x="112" y="24" font-family="'Space Mono', monospace" font-size="14"
-                font-weight="400" fill="currentColor" opacity="0.6">com</text>
+        <svg class="navbar__logo" width="140" height="28" viewBox="0 0 140 28" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <text x="0" y="24" font-family="'Bebas Neue', sans-serif" font-size="26" fill="currentColor">analist</text>
+          <text x="104" y="24" font-family="'Bebas Neue', sans-serif" font-size="26" fill="var(--brand-accent)">.</text>
+          <text x="112" y="24" font-family="'Space Mono', monospace" font-size="14" font-weight="400"
+            fill="currentColor" opacity="0.6">com</text>
         </svg>
       </a>
 
       <!-- Menu desktop — oculto em mobile via container query no layout.css -->
       <ul class="navbar__menu" role="list">
-        <li><a href="#hero"     class="navbar__link" data-smooth-scroll>Home</a></li>
-        <li><a href="#about"    class="navbar__link" data-smooth-scroll>Sobre</a></li>
+        <li><a href="#hero" class="navbar__link" data-smooth-scroll>Home</a></li>
+        <li><a href="#about" class="navbar__link" data-smooth-scroll>Sobre</a></li>
         <li><a href="#services" class="navbar__link" data-smooth-scroll>Serviços</a></li>
-        <li><a href="#ai"       class="navbar__link" data-smooth-scroll>Planejamento</a></li>
-        <li><a href="#contact"  class="navbar__link" data-smooth-scroll>Contato</a></li>
+        <li><a href="#ai" class="navbar__link" data-smooth-scroll>Planejamento</a></li>
+        <li><a href="#contact" class="navbar__link" data-smooth-scroll>Contato</a></li>
 
         <!-- Dropdown -->
         <li class="dropdown-wrapper">
-          <button
-            class="navbar__link navbar__link--dropdown"
-            aria-expanded="false"
-            aria-haspopup="true"
+          <button class="navbar__link navbar__link--dropdown" aria-expanded="false" aria-haspopup="true"
             data-dropdown-trigger>
             Páginas
             <span class="dropdown-arrow" aria-hidden="true"></span>
           </button>
           <ul class="navbar__submenu" role="list" hidden>
             <li>
-              <a href="https://www.buildai.space/app/analistcom-app"
-                 target="_blank" rel="noopener nofollow"
-                 class="navbar__sublink">
+              <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="noopener nofollow"
+                class="navbar__sublink">
                 Crie um negócio
               </a>
             </li>
@@ -157,40 +150,30 @@
       <div class="navbar__actions">
 
         <!-- Toggle de tema -->
-        <button
-          class="navbar__theme-toggle"
-          aria-label="Ativar modo escuro"
-          aria-pressed="false"
-          data-theme-toggle
+        <button class="navbar__theme-toggle" aria-label="Ativar modo escuro" aria-pressed="false" data-theme-toggle
           data-current-theme="light">
           <!-- Ícone sol -->
-          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <line x1="12" y1="2"  x2="12" y2="5"/>
-            <line x1="12" y1="19" x2="12" y2="22"/>
-            <line x1="4.22" y1="4.22"  x2="6.34" y2="6.34"/>
-            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-            <line x1="2"  y1="12" x2="5"  y2="12"/>
-            <line x1="19" y1="12" x2="22" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
-            <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <line x1="12" y1="2" x2="12" y2="5" />
+            <line x1="12" y1="19" x2="12" y2="22" />
+            <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" />
+            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" />
+            <line x1="2" y1="12" x2="5" y2="12" />
+            <line x1="19" y1="12" x2="22" y2="12" />
+            <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" />
+            <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" />
           </svg>
           <!-- Ícone lua -->
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         </button>
 
         <!-- Hamburger — visível em mobile via container query -->
-        <button
-          class="navbar__toggle"
-          aria-label="Abrir menu"
-          aria-expanded="false"
-          aria-controls="navbar-drawer"
+        <button class="navbar__toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navbar-drawer"
           data-nav-toggle>
           <span class="navbar__toggle-bar" aria-hidden="true"></span>
           <span class="navbar__toggle-bar" aria-hidden="true"></span>
@@ -201,31 +184,26 @@
     </nav><!-- /nav -->
 
     <!-- Drawer mobile — controlado por initNavigation() no app.js -->
-    <nav
-      id="navbar-drawer"
-      class="navbar__drawer"
-      aria-label="Menu mobile"
-      aria-hidden="true">
+    <nav id="navbar-drawer" class="navbar__drawer" aria-label="Menu mobile" aria-hidden="true">
       <ul class="navbar__drawer-list" role="list">
         <li class="navbar__drawer-item">
-          <a href="#hero"     class="navbar__drawer-link" data-smooth-scroll>Home</a>
+          <a href="#hero" class="navbar__drawer-link" data-smooth-scroll>Home</a>
         </li>
         <li class="navbar__drawer-item">
-          <a href="#about"    class="navbar__drawer-link" data-smooth-scroll>Sobre</a>
+          <a href="#about" class="navbar__drawer-link" data-smooth-scroll>Sobre</a>
         </li>
         <li class="navbar__drawer-item">
           <a href="#services" class="navbar__drawer-link" data-smooth-scroll>Serviços</a>
         </li>
         <li class="navbar__drawer-item">
-          <a href="#ai"       class="navbar__drawer-link" data-smooth-scroll>Planejamento</a>
+          <a href="#ai" class="navbar__drawer-link" data-smooth-scroll>Planejamento</a>
         </li>
         <li class="navbar__drawer-item">
-          <a href="#contact"  class="navbar__drawer-link" data-smooth-scroll>Contato</a>
+          <a href="#contact" class="navbar__drawer-link" data-smooth-scroll>Contato</a>
         </li>
         <li class="navbar__drawer-item">
-          <a href="https://www.buildai.space/app/analistcom-app"
-             target="_blank" rel="noopener nofollow"
-             class="navbar__drawer-link">
+          <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="noopener nofollow"
+            class="navbar__drawer-link">
             Crie um negócio
           </a>
         </li>
@@ -266,8 +244,8 @@
 
           <!-- Rotador de palavras -->
           <div class="hero__words" aria-label="analist.com faz: Sistemas que vendem, Presença online, Crescimento real">
-            <span class="hero__word" style="--word-delay: 0s"  aria-hidden="true">Sistemas que vendem</span>
-            <span class="hero__word" style="--word-delay: 9s"  aria-hidden="true">Presença online</span>
+            <span class="hero__word" style="--word-delay: 0s" aria-hidden="true">Sistemas que vendem</span>
+            <span class="hero__word" style="--word-delay: 9s" aria-hidden="true">Presença online</span>
             <span class="hero__word" style="--word-delay: 18s" aria-hidden="true">Crescimento real</span>
           </div>
 
@@ -289,34 +267,35 @@
 
           <!-- Stats de credibilidade -->
           <div class="hero__stats">
+
             <div class="hero__stat">
               <span class="hero__stat-value tabular">5+</span>
               <span class="hero__stat-label">Anos de mercado</span>
             </div>
+
             <div class="hero__stat">
               <span class="hero__stat-value tabular">100%</span>
               <span class="hero__stat-label">Projetos responsivos</span>
             </div>
-<span class="hero__stat-value tabular" aria-label="Infinito">
-  <svg width="0.8em" height="0.5em" viewBox="0 0 60 35"
-       fill="currentColor" aria-hidden="true">
-    <path d="M17.5 5C9.5 5 3 11.5 3 17.5S9.5 30 17.5 30c4.8 0 9-2.4 12.5-6 3.5 3.6 7.7 6 12.5 6C50.5 30 57 23.5 57 17.5S50.5 5 42.5 5c-4.8 0-9 2.4-12.5 6C26.5 7.4 22.3 5 17.5 5zm0 6c3.7 0 7 2.2 10 5.5-3 3.3-6.3 5.5-10 5.5-5 0-8.5-3.1-8.5-5.5S12.5 11 17.5 11zm25 0c5 0 8.5 3.1 8.5 5.5S47.5 22 42.5 22c-3.7 0-7-2.2-10-5.5 3-3.3 6.3-5.5 10-5.5z"/>
-  </svg>
-</span>
+
+            <div class="hero__stat"> <!-- ← faltava este div -->
+              <span class="hero__stat-value tabular" aria-label="Infinito">
+                <svg width="0.8em" height="0.5em" viewBox="0 0 60 35" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M17.5 5C9.5 5 3 11.5 3 17.5S9.5 30 17.5 30c4.8 0 9-2.4 12.5-6 3.5 3.6 7.7 6 12.5 6C50.5 30 57 23.5 57 17.5S50.5 5 42.5 5c-4.8 0-9 2.4-12.5 6C26.5 7.4 22.3 5 17.5 5zm0 6c3.7 0 7 2.2 10 5.5-3 3.3-6.3 5.5-10 5.5-5 0-8.5-3.1-8.5-5.5S12.5 11 17.5 11zm25 0c5 0 8.5 3.1 8.5 5.5S47.5 22 42.5 22c-3.7 0-7-2.2-10-5.5 3-3.3 6.3-5.5 10-5.5z" />
+                </svg>
+              </span>
+              <span class="hero__stat-label">Escalabilidade</span> <!-- ← faltava este -->
+            </div>
+
           </div>
 
         </div><!-- /hero__content -->
 
         <!-- Visual do hero -->
         <div class="hero__visual float-anim" aria-hidden="true">
-          <img
-            src="images/logoanalisti1-Photoroom.png"
-            alt=""
-            width="400"
-            height="400"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async">
+          <img src="images/logoanalisti1-Photoroom.png" alt="" width="400" height="400" loading="eager"
+            fetchpriority="high" decoding="async">
         </div>
 
       </div><!-- /hero__layout -->
@@ -527,23 +506,22 @@
             </p>
 
             <ul class="flow" style="--flow-space: var(--space-4); list-style: none; padding: 0;">
-              <li class="reveal" style="--reveal-from-y: 20px; color: color-mix(in srgb, var(--paper) 80%, transparent)">
+              <li class="reveal"
+                style="--reveal-from-y: 20px; color: color-mix(in srgb, var(--paper) 80%, transparent)">
                 → <strong style="color: var(--paper)">Reduz risco</strong> com análise inteligente
               </li>
-              <li class="reveal" style="--reveal-from-y: 20px; color: color-mix(in srgb, var(--paper) 80%, transparent)">
+              <li class="reveal"
+                style="--reveal-from-y: 20px; color: color-mix(in srgb, var(--paper) 80%, transparent)">
                 → <strong style="color: var(--paper)">Acelera clareza</strong> em decisões estratégicas
               </li>
-              <li class="reveal" style="--reveal-from-y: 20px; color: color-mix(in srgb, var(--paper) 80%, transparent)">
+              <li class="reveal"
+                style="--reveal-from-y: 20px; color: color-mix(in srgb, var(--paper) 80%, transparent)">
                 → <strong style="color: var(--paper)">Mostra caminhos</strong> onde havia dúvida
               </li>
             </ul>
 
-            <a
-              href="https://www.buildai.space/app/analistcom-app"
-              target="_blank"
-              rel="noopener nofollow"
-              class="btn btn--accent"
-              data-magnetic="0.3">
+            <a href="https://www.buildai.space/app/analistcom-app" target="_blank" rel="noopener nofollow"
+              class="btn btn--accent" data-magnetic="0.3">
               Explorar a plataforma
               <span class="btn__icon btn__icon--external" aria-hidden="true">↗</span>
             </a>
@@ -551,13 +529,8 @@
           </div><!-- /feature__content -->
 
           <div class="feature__visual reveal-left">
-            <img
-              src="images/diversidade-tec.jpg"
-              alt="Plataforma de IA analist.com"
-              loading="lazy"
-              decoding="async"
-              style="width: 100%; border: var(--border-width-brutal) solid var(--scar);"
-              data-no-dim>
+            <img src="images/diversidade-tec.jpg" alt="Plataforma de IA analist.com" loading="lazy" decoding="async"
+              style="width: 100%; border: var(--border-width-brutal) solid var(--scar);" data-no-dim>
           </div>
         </div>
 
@@ -598,11 +571,8 @@
               <li>Velocidade e performance de ponta</li>
             </ul>
             <div class="service-card__footer">
-              <a
-                href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Tenho%20interesse%20em%20Presença%20Web."
-                target="_blank"
-                rel="noopener"
-                class="btn btn--primary btn--full">
+              <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Tenho%20interesse%20em%20Presença%20Web."
+                target="_blank" rel="noopener" class="btn btn--primary btn--full">
                 Solicitar orçamento
               </a>
             </div>
@@ -624,11 +594,8 @@
               <li>Segurança avançada para seus dados</li>
             </ul>
             <div class="service-card__footer">
-              <a
-                href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Tenho%20interesse%20em%20Sistema%20Web."
-                target="_blank"
-                rel="noopener"
-                class="btn btn--accent btn--full">
+              <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Tenho%20interesse%20em%20Sistema%20Web."
+                target="_blank" rel="noopener" class="btn btn--accent btn--full">
                 Quero meu sistema
               </a>
             </div>
@@ -650,11 +617,8 @@
               <li>Escalabilidade garantida para o futuro</li>
             </ul>
             <div class="service-card__footer">
-              <a
-                href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Tenho%20interesse%20em%20Plataforma%20Completa."
-                target="_blank"
-                rel="noopener"
-                class="btn btn--primary btn--full">
+              <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Tenho%20interesse%20em%20Plataforma%20Completa."
+                target="_blank" rel="noopener" class="btn btn--primary btn--full">
                 Falar com especialista
               </a>
             </div>
@@ -673,11 +637,7 @@
       <div class="container container--tight">
         <div class="stack stack--center" style="--stack-gap: var(--space-6); text-align: center;">
 
-          <img
-            src="images/logoanalisti1-Photoroom.png"
-            alt="analist.com"
-            loading="lazy"
-            decoding="async"
+          <img src="images/logoanalisti1-Photoroom.png" alt="analist.com" loading="lazy" decoding="async"
             style="height: 80px; width: auto; margin-inline: auto;">
 
           <h2 class="section__title">analist<span style="color: var(--brand-accent)">.</span>com</h2>
@@ -694,12 +654,8 @@
             <a href="#" aria-label="Twitter / X" class="social-link">
               <i class="fab fa-twitter" aria-hidden="true"></i>
             </a>
-            <a
-              href="https://api.whatsapp.com/send?phone=5566981312846"
-              target="_blank"
-              rel="noopener"
-              aria-label="WhatsApp"
-              class="social-link">
+            <a href="https://api.whatsapp.com/send?phone=5566981312846" target="_blank" rel="noopener"
+              aria-label="WhatsApp" class="social-link">
               <i class="fab fa-whatsapp" aria-hidden="true"></i>
             </a>
           </div>
@@ -727,14 +683,8 @@
 
           <!-- Formulário Visme -->
           <div class="contact__form">
-            <div
-              class="visme_d"
-              data-title="Contatos analist.com"
-              data-url="4d7zz8yz-contatos-analist-com"
-              data-domain="forms"
-              data-full-page="false"
-              data-min-height="500px"
-              data-form-id="34148">
+            <div class="visme_d" data-title="Contatos analist.com" data-url="4d7zz8yz-contatos-analist-com"
+              data-domain="forms" data-full-page="false" data-min-height="500px" data-form-id="34148">
             </div>
           </div>
 
@@ -749,14 +699,10 @@
 
             <!-- Mapa de presença global -->
             <figure>
-              <img
-                src="images/WorldMap.svg"
-                alt="Presença global da analist.com"
-                loading="lazy"
-                decoding="async"
-                style="width: 100%; opacity: 0.7;"
-                data-filter="brutal">
-              <figcaption class="text-muted" style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; margin-block-start: var(--space-2);">
+              <img src="images/WorldMap.svg" alt="Presença global da analist.com" loading="lazy" decoding="async"
+                style="width: 100%; opacity: 0.7;" data-filter="brutal">
+              <figcaption class="text-muted"
+                style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; margin-block-start: var(--space-2);">
                 Alcance global
               </figcaption>
             </figure>
@@ -784,7 +730,8 @@
           <a href="index.html" class="footer__brand">
             analist<span style="color: var(--brand-accent)">.</span>com
           </a>
-          <p style="font-size: var(--text-xs); color: var(--text-muted); line-height: var(--leading-relaxed); max-width: 28ch;">
+          <p
+            style="font-size: var(--text-xs); color: var(--text-muted); line-height: var(--leading-relaxed); max-width: 28ch;">
             Presença digital que transforma atenção em crescimento real.
           </p>
           <div class="social-links">
@@ -794,12 +741,8 @@
             <a href="#" aria-label="Twitter / X" class="social-link">
               <i class="fab fa-twitter" aria-hidden="true"></i>
             </a>
-            <a
-              href="https://api.whatsapp.com/send?phone=5566981312846"
-              target="_blank"
-              rel="noopener"
-              aria-label="WhatsApp"
-              class="social-link">
+            <a href="https://api.whatsapp.com/send?phone=5566981312846" target="_blank" rel="noopener"
+              aria-label="WhatsApp" class="social-link">
               <i class="fab fa-whatsapp" aria-hidden="true"></i>
             </a>
           </div>
@@ -809,9 +752,9 @@
         <nav aria-label="Links da empresa">
           <h3 class="footer__heading">Empresa</h3>
           <ul class="footer__links" role="list">
-            <li><a href="#about"    class="footer__link" data-smooth-scroll>Sobre</a></li>
+            <li><a href="#about" class="footer__link" data-smooth-scroll>Sobre</a></li>
             <li><a href="#services" class="footer__link" data-smooth-scroll>Serviços</a></li>
-            <li><a href="#contact"  class="footer__link" data-smooth-scroll>Contato</a></li>
+            <li><a href="#contact" class="footer__link" data-smooth-scroll>Contato</a></li>
           </ul>
         </nav>
 
@@ -850,12 +793,8 @@
   <!-- ─────────────────────────────────────────────
        WHATSAPP BUTTON — fixo, fora do fluxo do documento
   ───────────────────────────────────────────────── -->
-  <a
-    href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Estou%20entrando%20em%20contato%20pelo%20seu%20site."
-    target="_blank"
-    rel="noopener"
-    class="whatsapp-btn"
-    aria-label="Contato via WhatsApp">
+  <a href="https://api.whatsapp.com/send?phone=5566981312846&text=Olá!%20Estou%20entrando%20em%20contato%20pelo%20seu%20site."
+    target="_blank" rel="noopener" class="whatsapp-btn" aria-label="Contato via WhatsApp">
     <i class="fab fa-whatsapp" aria-hidden="true"></i>
   </a>
 
@@ -870,4 +809,5 @@
   <script type="module" src="js/app.js"></script>
 
 </body>
+
 </html>
